@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="1" model="directory.endpoint">
+  <field type="PositiveIntegerField" name="uid">2000</field>
+  <field type="CharField" name="phone_type">S</field>
+  <field type="CharField" name="password">968196</field>
+  <field to="auth.user" name="accountcode" rel="ManyToOneRel">1</field>
+  <field to="dialplan.context" name="user_context" rel="ManyToOneRel">1</field>
+  <field to="server.sipprofile" name="sip_profile" rel="ManyToOneRel">3</field>
+  <field type="CharField" name="effective_caller_id_name">admin</field>
+  <field type="BooleanField" name="enable">True</field>
+  <field type="BooleanField" name="is_registered">False</field>
+  <field type="DateTimeField" name="last_registered"><None></None></field>
+  <field type="CharField" name="description">sip number</field>
+ </object>
+</django-objects>

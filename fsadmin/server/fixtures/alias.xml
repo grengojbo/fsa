@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="3" model="server.alias">
+  <field type="CharField" name="name">nat</field>
+ </object>
+ <object pk="2" model="server.alias">
+  <field type="CharField" name="name">default</field>
+ </object>
+ <object pk="4" model="server.alias">
+  <field type="CharField" name="name">outbound</field>
+ </object>
+</django-objects>

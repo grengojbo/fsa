@@ -1,0 +1,173 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-31 07:11+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:16
+msgid "UnixODBC"
+msgstr ""
+
+#: admin.py:19
+msgid "SSH params"
+msgstr ""
+
+#: models.py:40 models.py:121 models.py:132 models.py:169
+msgid "Name"
+msgstr ""
+
+#: models.py:59
+msgid "Listen IP"
+msgstr ""
+
+#: models.py:59
+msgid ""
+"The default settings allow socket connections only from the local host. To "
+"allow connections from any host on the network, use 0.0.0.0 instead of the "
+"default 127.0.0.1"
+msgstr ""
+
+#: models.py:60
+msgid "Listen Port"
+msgstr ""
+
+#: models.py:61
+msgid "Password"
+msgstr ""
+
+#: models.py:62
+msgid "SQL Name"
+msgstr ""
+
+#: models.py:63
+msgid "SQL Login"
+msgstr ""
+
+#: models.py:64
+msgid "SQL Password"
+msgstr ""
+
+#: models.py:65
+msgid "SSH User"
+msgstr ""
+
+#: models.py:66
+msgid "SSH Password"
+msgstr ""
+
+#: models.py:67
+msgid "SSH Host"
+msgstr ""
+
+#: models.py:68 models.py:134 models.py:175
+msgid "Enable"
+msgstr ""
+
+#: models.py:117
+msgid "Freeswitch Server"
+msgstr ""
+
+#: models.py:118
+msgid "Freeswitch Servers"
+msgstr ""
+
+#: models.py:125 models.py:126
+msgid "SIP Alias"
+msgstr ""
+
+#: models.py:139
+msgid "Configuration file"
+msgstr ""
+
+#: models.py:140
+msgid "Configuration files"
+msgstr ""
+
+#: models.py:176
+msgid "Proxy Media"
+msgstr ""
+
+#: models.py:178
+msgid "External RTP IP"
+msgstr ""
+
+#: models.py:178
+msgid ""
+"Use the external/public IP address of the machine. If you are behind NAT, "
+"you can use the internal IP but you won't be able to use endpoints or "
+"interconnect with machines outside your LAN. If your ip changes and you use "
+"dynamic dns you can try entering the domain name (not well tested) OR you "
+"can enter stun:stun.freeswitch.org."
+msgstr ""
+
+#: models.py:179
+msgid "External SIP IP"
+msgstr ""
+
+#: models.py:179
+msgid "See comments on External RTP IP"
+msgstr ""
+
+#: models.py:188
+msgid "Domain"
+msgstr ""
+
+#: models.py:188
+msgid ""
+"(Optional) the domain that sip endpoints for this account will register to. "
+"If left blank, endpoints should register to the IP given in External SIP IP"
+msgstr ""
+
+#: models.py:189
+msgid "RTP IP"
+msgstr ""
+
+#: models.py:190
+msgid "SIP IP"
+msgstr ""
+
+#: models.py:191
+msgid "SIP port"
+msgstr ""
+
+#: models.py:194
+msgid "Accept"
+msgstr ""
+
+#: models.py:194
+msgid ""
+"If true, anyone can register to server and will not be challenged for "
+"username/password information"
+msgstr ""
+
+#: models.py:198
+msgid "Codec"
+msgstr ""
+
+#: models.py:200
+msgid "Other Param"
+msgstr ""
+
+#: models.py:201
+msgid "Comments"
+msgstr ""
+
+#: models.py:206
+msgid "SIP Profile"
+msgstr ""
+
+#: models.py:207
+msgid "SIP Profiles"
+msgstr ""

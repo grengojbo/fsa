@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="1" model="directory.fsgroup">
+  <field type="CharField" name="name">sales</field>
+  <field to="directory.endpoint" name="users" rel="ManyToManyRel"></field>
+ </object>
+ <object pk="2" model="directory.fsgroup">
+  <field type="CharField" name="name">billing</field>
+  <field to="directory.endpoint" name="users" rel="ManyToManyRel"></field>
+ </object>
+</django-objects>

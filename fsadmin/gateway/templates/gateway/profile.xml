@@ -1,0 +1,15 @@
+{% load tf %}
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+  <section name="directory">
+	<domain name="{{ sofia.name }}">
+  		<user id ="sipmos">
+        <gateways>
+			{% for gw in sofia.gateway.lactive %}
+				{% include "gateway/gateways.xml" %}
+			{% endfor %}
+  		</gateways>
+        </user>
+	</domain>
+  </section>
+</document>

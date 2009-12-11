@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+{% load tf %}
+<document type="freeswitch/xml">
+  <section name="directory">
+  <domain name="{{ domain }}">
+    <params>
+      <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
+    </params>
+
+    <variables>
+      <variable name="record_stereo" value="true"/>
+      <variable name="default_gateway" value="$${default_provider}"/>
+      <variable name="default_areacode" value="$${default_areacode}"/>
+      <variable name="transfer_fallback_extension" value="operator"/>
+    </variables>
+
+    <groups>
+      <group name="default">
+	<users>
+{% for sip in sd %}
+{% include "directory/endpoints.sip.xml" %}
+{% endfor %}
+	</users>
+      </group>
+
+	  <!--
+	      type="pointer" is a pointer so you can have the 
+	      same user in multiple groups.  It basically means
+	      to keep searching for the user in the directory.
+	  -->
+{% for group in groups %}
+      <group name="{{ group.name }}">
+	<users>
+    {% for user in group.users.all %}
+	  <user id="{{ user.uid }}" type="pointer"/>
+    {% endfor %}
+	</users>
+      </group>
+{% endfor %}
+    </groups>
+  </domain>
+</section></document>

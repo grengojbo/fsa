@@ -1,0 +1,17 @@
+<document type="freeswitch/xml">
+  <section name="configuration">
+<configuration name="sofia.conf" description="sofia Endpoint">
+
+  <global_settings>
+    <param name="log-level" value="0"/>
+    <!-- <param name="auto-restart" value="false"/> -->
+    <param name="debug-presence" value="0"/>
+  </global_settings>
+  <profiles>
+{% for sofia in ss %}
+{% include "server/sip_profile.xml" %}
+{% endfor %}
+  </profiles>
+</configuration>
+
+</section></document>

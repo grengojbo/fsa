@@ -1,0 +1,2 @@
+Поиск аваторов неработает
+AVATAR_WEBSEARCH = False

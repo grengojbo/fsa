@@ -1,0 +1,9 @@
+{% extends "admin/base_fsadmin.html" %}
+{% load i18n %}
+{% block title %}{{ title|escape }} | {% trans 'FreeSWITCH Site Administration' %}{% endblock %}
+{% block branding %}
+<h1 id="site-name">{% trans 'FreeSWITCH Site Administration' %}</h1>
+{% endblock %}
+{% block nav-global %}
+<b>nav-global</b>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "admin/base_fsadmin.html" %}
+{% load i18n app_plugins %}
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2 class="module-title">{% trans 'Recent Actions' %}</h2>
+		<div class="module-content">
+        <h3>{% trans 'My Actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% trans 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">{% if not entry.is_deletion %}<a href="{{ entry.get_admin_url }}">{% endif %}{{ entry.object_repr|escape }}{% if not entry.is_deletion %}</a>{% endif %}<br /><span class="mini quiet">{% filter capfirst %}{% trans entry.content_type.name %}{% endfilter %}</span></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+		</div>
+    </div>
+
+	<div class="module" id="satchmo-helpers">
+		<h2 class="module-title">{% trans "Admin Tools" %}</h2>
+		<div class="module-content">
+			<ul>
+			{% plugin_point "admin_tools" %}
+			</ul>
+		</div>
+	</div>	
+</div>
+{% endblock %}

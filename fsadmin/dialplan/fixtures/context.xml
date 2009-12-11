@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="1" model="dialplan.context">
+  <field type="CharField" name="name">default</field>
+  <field type="BooleanField" name="default_context">True</field>
+ </object>
+ <object pk="2" model="dialplan.context">
+  <field type="CharField" name="name">public</field>
+  <field type="BooleanField" name="default_context">True</field>
+ </object>
+</django-objects>

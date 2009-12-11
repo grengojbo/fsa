@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/build_fsa
+#chown 744 build_fsa
+#build_satchmo.sh dev test_olala
+# sudo apt-get install python-setuptools
+
+#virtualenv .env --no-site-packages
+#source .env/bin/activate
+#./manage.py runserver
+source ~/.bashrc
+if [ ! $PYTHONPATH ]; then
+ if [ ! -d $HOME/lib/python2.5/site-packages ]; then
+  if [ ! -d $HOME/lib ]; then
+   mkdir $HOME/lib
+  fi
+  if [ ! -d $HOME/lib/python2.5 ]; then
+   mkdir $HOME/lib/python2.5
+  fi
+  mkdir $HOME/lib/python2.5/site-packages
+ fi
+ echo "PYTHONPATH=$HOME/lib/python2.5/site-packages" >> $HOME/.bashrc
+ source ~/.bashrc
+fi
+build_global() {
+    sudo easy_install -U mercurial
+    sudo easy_install -U pip
+    sudo easy_install -U virtualenv
+    sudo easy_install -U virtualenvwrapper
+
+    sudo easy_install -U hg-git
+    sudo easy_install -U setuptools_hg
+    sudo easy_install -U setuptools_git
+    sudo easy_install -U Fabric   
+}
+build_env() {
+if [ ! -d $HOME/.virtualenvs ]; then
+ mkdir $HOME/.virtualenvs
+ echo "export WORKON_HOME=$HOME/.virtualenvs" >> $HOME/.bashrc
+ echo "export PIP_VIRTUALENV_BASE=$WORKON_HOME" >> $HOME/.bashrс
+ if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
+  echo "source /usr/local/bin/virtualenvwrapper_bashrc" >> $HOME/.bashrc
+ elif [ -f /usr/bin/virtualenvwrapper_bashrc ]; then
+  echo "source /usr/bin/virtualenvwrapper_bashrc" >> $HOME/.bashrc
+ else
+  echo "No file virtualenvwrapper_bashrc"
+ fi
+fi
+if [ ! -f $HOME/.virtualenvs/postactivate ]; then
+ cd $HOME/.virtualenvs
+ wget http://bitbucket.org/jbo/satchmo/raw/tip/scripts/postactivate
+fi
+if [ ! -f $HOME/.virtualenvs/predeactivate ]; then
+ cd $HOME/.virtualenvs
+ wget http://bitbucket.org/jbo/satchmo/raw/tip/scripts/predeactivate
+fi
+cd $HOME
+source ~/.bashrc
+if [ $1 ]; then
+ mkvirtualenv $1
+ easy_install pip
+ echo "Build virtualenv $1"
+fi
+}
+build_dev() {
+    pip install -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements-dev.txt
+    pip install -e hg+http://bitbucket.org/jbo/fsa/#egg=fsa   
+}
+build_stable() {
+    pip install -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements.txt
+    pip install -e hg+http://bitbucket.org/jbo/fsa/#egg=fsa
+}
+
+case "$1" in
+    env)
+        build_env $2
+        ;;
+    stable)
+        build_env $2
+        build_stable
+        ;;
+    dev)
+        build_env $2
+        build_stable
+        build_dev
+        ;;
+    *)
+    echo $"Usage: $0 {env|dev|stable} NAME_ENV"
+    echo "env - only virtualenv"
+    echo "dev - include requirements.txt requirements-dev.txt"
+    echo "stable - include requirements.txt"
+    exit 1
+esac

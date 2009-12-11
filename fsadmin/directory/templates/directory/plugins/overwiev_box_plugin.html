@@ -1,0 +1,20 @@
+{% load i18n endpoints %}
+<h2>Ваши Номера:</h2>
+{% endpoints %} 
+<script type="text/javascript">
+function get_json(data) {
+	return eval('(' + data + ')');
+};
+function new_endpoint(url) {
+    if (confirm("Are you sure to delete this comment?"))
+        {
+            $.post(url,
+                   {'new': true},
+                   function (data) {
+                       json = get_json(data);
+                   });
+        };
+    return false;
+};
+</script>
+<a href="#" onclick="return new_endpoint('{% url new_endpoint %}');">Добавить номер</a>

@@ -1,0 +1,23 @@
+<document type="freeswitch/xml">{% load tf %}
+  <section name="configuration">
+<configuration name="lcr.conf" description="LCR Configuration">
+  <settings>
+    <param name="odbc-dsn" value="{{ es.sql_name }}:{{ es.sql_login }}:{{ es.sql_password }}"/>
+<!--    <param name="odbc-dsn" value="freeswitch-pgsql:freeswitch:Fr33Sw1tch"/> -->
+  </settings>
+  <profiles>
+    <profile name="default">
+      <param name="id" value="0"/>
+      <param name="custom_sql" value="SELECT l.digits, cg.name AS carrier_name, l.rate, cg.prefix AS gw_prefix, cg.suffix AS gw_suffix, l.lead_strip, l.trail_strip, l.prefix, l.suffix FROM lcr l JOIN carrier_gateway cg ON l.carrier_id_id=cg.id  WHERE cg.enabled = '1' AND l.enabled = '1' AND digits IN (${lcr_query_expanded_digits}) AND CURRENT_TIMESTAMP BETWEEN date_start AND date_end ORDER BY  digits DESC,  rate,  quality DESC, reliability DESC, rand()"/>
+    </profile>
+    <profile name="qual_rel">
+      <param name="id" value="1"/>
+      <param name="custom_sql" value="SELECT l.digits, cg.name AS carrier_name, l.rate, cg.prefix AS gw_prefix, cg.suffix AS gw_suffix, l.lead_strip, l.trail_strip, l.prefix, l.suffix FROM lcr l JOIN carrier_gateway cg ON l.carrier_id_id=cg.id  WHERE cg.enabled = '1' AND l.enabled = '1' AND digits IN (${lcr_query_expanded_digits}) AND CURRENT_TIMESTAMP BETWEEN date_start AND date_end ORDER BY  digits DESC, quality DESC, reliability DESC, rand()"/>
+    </profile>
+    <profile name="rel_qual">
+      <param name="id" value="2"/>
+      <param name="custom_sql" value="SELECT l.digits, cg.name AS carrier_name, l.rate, cg.prefix AS gw_prefix, cg.suffix AS gw_suffix, l.lead_strip, l.trail_strip, l.prefix, l.suffix FROM lcr l JOIN carrier_gateway cg ON l.carrier_id_id=cg.id  WHERE cg.enabled = '1' AND l.enabled = '1' AND digits IN (${lcr_query_expanded_digits}) AND CURRENT_TIMESTAMP BETWEEN date_start AND date_end ORDER BY  digits DESC, reliability DESC, quality DESC, rand()"/>
+    </profile>
+  </profiles>
+</configuration>
+</section></document> 

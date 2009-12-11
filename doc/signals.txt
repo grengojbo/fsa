@@ -1,0 +1,169 @@
+:tocdepth: 2
+
+.. _signals:
+
+Сигналы в FSAdmin
+==================
+
+Signals are a very powerful tool available in Django that allows you to decouple aspects of your application. The `Django Signals Documentation`_, has this summary:
+   
+    "In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place."
+
+In addition to all of the built in `Django signals`_, FSAdmin includes a number of store related signals. By using these signals, you can add very unique customizations to your store without needing to modify the FSAdmin code.
+
+Описание сигналов
+--------------------
+
+contact.signals
++++++++++++++++++++++++++++++
+
+satchmo_contact_view
+********************
+
+Sent when contact information is viewed or updated before a template is rendered. Allows you to override the contact information and context passed to the templates used.
+
+Arguments sent with this signal:
+
+    ``sender``
+        An instance of ``satchmo_store.contact.models.Contact`` representing the contact information being viewed, or None if the information cannot be found.
+    
+    ``contact``
+        An instance of ``satchmo_store.contact.models.Contact`` representing the contact information being viewed, or None if the information cannot be found (Note: This argument is the same as ``sender``).
+    
+    ``contact_dict``
+        A dictionary containing the intitial data for the instance of ``satchmo_store.contact.forms.ExtendedContactInfoForm`` instance that will be rendered to the user. 
+    
+    
+satchmo_contact_location_changed
+********************************
+
+Sent after a user changes their location in their profile
+
+Arguments sent with this signal:
+
+    ``sender``
+        The instance of ``satchmo_store.contact.forms.ContactInfoForm`` which was responsible for the location change.
+    
+    ``contact``
+        The instance of ``satchmo_store.contact.models.Contact`` which was updated with a new location.
+
+form_save
+*********
+
+Sent after a form has been saved to the database
+
+Arguments sent with this signal:
+
+    ``sender``
+        The form model of the form being set (Note: Not an instance). Possible values include:
+        
+        - ``satchmo_store.contact.forms.ContactInfoForm``
+        - ``payment.modules.purchaseorder.forms.PurchaseorderPayShipForm``
+        - ``payment.forms.CreditPayShipForm``
+        - ``payment.forms.SimplePayShipForm``
+        - ``payment.forms.PaymentContactInfoForm``
+    
+    ``form``
+        - The instance of the form defined by one of the above models that was saved.
+    
+validate_postcode
+*****************
+
+Sent when a form that contains postal codes (shipping and billing forms) needs to validate. This signal can be used to custom validate postal postal codes. Any listener should return the validated postal code or raise an exception for an invalid postal code.
+
+Arguments sent with this signal:
+
+    ``sender``
+        An instance of ``satchmo_store.contact.forms.ContactInfoForm`` which is validating it's postal codes.
+    
+    ``postcode``
+        The postal code as a string being validated
+    
+    ``country``
+        An instance of ``l10n.models.Country`` that was selected in the form (or specified in the configuration if local sales are only allowed)
+    
+
+userprofile.signals
+++++++++++++++++++++++++++++++
+
+profile_registration
+********************
+
+Пользователь зарегистрировался и активировал акаунт
+
+Arguments sent with this signal:
+
+    ``sender``
+        The instance of ``satchmo_store.accounts.forms.RegistrationForm`` which was submitted.
+    
+    ``user``
+        The instance of ``django.contrib.auth.models.User`` that was saved to the database
+
+satchmo_registration
+********************
+
+Sent after a user has registered an account with the store.
+
+Arguments sent with this signal:
+
+    ``sender``
+        The instance of ``satchmo_store.accounts.forms.RegistrationForm`` which was submitted.
+    
+    ``contact``
+        The instance of ``satchmo_store.contact.models.Contact`` that was saved to the database
+    
+    ``subscribed``
+        A boolean reflecting weather or not the user subscribed to a newsletter (defaults to False)
+        
+    ``data``
+        The cleaned_data dictionary of the submitted form
+
+satchmo_registration_verified
+*****************************
+
+Sent after a user account has been verified. This signal is also sent right after an account is created if account verification is disabled.
+
+Arguments sent with this signal:
+
+    ``sender``
+        An instance of ``contact`` if the account was verified via email, or an instance of ``satchmo_store.models.Contact`` if account verification is disabled (Note: this is the same argument as ``contact``).
+        
+    ``contact``
+        The instance of ``contact.models.Contact`` that was verified
+
+satchmo_registration_initialdata
+********************************
+
+Sent before an instance of ``satchmo_store.accounts.forms.RegistrationAddressForm`` or ``satcmo_store.accounts.forms.RegistrationForm`` is rendered
+
+Arguments sent with this signal:
+
+    ``sender``
+        An instance of ``satchmo_store.models.Contact`` or None
+    
+    ``contact``
+        An instance of ``satchmo_store.models.Contact`` or None (Note: This is the same argument as ``sender``)
+    
+    ``initial_data``
+        A dicionary of initial data to populate the form with on rendering
+
+fsadmin.directory.signals
+++++++++++++++++++++++++++++++
+
+endpoint_signal
+********************
+
+Пользователь зарегистрировался и активировал акаунт
+
+Arguments sent with this signal:
+
+    ``sender``
+        The instance of ``satchmo_store.accounts.forms.RegistrationForm`` which was submitted.
+    
+    ``user``
+        The instance of ``django.contrib.auth.models.User`` that was saved to the database
+	
+    ``endpoint``
+        The instance of ``django.contrib.auth.models.User`` that was saved to the database
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="1" model="cdr.conf">
+  <field type="CharField" name="name">test</field>
+  <field to="server.server" name="server" rel="ManyToOneRel">1</field>
+  <field type="CharField" name="url">http://127.0.0.1:8219/cdr/set/</field>
+  <field type="CharField" name="user">freeswitch</field>
+  <field type="CharField" name="passwd">freeswitch</field>
+  <field type="PositiveIntegerField" name="retries">2</field>
+  <field type="PositiveIntegerField" name="delay">1</field>
+  <field type="CharField" name="log_dir"></field>
+  <field type="BooleanField" name="log_b_leg">0</field>
+  <field type="BooleanField" name="prefix_a_leg">1</field>
+  <field type="BooleanField" name="lighttpd">0</field>
+  <field type="CharField" name="err_log">xml_cdr</field>
+  <field type="BooleanField" name="cdr_ca">1</field>
+  <field type="BooleanField" name="enabled">1</field>
+ </object>
+</django-objects>

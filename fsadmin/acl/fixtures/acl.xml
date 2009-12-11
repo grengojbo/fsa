@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="1" model="acl.fsacl">
+  <field type="CharField" name="name">test1</field>
+  <field to="server.server" name="server" rel="ManyToOneRel">2</field>
+  <field type="BooleanField" name="enabled">True</field>
+  <field type="TextField" name="acl_val">&lt;node type="allow" domain="test1.example.com"/&gt;</field>
+ </object>
+</django-objects>

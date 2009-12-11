@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="1" model="dialplan.extension">
+  <field type="CharField" name="name">testExt</field>
+  <field type="BooleanField" name="continue_on">False</field>
+  <field to="dialplan.context" name="context" rel="ManyToOneRel">1</field>
+ </object>
+</django-objects>
