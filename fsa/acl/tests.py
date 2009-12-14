@@ -14,7 +14,7 @@ from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
 #from fsadmin.directory.models import Endpoint, SipRegistration
-from fsadmin.acl.models import FSAcl
+from fsa.acl.models import FSAcl
 #from django.test import TestCase
 
 class AclTestCase(test.TestCase):

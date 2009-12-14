@@ -1,7 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
-from fsadmin.dialplan import views
+from fsa.dialplan import views
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'

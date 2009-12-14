@@ -1,10 +1,10 @@
 # -*- coding: UTF-8 -*-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.server.models import Server
+from fsa.server.models import Server
 from fsadmin.lcr.models import Lcr
 from django.views.generic.list_detail import object_list
-from lib.decorators import render_to
+from sugar.views.decorators import render_to
 from django.shortcuts import get_object_or_404
 import logging
 

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.core.management.base import NoArgsCommand
 from django.core.management import call_command
 

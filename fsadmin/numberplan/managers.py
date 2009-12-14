@@ -2,8 +2,8 @@
 from django.db import models
 #from django.template import Context, loader
 from django.contrib.auth.models import User
-from fsadmin.dialplan.models import Context
-from fsadmin.server.models import SipProfile
+from fsa.dialplan.models import Context
+from fsa.server.models import SipProfile
 #from fsadmin.directory.models import Endpoint as e
 from django.conf import settings
 #from fsadmin.directory.models import Endpoint, NumberPlan

@@ -1,11 +1,11 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.list_detail import object_list
-from lib.decorators import render_to
+from sugar.views.decorators import render_to
 from django.shortcuts import get_object_or_404
 from lib.helpers import reverse
 from fsadmin.gateway.models import SofiaGateway
-from fsadmin.server.models import Server, SipProfile
+from fsa.server.models import Server, SipProfile
 import logging as l
 
 __author__ = '$Author:$'

@@ -1,6 +1,5 @@
 # -*- mode: python; coding: utf-8; -*- 
-
-from django.contrib import databrowse, admin
+from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 #from .models import
 from fsa.core.models import VoicemailMsgs, VoicemailPrefs, DbData, SipSubscriptions, SipRegistrations, SipSharedAppearanceDialogs, SipSharedAppearanceSubscriptions, SipDialogs, SipPresence, SipAuthentication, SipAlias, LimitData
@@ -101,3 +100,4 @@ admin.site.register(SipSubscriptions, SipSubscriptionsAdmin)
 admin.site.register(DbData, DbDataAdmin)
 admin.site.register(VoicemailMsgs, VoicemailMsgsAdmin)
 admin.site.register(VoicemailPrefs, VoicemailPrefsAdmin)
+

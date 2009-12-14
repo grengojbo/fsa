@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+ <object pk="3" model="server.sipprofile">
+  <field type="CharField" name="name">test1.example.com</field>
+  <field to="server.server" name="server" rel="ManyToOneRel">2</field>
+  <field type="BooleanField" name="enabled">1</field>
+  <field type="BooleanField" name="proxy_media">1</field>
+  <field type="CharField" name="ext_rtp_ip"></field>
+  <field type="CharField" name="ext_sip_ip"></field>
+  <field type="CharField" name="domain"></field>
+  <field type="IPAddressField" name="rtp_ip">192.168.51.100</field>
+  <field type="IPAddressField" name="sip_ip">192.168.51.100</field>
+  <field type="PositiveIntegerField" name="sip_port">5040</field>
+  <field type="BooleanField" name="accept_blind_reg">0</field>
+  <field type="CharField" name="codec_prefs">G729,GSM,PCMU</field>
+  <field to="dialplan.context" name="context" rel="ManyToOneRel">2</field>
+  <field type="TextField" name="other_param"></field>
+  <field type="CharField" name="comments"></field>
+  <field to="server.alias" name="alias" rel="ManyToManyRel"><object pk="2"></object></field>
+  <field to="gateway.sofiagateway" name="gateway" rel="ManyToManyRel"><object pk="1"></object></field>
+ </object>
+</django-objects>

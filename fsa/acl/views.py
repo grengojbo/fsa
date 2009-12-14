@@ -1,13 +1,13 @@
 # -*- coding: UTF-8 -*-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.acl.models import FSAcl
+from fsa.acl.models import FSAcl
 from django.views.generic.list_detail import object_list
-from lib.decorators import render_to
+from sugar.views.decorators import render_to
 from django.shortcuts import get_object_or_404      
 import logging
 
-l = logging.getLogger('fsadmin.acl.views')
+l = logging.getLogger('fsa.acl.views')
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'

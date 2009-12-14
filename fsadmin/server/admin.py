@@ -2,7 +2,7 @@
 
 from django.contrib import databrowse, admin
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.server.models import Server, SipProfile, Alias, Conf
+from fsa.server.models import Server, SipProfile, Alias, Conf
 from django.contrib.auth.models import User
 from django.conf import settings
 

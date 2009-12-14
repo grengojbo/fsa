@@ -2,7 +2,7 @@
 from django.conf.urls.defaults import *
 
 # place app url patterns here
-from fsadmin.server import views
+from fsa.server import views
 
 urlpatterns = patterns(
     '',

@@ -2,7 +2,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.server.models import Server
+from fsa.server.models import Server
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'

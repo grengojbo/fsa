@@ -1,9 +1,9 @@
-# -*- qa: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.dialplan.models import Context
+from fsa.dialplan.models import Context
 from django.views.generic.list_detail import object_list
-from lib.decorators import render_to
+from sugar.views.decorators import render_to
 from django.shortcuts import get_object_or_404
 
 __author__ = '$Author: $'

@@ -2,7 +2,7 @@
 from django.db import models
 #from django.template import Context, loader
 from django.contrib.auth.models import User
-#from fsadmin.dialplan.models import Context
+#from fsa.dialplan.models import Context
 #from django.conf import settings
 #from fsadmin.directory import Endpoint
 from django.db.models import Avg, Max, Min, Count

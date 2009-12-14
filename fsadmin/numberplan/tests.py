@@ -14,7 +14,7 @@ from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
 from fsadmin.numberplan.models import NumberPlan
-from fsadmin.dialplan.models import Context
+from fsa.dialplan.models import Context
 #from django.test import TestCase
 
 class DirectoryTestCase(test.TestCase):

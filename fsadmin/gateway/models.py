@@ -3,7 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from fsadmin.gateway.managers import GatewayManager
-from fsadmin.dialplan.models import Context, Extension
+from fsa.dialplan.models import Context, Extension
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'

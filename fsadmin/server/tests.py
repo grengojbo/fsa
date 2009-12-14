@@ -13,9 +13,9 @@ import unittest
 from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
-from fsadmin.server.models import Server, SipProfile, Conf
-from fsadmin.dialplan.models import Context
-from fsadmin.server import views as sv
+from fsa.server.models import Server, SipProfile, Conf
+from fsa.dialplan.models import Context
+from fsa.server import views as sv
 #from django.test import TestCase
 
 class ServerTestCase(test.TestCase):

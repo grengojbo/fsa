@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 
 from django.contrib import databrowse, admin
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.dialplan.models import Context, Extension
+from fsa.dialplan.models import Context, Extension
 
 class ContextAdmin(admin.ModelAdmin):
     #list_display = ()

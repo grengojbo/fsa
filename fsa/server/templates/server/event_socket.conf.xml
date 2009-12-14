@@ -1,0 +1,12 @@
+{% cache ("event_socket", es.listen_ip), 3600 %}<document type="freeswitch/xml">
+  <section name="configuration">
+<configuration name="event_socket.conf" description="Socket Client">
+  <settings>
+	<param name="nat-map" value="false"/>
+    <param name="listen-ip" value="{{ es.listen_ip }}"/>
+    <param name="listen-port" value="{{ es.listen_port }}"/>
+    <param name="password" value="{{ es.password }}"/>
+    <!--<param name="apply-inbound-acl" value="lan"/>-->
+  </settings>
+</configuration>
+</section></document>{% endcache %}

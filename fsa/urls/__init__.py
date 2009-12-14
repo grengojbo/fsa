@@ -11,8 +11,11 @@ from default import urlpatterns as defaultpatterns
 from django.conf.urls.defaults import *
 import urlhelper
 
+handler404 = 'djanjinja.handlers.page_not_found'
+handler500 = 'djanjinja.handlers.server_error'
+
 import logging
 log = logging.getLogger('fsa.urls') 
 
-urlpatterns = basepatterns + shoppatterns + defaultpatterns
+urlpatterns = basepatterns + defaultpatterns
 urlhelper.remove_duplicate_urls(urlpatterns, [])

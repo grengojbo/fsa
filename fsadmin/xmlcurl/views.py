@@ -1,12 +1,12 @@
 # -*- coding: UTF-8 -*-
 from django.conf import settings
 from django.http import HttpResponseNotFound
-from lib.decorators import render_to
+from sugar.views.decorators import render_to
 from lib.http import HttpResponseRedirectView
 from fsa.core import is_app
 #from lib.helpers import reverse
 #from django.utils.translation import ugettext_lazy as _
-from fsadmin.server.models import Server, SipProfile
+from fsa.server.models import Server, SipProfile
 import logging
 
 l = logging.getLogger('fsadmin.xmlcurl.views')
@@ -24,7 +24,7 @@ def get(request):
         if request.POST['section'] == "configuration":
             try:
                 # TODO добавить загрузку конфигурации lcr.conf
-                from fsadmin.server import views as sv
+                from fsa.server import views as sv
                 if (request.POST.get('key_value') == "event_socket.conf"):
                     l.debug("hostname: %s" % request.POST.get('hostname'))
                     #return HttpResponseRedirectView(sv.get_event_socket, request)
@@ -41,7 +41,7 @@ def get(request):
                     l.debug("key_ value xml_cdr.conf hostname: %s" % request.POST.get('hostname'))
                     return cv.get_xml_conf(request)
                 elif (request.POST['key_value'] == "acl.conf"):
-                    from fsadmin.acl import views as av
+                    from fsa.acl import views as av
                     l.debug("key_ value acl.conf hostname: %s" % request.POST.get('hostname'))
                     return av.get(request)
                 elif is_app('fsadmin.lcr') and request.POST.get('key_value') == "lcr.conf":
@@ -66,7 +66,7 @@ def get(request):
             try:
                 from fsadmin.directory import views as d
                 from fsadmin.gateway import views as gw
-                from fsadmin.server import views as sv
+                from fsa.server import views as sv
                 if request.POST.get('profile') and request.POST['purpose'] == 'gateways':
                     # TODO сейчас выдает пустушку но если раскоментировать то будет выдавать список шлюзов
                     # но тогда наверное нужно убрать из server/sip_profile.xml секцию gateways  

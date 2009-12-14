@@ -15,7 +15,7 @@ from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
 #from fsadmin.directory.models import Endpoint, SipRegistration
-#from fsadmin.dialplan.models import Context
+#from fsa.dialplan.models import Context
 import logging as l
 
 #class SimpleTest(unittest.TestCase):
@@ -40,8 +40,6 @@ class XmlCurlTestCase(test.TestCase):
         ##self.failUnlessEqual(response.status_code, 200)
         # Check that the rendered context contains 5 customers.
         ##self.failUnlessEqual(len(response.context['customers']), 5)
-        response = self.client.post('/xmlcurl/get/', {'key_value': 'event_socket.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
-        self.assertEquals(response.status_code, 200)
         response1 = self.client.post('/xmlcurl/get/', {'key_value': 'xml_cdr.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.assertEquals(response1.status_code, 200)
         

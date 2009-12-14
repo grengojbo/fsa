@@ -7,7 +7,7 @@ import time, datetime
 from fsa.core.utils import CsvData
 #from django.template import Context, loader
 from django.contrib.auth.models import User
-#from fsadmin.dialplan.models import Context
+#from fsa.dialplan.models import Context
 #from django.conf import settings
 #from fsadmin.directory import Endpoint
 from django.utils.encoding import force_unicode

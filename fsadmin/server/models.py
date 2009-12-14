@@ -2,9 +2,9 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.dialplan.models import Context, Extension
+from fsa.dialplan.models import Context, Extension
 from fsadmin.gateway.models import SofiaGateway
-from fsadmin.server.managers import ServerManager
+from fsa.server.managers import ServerManager
 # Create your models here.
 #from django.db import models
 #from django.contrib.contenttypes.models import ContentType

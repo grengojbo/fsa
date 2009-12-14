@@ -5,8 +5,8 @@ from lib.composition import CompositionField, AttributesAggregation, ChildsAggre
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
-from fsadmin.dialplan.models import Context
-from fsadmin.server.models import SipProfile
+from fsa.dialplan.models import Context
+from fsa.server.models import SipProfile
 from fsadmin.directory.managers import EndpointManager, SipRegistrationManager
 
 #from .managers import 

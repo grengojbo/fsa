@@ -14,7 +14,7 @@ from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
 #from fsadmin.directory.models import Endpoint, SipRegistration
-from fsadmin.server.models import SipProfile
+from fsa.server.models import SipProfile
 #from django.test import TestCase
 
 class DirectoryTestCase(test.TestCase):

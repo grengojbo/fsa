@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
@@ -12,12 +12,18 @@ __revision__ = '$Revision: $'
 
 # Create your models here.
 class Context(models.Model):
+    # TODO перенести default_context в настройки для сайта
     name = models.CharField(_(u'Name'), max_length=50, unique=True)
     default_context = models.BooleanField(_(u'Default'),default=False)
     
     def __unicode__(self):
         return self.name
-
+    
+    class Meta:
+        db_table = 'dialplan_context'
+        verbose_name = _(u'Dialplan Context')
+        verbose_name_plural = _(u'Dialplan Contexts')
+        
 class Extension(models.Model):
     name = models.CharField(_(u'Name'), max_length=50, unique=True)
     continue_on = models.BooleanField(default=False)
@@ -26,7 +32,12 @@ class Extension(models.Model):
 
     def __unicode__(self):
         return self.name
-
+    
+    class Meta:
+        db_table = 'dialplan_extension'
+        verbose_name = _(u'Dialplan Extension')
+        verbose_name_plural = _(u'Dialplan Extensions')
+        
 #BREAK = (
 #    ("on-false","on-false"),
 #    ("on-true","on-true"),
