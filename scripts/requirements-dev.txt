@@ -1,3 +1,5 @@
 -e svn+http://django-rosetta.googlecode.com/svn/trunk/#egg=rosetta
 django-debug-toolbar==0.8
 werkzeug
+ipython
+fabric

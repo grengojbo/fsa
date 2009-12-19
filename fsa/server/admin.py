@@ -11,6 +11,7 @@ class ServerAdmin(admin.ModelAdmin):
     list_display = ('name', 'listen_ip', 'listen_port', 'enabled')
     #search_fields = ('name', 'text')
     #list_filter = ('date', 'is_draft', 'site')
+    order = 0
     fieldsets = (
         (None, {'fields': ('name', 'password', ('listen_ip', 'listen_port'), 'enabled')}),
         (_(u'UnixODBC'), {
@@ -23,11 +24,19 @@ class ServerAdmin(admin.ModelAdmin):
 
 class ConfAdmin(admin.ModelAdmin):
     list_display = ('name', 'enabled')
+    order = 4
 
 class SipProfileAdmin(admin.ModelAdmin):
     list_display = ('name', 'server', 'domain', 'sip_ip', 'sip_port', 'enabled')
+    order = 1
 
+class AliasAdmin(admin.ModelAdmin):
+    list_display = ()
+    save_as = True
+    save_on_top = True
+    order = 5
+    
+admin.site.register(Alias, AliasAdmin)
 admin.site.register(Server, ServerAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
-admin.site.register(Alias)
 admin.site.register(Conf, ConfAdmin)

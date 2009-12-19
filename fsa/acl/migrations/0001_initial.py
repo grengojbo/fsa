@@ -1,5 +1,4 @@
 # -*- coding: UTF-8 -*-
-
 from south.db import db
 from django.db import models
 from fsa.acl.models import *
@@ -8,28 +7,22 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Adding model 'FSAcl'
-        db.create_table('fs_acl', (
-            ('id', orm['acl.FSAcl:id']),
-            ('name', orm['acl.FSAcl:name']),
-            ('server', orm['acl.FSAcl:server']),
-            ('enabled', orm['acl.FSAcl:enabled']),
-            ('acl_val', orm['acl.FSAcl:acl_val']),
-        ))
-        db.send_create_signal('acl', ['FSAcl'])
+        # Adding field 'FSAcl.acl_default'
+        db.add_column('fs_acl', 'acl_default', orm['acl.fsacl:acl_default'])
         
     
     
     def backwards(self, orm):
         
-        # Deleting model 'FSAcl'
-        db.delete_table('fs_acl')
+        # Deleting field 'FSAcl.acl_default'
+        db.delete_column('fs_acl', 'acl_default')
         
     
     
     models = {
         'acl.fsacl': {
             'Meta': {'db_table': "'fs_acl'"},
+            'acl_default': ('django.db.models.fields.CharField', [], {'default': "'deny'", 'max_length': '5'}),
             'acl_val': ('django.db.models.fields.XMLField', [], {'default': '\'<node type="allow" domain="test.example.com"/>\''}),
             'enabled': ('django.db.models.fields.BooleanField', [], {'default': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),

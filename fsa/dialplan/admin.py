@@ -18,7 +18,7 @@ class ContextAdmin(admin.ModelAdmin):
 
 class ExtensionAdmin(admin.ModelAdmin):
     actions = ['delete_selected']
-    
+    order = 4
     save_as = True
     save_on_top = True
     list_per_page = 50

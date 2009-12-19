@@ -39,7 +39,7 @@ admin.site.groups = {
     1: {
         'title': _(u'FreeSWITCH Servers'), # optional
         'name': _(u'FreeSWITCH Servers'),
-        'apps': ['server','sites'],
+        'apps': ['server','acl','sites'],
         #'template': 'custom/index_group_usermanagement.html', # optional
         'classes': ['collapse-closed'], # optional
         'show_apps': False, # optional

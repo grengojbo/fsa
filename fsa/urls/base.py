@@ -19,10 +19,12 @@ fsa_urlpatterns = patterns('',
     #url(r'^dialplan/', include('fsa.dialplan.urls')),
     #url(r'^directory/', include('fsadmin.directory.urls')),
     #url(r'^cdr/', include('fsadmin.cdr.urls')),
+    #url(r'^acl/', include('fsa.acl.urls')),
 ) 
 
 urlpatterns = patterns('',
     #(r'^accounts/', include('satchmo_store.accounts.urls')),
+    #url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog', name="i18n-js"),
     (r'^settings/', include('livesettings.urls')),
     (r'^cache/', include('keyedcache.urls')),
 ) + fsa_urlpatterns
