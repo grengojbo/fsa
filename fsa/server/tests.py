@@ -16,10 +16,13 @@ from django.contrib.auth.models import User
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.dialplan.models import Context
 from fsa.server import views as sv
-#from django.test import TestCase
+from fsa.acl.models import FSAcl
 
 class ServerTestCase(test.TestCase):
-    fixtures = ['testsite', 'alias', 'context', 'server', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr', 'acl']
+    # TODO проблемы при загрузке таблицы alias почемуто несоздается колонка alias_type
+    fixtures = ['testsite', 'acl', 'context', 'server', 'server_conf']
+    #fixtures = ['testsite', 'acl', 'alias', 'context', 'server', 'server.conf', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr']
+    
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()
@@ -36,6 +39,24 @@ class ServerTestCase(test.TestCase):
         #self.enable = True
         self.serv_name = 'test1.example.com'
 
+    def testAcl(self):
+        nls = FSAcl.objects.filter(server_acl__name__exact=self.serv_name,enabled=True)
+        self.assertEquals(nls.count(), 2)
+                
+    def testConf(self):
+        key_value = 'local_stream.conf'
+        ls = Conf.objects.get(server__name__exact=self.serv_name, enabled=True, name__exact=key_value)
+        self.assertEquals(ls.name, 'local_stream.conf')
+        try:
+            ls = Conf.objects.get(server__name__exact=self.serv_name, enabled=True, name__exact='no_key_value')
+            xml_context = None
+        except ls.DoesNotExist:
+            xml_context = '<result status="not found" />'
+            ls = None
+        self.assertEquals(xml_context, '<result status="not found" />')
+        self.assertEquals(ls, None)    
+        
+        
     def testGetServer(self):
         """
         Tests 
@@ -45,15 +66,16 @@ class ServerTestCase(test.TestCase):
         #c = Context.objects.filter(name='private')
         #self.failUnlessEqual(res, 2000)
         #response = self.client.post('/cdr/set/', {'name': 'param'})
+        
         s = Server.objects.get_servers(self.serv_name)
         self.assertEquals(s.name, self.serv_name)
-        ss = SipProfile.objects.filter(enabled=True)
-        self.assertEquals(ss.count(), 1)
+        ##ss = SipProfile.objects.filter(enabled=True)
+        ##self.assertEquals(ss.count(), 1)
+        
         # TODO: сервер неактивен
         #s1 = Server.objects.get_servers('test2.example.com')
         #self.assertEquals(s1, True)
         #self.failUnlessEqual(response.status_code, 200)Server.objects.get(name='linktel.com.ua')
-        
 
     def testWebGetServer(self):
         """

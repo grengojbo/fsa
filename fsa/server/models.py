@@ -5,19 +5,12 @@ from django.utils.translation import ugettext_lazy as _
 from fsa.dialplan.models import Context, Extension
 from fsadmin.gateway.models import SofiaGateway
 from fsa.server.managers import ServerManager
-# Create your models here.
-#from django.db import models
-#from django.contrib.contenttypes.models import ContentType
-#from django.contrib.auth.models import User
-#import datetime, re, os, sys, shutil
-#from time import strftime
-#from pytz import timezone
-#from StringIO import StringIO
-#from xml.dom import minidom
-#from xml.dom.ext import PrettyPrint
-#import re
+from fsa.acl.models import FSAcl
 
-#from wikipbx import logger, utils, sofiautil
+
+# Create your models here.
+VERSION_CHOICES = ( (0, '1.0.5'),)
+TYPE_CHOICES = ( (0, _(u'SyStem')), (1, _(u'User')),)
 
 class Server(models.Model):
     """
@@ -30,34 +23,21 @@ class Server(models.Model):
     
     <configuration name="event_socket.conf" description="Socket Client">
       <settings>
+        <param name="nat-map" value="false"/>
         <param name="listen-ip" value="127.0.0.1"/>
         <param name="listen-port" value="8021"/>
         <param name="password" value="ClueCon"/>
+        <!--<param name="apply-inbound-acl" value="lan"/>-->
       </settings>
     </configuration>
+    
     """
     
     name = models.CharField(_(u'Name'), max_length=50)
-    # the absolute path to the directory where the
-    # application is installed.  used to find the ivr
-    # subdirectory for editing IVR scripts.
-    #application_root = models.CharField(maxlength=75)
-
-    # the port the FS listens on 
-    #server_port = models.PositiveIntegerField()
-
-    # the internal ip address of the webserver
-    # 1. what ip address fs should connect to for xml_cdr posts
-    #ip = models.CharField(maxlength=24)
-
-    # fully qualified domain name of webserver,
-    # at the time of this writing, only used for links that
-    # are sent in voicemail email notifications
-    # eg, wikipbx.yourdomain.com
-    #fqdn = models.CharField(maxlength=100)
-
     listen_ip = models.IPAddressField(_(u'Listen IP'), help_text=_(u'The default settings allow socket connections only from the local host. To allow connections from any host on the network, use 0.0.0.0 instead of the default 127.0.0.1'))
-    listen_port = models.PositiveIntegerField(_(u'Listen Port'), help_text="Is a tcp based interface to control FreeSwitch. Default port listen 8021")
+    listen_port = models.PositiveIntegerField(_(u'Listen Port'), help_text=_(u"Is a tcp based interface to control FreeSwitch. Default port listen 8021"))
+    listen_acl = models.ForeignKey(FSAcl, verbose_name=_(u'Acl'), default=1, related_name='event_socket', help_text=_(u' Event socet param name="apply-inbound-acl" value="lan"'))
+    nat_map = models.BooleanField(_('NAT Map'), default=False)
     password = models.CharField(_(u'Password'), max_length=25)
     sql_name = models.CharField(_(u'SQL Name'), max_length=25, blank=True, null=True, help_text="Name MySQL ODBC Connetion odbc.ini")
     sql_login = models.CharField(_(u'SQL Login'), max_length=25, blank=True)
@@ -66,49 +46,11 @@ class Server(models.Model):
     ssh_password = models.CharField(_(u'SSH Password'), max_length=25, blank=True)
     ssh_host = models.CharField(_(u'SSH Host'), max_length=100, blank=True)
     enabled = models.BooleanField(_(u'Enable'), default=False)
+    
+    server_version = models.PositiveSmallIntegerField(_(u'Server Version'), choices=VERSION_CHOICES, default=0)
+    acl = models.ManyToManyField(FSAcl, related_name='server_acl')
     objects = ServerManager()
 
-    #def form_dict(self):
-    #    result = {}
-    #    result["listen_ip"] = self.listen_ip
-    #    result["listen_port"] = self.listen_port
-    #    result["password"] = self.password
-    #    return result
-
-        
-    #def generate_xml_config(self):
-    #    dom = minidom.Document()
-    #    configuration= dom.createElement("configuration")
-    #    configuration.setAttribute("name", "event_socket.conf")
-    #    configuration.setAttribute("description", "Socket Client")        
-    #    dom.appendChild(configuration)
-    #    settings = dom.createElement("settings")
-    #    configuration.appendChild(settings)
-    #    
-    #    # replace each param with db value
-    #    params_map = {'listen-ip':str(self.listen_ip),
-    #                  'listen-port':str(self.listen_port),
-    #                  'password':str(self.password)}
-
-    #    for param_name, param_val in params_map.items():
-    #        param = dom.createElement("param")
-    #        param.setAttribute("name", param_name)
-    #        param.setAttribute("value", param_val)
-    #        settings.appendChild(param)
-
-    #    # serialize to xml
-    #    sio = StringIO()
-    #    PrettyPrint(dom, sio)
-    #    return sio.getvalue()
-    
-    #def form_dict(self):
-    #    retval = {}
-    #    retval['application_root'] = self.application_root
-    #    retval['http_port'] = self.http_port
-    #    retval['ip'] = self.ip
-    #    retval['fqdn'] = self.fqdn        
-    #    return retval
-        
     def __unicode__(self):
         return self.name
     
@@ -119,7 +61,8 @@ class Server(models.Model):
 
 class Alias(models.Model):
     name = models.CharField(_(u'Name'), max_length=50, default='default')
-
+    alias_type = models.PositiveSmallIntegerField(_(u'Type'), choices=TYPE_CHOICES, default=0)
+    
     class Meta:
         db_table = 'sip_alias'
         verbose_name = _(u'SIP Alias')
@@ -130,7 +73,7 @@ class Alias(models.Model):
 
 class Conf(models.Model):
     name = models.CharField(_(u'Name'), max_length=50)
-    #server = models.ForeignKey(Server)
+    server = models.ForeignKey(Server, verbose_name=_('FreeSWITCH Server'), default=2, related_name='serverfs')
     enabled = models.BooleanField(_(u'Enable'), default=False)
     xml_conf = models.XMLField(u'XML')
 

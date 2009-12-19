@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 from django.db import models
 from django.conf import settings
-from fsa.server.models import Server
 from django.utils.translation import ugettext_lazy as _
 
 #from .managers import 
@@ -39,7 +38,7 @@ class FSAcl(models.Model):
         return self.relnode.filter(enabled=True)
         
     def __unicode__(self):
-        return vacl
+        return self.name
 
 class FSAclNode(models.Model):
     """

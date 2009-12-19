@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+{% cache ("network_list", server), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
   <section name="{{ name }}">
   <network-lists>{% for nl in nls %}
-	{{ nl }}
+	{{ nl.vacl }}
 	{% for n in nl.nodes %}
 		{{ n }}{% endfor%}  
     </list>{% endfor%}
   </network-lists>
   </section>
-</document>
+</document>{% endcache %}

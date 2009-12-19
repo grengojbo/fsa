@@ -8,12 +8,15 @@ from django.conf import settings
 
 class ServerAdmin(admin.ModelAdmin):
     #prepopulated_fields = {'slug': ('name', )}
-    list_display = ('name', 'listen_ip', 'listen_port', 'enabled')
+    list_display = ('name', 'server_version', 'listen_ip', 'listen_port', 'enabled',)
     #search_fields = ('name', 'text')
     #list_filter = ('date', 'is_draft', 'site')
     order = 0
     fieldsets = (
-        (None, {'fields': ('name', 'password', ('listen_ip', 'listen_port'), 'enabled')}),
+        (None, {'fields': ('name', 'password', ('listen_ip', 'listen_port', 'listen_acl'), 'enabled')}),
+        (_(u'Server Configuration'), {
+            'classes': ('collapse',),
+            'fields': ('server_version', 'acl')}),
         (_(u'UnixODBC'), {
             'classes': ('collapse',),
             'fields': ('sql_name', 'sql_login', 'sql_password')}),
@@ -23,15 +26,15 @@ class ServerAdmin(admin.ModelAdmin):
         )
 
 class ConfAdmin(admin.ModelAdmin):
-    list_display = ('name', 'enabled')
+    list_display = ('server', 'name', 'enabled')
     order = 4
 
 class SipProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'server', 'domain', 'sip_ip', 'sip_port', 'enabled')
+    list_display = ('name', 'server', 'domain', 'sip_ip', 'sip_port', 'enabled',)
     order = 1
 
 class AliasAdmin(admin.ModelAdmin):
-    list_display = ()
+    list_display = ('name', 'alias_type',)
     save_as = True
     save_on_top = True
     order = 5

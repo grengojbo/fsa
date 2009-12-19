@@ -1,12 +1,13 @@
-{% cache ("event_socket", es.listen_ip), 3600 %}<document type="freeswitch/xml">
+{% cache ("event_socket", es.listen_ip), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
   <section name="configuration">
 <configuration name="event_socket.conf" description="Socket Client">
   <settings>
-	<param name="nat-map" value="false"/>
+	<param name="nat-map" value="{{ es.nat_map|lower }}"/>
     <param name="listen-ip" value="{{ es.listen_ip }}"/>
     <param name="listen-port" value="{{ es.listen_port }}"/>
     <param name="password" value="{{ es.password }}"/>
-    <!--<param name="apply-inbound-acl" value="lan"/>-->
+    <!--<param name="apply-inbound-acl" value="{{ es.listen_acl }}"/>-->
   </settings>
 </configuration>
 </section></document>{% endcache %}

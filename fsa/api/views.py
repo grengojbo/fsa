@@ -26,14 +26,13 @@ def get(request):
                 # TODO добавить загрузку конфигурации lcr.conf
                 from fsa.server import views as sv
                 if (request.POST.get('key_value') == "event_socket.conf"):
-                    l.debug("hostname: %s" % request.POST.get('hostname'))
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return sv.get_event_socket(request)
                 elif (request.POST['key_value'] == "acl.conf"):
                     from fsa.acl import views as av
-                    l.debug("key_ value acl.conf hostname: %s" % request.POST.get('hostname'))
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return av.get(request)
                 else:
-                    l.error('IS NOT key_value: %s' % request.POST.get('key_value'))
                     return sv.get(request)
             except Exception, e:
                 l.error("Error import module: %s" % e)

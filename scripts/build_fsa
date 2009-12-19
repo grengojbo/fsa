@@ -71,6 +71,9 @@ build_stable() {
 }
 
 case "$1" in
+    global)
+        build_global
+        ;;
     env)
         build_env $2
         ;;
@@ -85,6 +88,7 @@ case "$1" in
         ;;
     *)
     echo $"Usage: $0 {env|dev|stable} NAME_ENV"
+    echo "global - GLobal Library"
     echo "env - only virtualenv"
     echo "dev - include requirements.txt requirements-dev.txt"
     echo "stable - include requirements.txt"
