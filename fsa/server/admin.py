@@ -18,10 +18,10 @@ class ServerAdmin(admin.ModelAdmin):
             'classes': ('collapse',),
             'fields': ('server_version', 'acl')}),
         (_(u'UnixODBC'), {
-            'classes': ('collapse',),
+            'classes':['collapse-open'],
             'fields': ('sql_name', 'sql_login', 'sql_password')}),
         (_(u'SSH params'), {
-            'classes': ('collapse',),
+            'classes': ['collapse-closed'],
             'fields': ('ssh_user', 'ssh_password', 'ssh_host')}),
         )
 

@@ -18,6 +18,7 @@ from fsa.server.models import SipProfile
 #from django.test import TestCase
 
 class DirectoryTestCase(test.TestCase):
+    # TODO добавить тесты
     fixtures = ['testsite', 'alias', 'server', 'context', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr', 'acl']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)

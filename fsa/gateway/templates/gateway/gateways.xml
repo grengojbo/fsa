@@ -1,4 +1,3 @@
-{% load tf %}
   <gateway name="{{ gw.name }}">
   <!--/// account username *required* ///-->
   <param name="username" value="{{ gw.username }}"/>
@@ -33,22 +32,19 @@
   <param name="expire-seconds" value="{{ gw.expire_seconds }}"/>
   {% endif %}
   <!--/// do not register ///-->
-  <param name="register" value="{{ gw.register|tf }}"/>
+  <param name="register" value="{{ gw.register|lower }}"/>
   <!-- which transport to use for register -->
   <!--<param name="register-transport" value="udp"/>-->
   <!--How many seconds before a retry when a failure or timeout occurs -->
-  {% if gw.retry_seconds %}
-  <param name="retry-seconds" value="{{ gw.retry_seconds }}"/>
-  {% endif %}
+  {% if gw.retry_seconds %}<param name="retry-seconds" value="{{ gw.retry_seconds }}"/>{% endif %}
   <!--Use the callerid of an inbound call in the from field on outbound calls via this gateway -->
-  <param name="caller-id-in-from" value="{{ gw.caller_id_in_from|tf }}"/>
+  <param name="caller-id-in-from" value="{{ gw.caller_id_in_from|lower }}"/>
   <!--extra sip params to send in the contact-->
   <!--<param name="contact-params" value="tport=tcp"/>-->
+  <!-- <param name="extension-in-contact" value="{{ gw.extension_in_contact|lower }}"/> -->
   <!--send an options ping every x seconds, failure will unregister and/or mark it down-->
-  {% if gw.ping %}
-  <param name="ping" value="{{ gw.ping }}"/>
-  {% endif %}
-  <param name="extension" value="{{ gw.extension.name }}"/>
+  {% if gw.ping %}<param name="ping" value="{{ gw.ping }}"/>{% endif %}
+  {% if gw.extension %}<param name="extension" value="{{ gw.extension }}"/>{% endif %}
   <!-- <param name="context" value="public"/> -->
   <param name="context" value="{{ gw.context.name }}"/>
   </gateway>

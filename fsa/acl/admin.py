@@ -7,8 +7,9 @@ from fsa.acl.models import FSAcl, FSAclNode, AclNetworkList
 #from grappelli.admin import GrappelliModelAdmin, GrappelliStackedInline, GrappelliTabularInline
 
 class FSAclNodeInline(admin.TabularInline):
+    # TODO исправить если добавлять нового пользователя то неработает кнопка + и приходится оставлять extra = 1 вместо extra = 0
     model = FSAclNode
-    extra = 0
+    extra = 1
     classes = ('collapse-open',)
     allow_add = True
 

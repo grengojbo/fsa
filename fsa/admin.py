@@ -37,6 +37,22 @@ admin.site.groups = {
         'show_apps': False, # optional
     },
     1: {
+        'title': _(u'Partner Management'), # optional
+        'name': _(u'Partner Management'),
+        'apps': ['gateway'],
+        #'template': 'custom/index_group_usermanagement.html', # optional
+        'classes': ['collapse-open'], # optional
+        'show_apps': False, # optional
+    },
+    2: {
+        'title': _(u'Dial PLan Management'), # optional
+        'name': _(u'Dial PLan Management'),
+        'apps': ['dialplan'],
+        #'template': 'custom/index_group_usermanagement.html', # optional
+        'classes': ['collapse-closed'], # optional
+        'show_apps': False, # optional
+    },
+    3: {
         'title': _(u'FreeSWITCH Servers'), # optional
         'name': _(u'FreeSWITCH Servers'),
         'apps': ['server','acl','sites'],
@@ -44,7 +60,7 @@ admin.site.groups = {
         'classes': ['collapse-closed'], # optional
         'show_apps': False, # optional
     },
-    2: {
+    4: {
         'title': _(u'Configuration'), # optional
         'name': _(u'Configuration'),
         'apps': ['grappelli','app_plugins'],
