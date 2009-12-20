@@ -31,7 +31,7 @@ class Command(BaseCommand):
         from django.db import connection, transaction
         from django.conf import settings
         from fsadmin.lcr.models import Lcr
-        from fsadmin.gateway.models import SofiaGateway
+        from fsa.gateway.models import SofiaGateway
         
         gw = options.get('gw','')
 

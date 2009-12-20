@@ -1,5 +1,9 @@
-<configuration name="limit.conf" description="LIMIT Configuration">
+{% cache ("limit_conf", name), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+  <section name="configuration">
+	<configuration name="limit.conf" description="LIMIT Configuration">
   <settings>
-    <!--<param name="odbc-dsn" value="dsn:user:pass"/>-->
+    <param name="odbc-dsn" value="{{ odbc_dsn }}"/>
   </settings>
 </configuration>
+</section></document>{% endcache %} 

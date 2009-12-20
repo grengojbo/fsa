@@ -2,7 +2,7 @@
 from django.db import models
 #from django.template import Context, loader
 #from django.contrib.auth.models import User
-#from fsadmin.gateway.models import SofiaGateway
+#from fsa.gateway.models import SofiaGateway
 #from fsadmin.directory.models import Endpoint as e
 #from django.conf import settings
 #from fsadmin.directory import Endpoint

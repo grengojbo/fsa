@@ -1,6 +1,6 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.conf.urls.defaults import *
-from fsadmin.gateway import views
+from fsa.gateway import views
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'

@@ -3,7 +3,7 @@ from django.db import models
 #from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from fsa.dialplan.models import Context, Extension
-from fsadmin.gateway.models import SofiaGateway
+from fsa.gateway.models import SofiaGateway
 from fsa.server.managers import ServerManager
 from fsa.acl.models import FSAcl
 
@@ -53,6 +53,11 @@ class Server(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+    @property
+    def odbc_dsn(self):
+        """string connect ODBC"""
+        return "%s:%s:%s" % (self.sql_name, self.sql_login, self.sql_password)
     
     class Meta:
         db_table = 'server'

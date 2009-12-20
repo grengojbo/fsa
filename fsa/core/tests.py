@@ -49,7 +49,11 @@ class CoreTestCase(test.TestCase):
         response = self.client.post('/api/get/', {'key_value': 'switch.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.assertEquals(response.status_code, 200)
         
+        response = self.client.post('/api/get/', {'key_value': 'limit.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        self.failUnlessEqual(response.status_code, 200)
         #l.debug(response)
+        
+        
         #self.assertEquals(response.context['xml_context'], self.xml_context)
     
 

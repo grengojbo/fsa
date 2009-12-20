@@ -65,7 +65,7 @@ def get(request):
             l.debug("got post: key_value %s section: directory" % request.POST['key_value'])
             try:
                 from fsadmin.directory import views as d
-                from fsadmin.gateway import views as gw
+                from fsa.gateway import views as gw
                 from fsa.server import views as sv
                 if request.POST.get('profile') and request.POST['purpose'] == 'gateways':
                     # TODO сейчас выдает пустушку но если раскоментировать то будет выдавать список шлюзов

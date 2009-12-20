@@ -2,7 +2,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.gateway.managers import GatewayManager
+from fsa.gateway.managers import GatewayManager
 from fsa.dialplan.models import Context, Extension
 
 __author__ = '$Author: $'
@@ -70,23 +70,3 @@ class SofiaGateway(models.Model):
         else:
             return "%s (%s)" % (self.name, _(u'disable'))
     
-    #def form_dict(self):
-    #    retval = {}
-    #    retval['name']=self.name
-    #    retval['username']=self.username
-    #    retval['password']=self.password
-    #    retval['proxy']=self.proxy
-    #    retval['register']=self.register
-    #    retval['direction']=self.direction
-    #    retval['extension']=self.extension
-    #    retval['realm']=self.realm
-    #    retval['from_domain']=self.from_domain
-    #    retval['expire_seconds']=self.expire_seconds
-    #    retval['retry_seconds']=self.retry_seconds
-    #    retval['caller_id_in_from']=self.caller_id_in_from
-    #    retval['max_concurrent']=self.max_concurrent
-    #    return retval
-
-    #class Admin:
-    #    pass
-

@@ -58,8 +58,6 @@ class XmlCurlTestCase(test.TestCase):
         #self.failUnlessEqual(response.status_code, 200)
         #response = self.client.post('/xmlcurl/get/', {'key_value': 'voicemail.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         #self.failUnlessEqual(response.status_code, 200)
-        #response = self.client.post('/xmlcurl/get/', {'key_value': 'limit.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
-        #self.failUnlessEqual(response.status_code, 200)
         
         response = self.client.post('/xmlcurl/get/', {'key_value': 'local_stream.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.assertEquals(response.status_code, 200)

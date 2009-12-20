@@ -32,6 +32,9 @@ def get(request):
                     from fsa.acl import views as av
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return av.get(request)
+                elif (request.POST['key_value'] == "limit.conf"):
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
+                    return sv.get_limit(request)
                 else:
                     return sv.get(request)
             except Exception, e:

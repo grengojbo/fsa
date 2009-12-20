@@ -14,7 +14,7 @@ from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
 from fsadmin.lcr.models import Lcr
-from fsadmin.gateway.models import SofiaGateway
+from fsa.gateway.models import SofiaGateway
 import csv, sys, os
 
 class LcrTestCase(test.TestCase):

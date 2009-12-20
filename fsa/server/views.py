@@ -14,7 +14,7 @@ def get_event_socket(request):
     """ 
     reguest  -- сами знаете что
     """
-    es = get_object_or_404(Server, name=request.POST.get('hostname'))
+    es = get_object_or_404(Server, name=request.POST.get('hostname'), enabled=True)
     #return {'es':es}
     return request.Context({'es':es}).render_response('server/event_socket.conf.xml')
 
@@ -28,6 +28,15 @@ def get_sofia(request):
     ss = SipProfile.objects.filter(enabled=True)
     #return {'ss':ss}
     return request.Context({'ss':ss}).render_response('server/sofia.conf.xml')
+    
+def get_limit(request):
+    """
+    Файл конфигурации limit.conf
+    подробнее смотреть http://wiki.freeswitch.org/wiki/Mod_limit
+    """
+    es = get_object_or_404(Server, name=request.POST.get('hostname'), enabled=True)
+    #l.debug("es.odbc_dsn %s" % (es.odbc_dsn))
+    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn}).render_response('server/limit.conf.xml')
     
 
 #@render_to('server/fs.xml')

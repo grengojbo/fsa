@@ -16,7 +16,7 @@ from django.utils.translation import ugettext_lazy as _
 #from fsa.dialplan.models import Context
 from fsadmin.lcr.managers import LcrManager
 from fsa.core.managers import GenericManager
-from fsadmin.gateway.models import SofiaGateway
+from fsa.gateway.models import SofiaGateway
 
 #from .managers import 
 
