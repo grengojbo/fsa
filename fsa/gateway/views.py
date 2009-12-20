@@ -36,3 +36,8 @@ def profile(request):
     sofia = SipProfile.objects.get(name = request.POST.get('profile'), enabled=True)
     return {'sofia':sofia}
 
+def gw(request):
+    gw = SofiaGateway.objects.get(name='test1', enabled=True)
+    l.debug('gw: %s' % gw)
+    return request.Context({'gw':gw}).render_response('gateway/gateways_test.xml')
+    

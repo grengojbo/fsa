@@ -1,45 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
  <object pk="1" model="gateway.sofiagateway">
-	  <field type="CharField" name="name">testgw</field>
-	  <field type="CharField" name="username">testgw</field>
-	  <field type="CharField" name="password">testgw</field>
-	  <field type="CharField" name="realm"></field>
-	  <field type="CharField" name="from_user">testgw</field>
-	  <field type="CharField" name="from_domain"></field>
-	  <field type="CharField" name="proxy"></field>
-	  <field type="CharField" name="register_proxy"></field>
-	  <field type="PositiveIntegerField" name="expire_seconds">60</field>
-	  <field type="BooleanField" name="register">False</field>
-	  <field type="PositiveIntegerField" name="retry_seconds">30</field>
-	  <field type="BooleanField" name="caller_id_in_from">False</field>
-	  <field type="PositiveIntegerField" name="ping">25</field>
-	  <field type="CharField" name="prefix"></field>
-	  <field type="CharField" name="suffix"></field>
-	  <field type="BooleanField" name="enabled">True</field>
-	  <field type="CharField" name="lcr_format">delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate</field>
-	  <field to="dialplan.extension" name="extension" rel="ManyToOneRel">1</field>
-	  <field to="dialplan.context" name="context" rel="ManyToOneRel">1</field>
+  <field type="CharField" name="name">testgw</field>
+  <field type="CharField" name="descriptions"><None></None></field>
+  <field type="CharField" name="prov_url"><None></None></field>
+  <field type="CharField" name="username">testgw</field>
+  <field type="CharField" name="password">testgw</field>
+  <field type="CharField" name="realm"></field>
+  <field type="CharField" name="from_user">testgw</field>
+  <field type="CharField" name="from_domain"></field>
+  <field type="CharField" name="exten"><None></None></field>
+  <field type="CharField" name="proxy"></field>
+  <field type="CharField" name="register_proxy"></field>
+  <field type="PositiveIntegerField" name="expire_seconds">60</field>
+  <field type="BooleanField" name="register">False</field>
+  <field type="PositiveIntegerField" name="retry_seconds">30</field>
+  <field type="PositiveSmallIntegerField" name="register_transport">0</field>
+  <field type="BooleanField" name="caller_id_in_from">False</field>
+  <field type="BooleanField" name="extension_in_contact">False</field>
+  <field type="PositiveIntegerField" name="ping">25</field>
+  <field type="CharField" name="prefix"></field>
+  <field type="CharField" name="suffix"></field>
+  <field type="BooleanField" name="enabled">True</field>
+  <field type="CharField" name="lcr_format">delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate</field>
+  <field to="dialplan.context" name="context" rel="ManyToOneRel">1</field>
+  <field type="PositiveIntegerField" name="max_concurrent">0</field>
+  <field type="PositiveIntegerField" name="in_progress_calls">0</field>
+  <field type="PositiveSmallIntegerField" name="direction">2</field>
+  <field to="acl.fsacl" name="acl" rel="ManyToManyRel"></field>
  </object>
  <object pk="2" model="gateway.sofiagateway">
   <field type="CharField" name="name">voicepulse</field>
+  <field type="CharField" name="descriptions">VoicePulse</field>
+  <field type="CharField" name="prov_url"></field>
   <field type="CharField" name="username">your-username</field>
   <field type="CharField" name="password">your-password</field>
   <field type="CharField" name="realm">jfk-primary.voicepulse.com</field>
   <field type="CharField" name="from_user"></field>
   <field type="CharField" name="from_domain"></field>
+  <field type="CharField" name="exten"></field>
   <field type="CharField" name="proxy">jfk-primary.voicepulse.com</field>
   <field type="CharField" name="register_proxy"></field>
   <field type="PositiveIntegerField" name="expire_seconds">60</field>
   <field type="BooleanField" name="register">False</field>
   <field type="PositiveIntegerField" name="retry_seconds">30</field>
+  <field type="PositiveSmallIntegerField" name="register_transport">0</field>
   <field type="BooleanField" name="caller_id_in_from">False</field>
+  <field type="BooleanField" name="extension_in_contact">False</field>
   <field type="PositiveIntegerField" name="ping">25</field>
   <field type="CharField" name="prefix">sofia/external/</field>
   <field type="CharField" name="suffix">example:@proxy.carrier2.net:5060</field>
   <field type="BooleanField" name="enabled">True</field>
   <field type="CharField" name="lcr_format">delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate</field>
-  <field to="dialplan.extension" name="extension" rel="ManyToOneRel">1</field>
   <field to="dialplan.context" name="context" rel="ManyToOneRel">1</field>
+  <field type="PositiveIntegerField" name="max_concurrent">0</field>
+  <field type="PositiveIntegerField" name="in_progress_calls">0</field>
+  <field type="PositiveSmallIntegerField" name="direction">2</field>
+  <field to="acl.fsacl" name="acl" rel="ManyToManyRel"></field>
+ </object>
+ <object pk="3" model="gateway.sofiagateway">
+  <field type="CharField" name="name">gizmo</field>
+  <field type="CharField" name="descriptions">Gizmo</field>
+  <field type="CharField" name="prov_url">http://www.google.com/gizmo5/</field>
+  <field type="CharField" name="username">1747NXXXXXX</field>
+  <field type="CharField" name="password">[YOUR PASSWORD]</field>
+  <field type="CharField" name="realm"></field>
+  <field type="CharField" name="from_user"></field>
+  <field type="CharField" name="from_domain">proxy01.sipphone.com</field>
+  <field type="CharField" name="exten"></field>
+  <field type="CharField" name="proxy">proxy01.sipphone.com</field>
+  <field type="CharField" name="register_proxy"></field>
+  <field type="PositiveIntegerField" name="expire_seconds">3600</field>
+  <field type="BooleanField" name="register">False</field>
+  <field type="PositiveIntegerField" name="retry_seconds">3600</field>
+  <field type="PositiveSmallIntegerField" name="register_transport">0</field>
+  <field type="BooleanField" name="caller_id_in_from">False</field>
+  <field type="BooleanField" name="extension_in_contact">False</field>
+  <field type="PositiveIntegerField" name="ping">25</field>
+  <field type="CharField" name="prefix"></field>
+  <field type="CharField" name="suffix"></field>
+  <field type="BooleanField" name="enabled">True</field>
+  <field type="CharField" name="lcr_format">digits,name,rate,other,date_start,date_end</field>
+  <field to="dialplan.context" name="context" rel="ManyToOneRel">1</field>
+  <field type="PositiveIntegerField" name="max_concurrent">0</field>
+  <field type="PositiveIntegerField" name="in_progress_calls">0</field>
+  <field type="PositiveSmallIntegerField" name="direction">2</field>
+  <field to="acl.fsacl" name="acl" rel="ManyToManyRel"></field>
+ </object>
+ <object pk="4" model="gateway.sofiagateway">
+  <field type="CharField" name="name">icall</field>
+  <field type="CharField" name="descriptions">iCall</field>
+  <field type="CharField" name="prov_url">http://www.icall.com.ua/</field>
+  <field type="CharField" name="username">200XXXX</field>
+  <field type="CharField" name="password">[YOUR PASSWORD]</field>
+  <field type="CharField" name="realm">sip.icall.com.ua</field>
+  <field type="CharField" name="from_user"></field>
+  <field type="CharField" name="from_domain"></field>
+  <field type="CharField" name="exten"></field>
+  <field type="CharField" name="proxy"></field>
+  <field type="CharField" name="register_proxy"></field>
+  <field type="PositiveIntegerField" name="expire_seconds">60</field>
+  <field type="BooleanField" name="register">False</field>
+  <field type="PositiveIntegerField" name="retry_seconds">30</field>
+  <field type="PositiveSmallIntegerField" name="register_transport">0</field>
+  <field type="BooleanField" name="caller_id_in_from">False</field>
+  <field type="BooleanField" name="extension_in_contact">False</field>
+  <field type="PositiveIntegerField" name="ping">25</field>
+  <field type="CharField" name="prefix"></field>
+  <field type="CharField" name="suffix"></field>
+  <field type="BooleanField" name="enabled">True</field>
+  <field type="CharField" name="lcr_format">digits,name,rate,other,date_start,date_end</field>
+  <field to="dialplan.context" name="context" rel="ManyToOneRel">2</field>
+  <field type="PositiveIntegerField" name="max_concurrent">0</field>
+  <field type="PositiveIntegerField" name="in_progress_calls">0</field>
+  <field type="PositiveSmallIntegerField" name="direction">2</field>
+  <field to="acl.fsacl" name="acl" rel="ManyToManyRel"></field>
  </object>
 </django-objects>

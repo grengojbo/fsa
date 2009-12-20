@@ -9,5 +9,6 @@ __revision__ = '$Revision: $'
 
 urlpatterns = patterns(
     '',
-    url(r'^get/$', views.get),
+    #url(r'^get/$', views.get),
+    url(r'^gw/$', views.gw),
     )

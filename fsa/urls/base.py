@@ -20,6 +20,7 @@ fsa_urlpatterns = patterns('',
     #url(r'^directory/', include('fsadmin.directory.urls')),
     #url(r'^cdr/', include('fsadmin.cdr.urls')),
     #url(r'^acl/', include('fsa.acl.urls')),
+    url(r'^gw/', include('fsa.gateway.urls')),
 ) 
 
 urlpatterns = patterns('',
@@ -30,4 +31,3 @@ urlpatterns = patterns('',
 ) + fsa_urlpatterns
 
 collect_urls.send(sender=fsa, patterns=urlpatterns)
-

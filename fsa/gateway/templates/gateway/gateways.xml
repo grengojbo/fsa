@@ -2,35 +2,21 @@
   <!--/// account username *required* ///-->
   <param name="username" value="{{ gw.username }}"/>
   <!--/// auth realm: *optional* same as gateway name, if blank ///-->
-  {% if gw.realm %}
-  <param name="realm" value="{{ gw.realm }}"/>
-  {% endif %}
+  {% if gw.realm %}<param name="realm" value="{{ gw.realm }}"/>{% endif %}
   <!--/// username to use in from: *optional* same as  username, if blank ///-->
-  {% if gw.from_user %}
-  <param name="from-user" value="{{ gw.from_user }}"/>
-  {% endif %}
+  {% if gw.from_user %}<param name="from-user" value="{{ gw.from_user }}"/>{% endif %}
   <!--/// domain to use in from: *optional* same as  realm, if blank ///-->
-  {% if gw.from_domain %}
-  <param name="from-domain" value="{{ gw.from_domain }}"/>
-  {% endif %}
+  {% if gw.from_domain %}<param name="from-domain" value="{{ gw.from_domain }}"/>{% endif %}
   <!--/// account password *required* ///-->
   <param name="password" value="{{ gw.password }}"/> 
   <!--/// extension for inbound calls: *optional* same as username, if blank ///-->
-  {% if gw.extension %}
-  <param name="extension" value="{{ gw.extension }}"/>
-  {% endif %}
+  {% if gw.extension %}<param name="extension" value="{{ gw.extension }}"/>{% endif %}
   <!--/// proxy host: *optional* same as realm, if blank ///-->
-  {% if gw.proxy %}
-  <param name="proxy" value="{{ gw.proxy }}"/>
-  {% endif %}
+  {% if gw.proxy %}<param name="proxy" value="{{ gw.proxy }}"/>{% endif %}
   <!--/// send register to this proxy: *optional* same as proxy, if blank ///-->
-  {% if gw.register_proxy %}
-  <param name="register-proxy" value="{{ gw.register_proxy }}"/>
-  {% endif %}
+  {% if gw.register_proxy %}<param name="register-proxy" value="{{ gw.register_proxy }}"/>{% endif %}
   <!--/// expire in seconds: *optional* 3600, if blank ///-->
-  {% if gw.expire_seconds %}
-  <param name="expire-seconds" value="{{ gw.expire_seconds }}"/>
-  {% endif %}
+  {% if gw.expire_seconds %}<param name="expire-seconds" value="{{ gw.expire_seconds }}"/>{% endif %}
   <!--/// do not register ///-->
   <param name="register" value="{{ gw.register|lower }}"/>
   <!-- which transport to use for register -->
@@ -44,7 +30,7 @@
   <!-- <param name="extension-in-contact" value="{{ gw.extension_in_contact|lower }}"/> -->
   <!--send an options ping every x seconds, failure will unregister and/or mark it down-->
   {% if gw.ping %}<param name="ping" value="{{ gw.ping }}"/>{% endif %}
-  {% if gw.extension %}<param name="extension" value="{{ gw.extension }}"/>{% endif %}
+  {% if gw.exten %}<param name="extension" value="{{ gw.exten }}"/>{% endif %}
   <!-- <param name="context" value="public"/> -->
   <param name="context" value="{{ gw.context.name }}"/>
   </gateway>

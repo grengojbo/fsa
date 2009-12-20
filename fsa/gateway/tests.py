@@ -15,11 +15,12 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 #from fsadmin.directory.models import Endpoint, SipRegistration
 from fsa.server.models import SipProfile
-#from django.test import TestCase
+from fsa.gateway.models import SofiaGateway
+import logging as l
 
 class DirectoryTestCase(test.TestCase):
     # TODO добавить тесты
-    fixtures = ['testsite', 'alias', 'server', 'context', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr', 'acl']
+    fixtures = ['testsite', 'acl', 'context', 'extension', 'server', 'server_conf', 'gateway']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()
@@ -39,7 +40,42 @@ class DirectoryTestCase(test.TestCase):
         """
         Tests 
         """
-        sofia = SipProfile.objects.get(name = 'test1.example.com', enabled=True)
-        gw = sofia.gateway.lactive()
-        self.assertEquals(gw.count(), 1)
+        lcr_format = "digits,name,rate,other,date_start,date_end"
+        
+        ngw = SofiaGateway.objects.create(name='test1', username='testUser', realm='realm.com', enabled=True)
+        gw = SofiaGateway.objects.get(name='test1', enabled=True)
+        self.assertEquals(gw.lcr_format, lcr_format)
+        gt = SofiaGateway.objects.filter(enabled=True)
+        self.assertEquals(gt.count(),5)
+        gw.prov_url = 'http://realm.com/'
+        gw.save()
+        
+        response = self.client.post('/gw/gw/', {'key_value': 'event_socket.conf'})
+        self.assertEquals(response.status_code, 200)
+        #l.debug(response.content)
+        
+        #gw.password = 'mypass'
+        # from_user = 
+        # from_domain = 
+        # exten = 
+        # proxy = 
+        # register_proxy = 
+        # expire_seconds = 
+        # register = 
+        # retry_seconds = 
+        # register_transport = 
+        # caller_id_in_from = 
+        # extension_in_contact = 
+        #gw.ping = ''
+        # prefix = 
+        # suffix = 
+        # context =
+        # max_concurrent =
+        # in_progress_calls = 
+        # direction = 
+        # acl =
+        
+        #sofia = SipProfile.objects.get(name = 'test1.example.com', enabled=True)
+        #gw = sofia.gateway.lactive()
+        #self.assertEquals(gw.count(), 1)
 
