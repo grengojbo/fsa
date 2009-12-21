@@ -22,7 +22,7 @@ class ServerAdmin(admin.ModelAdmin):
             'fields': ('sql_name', 'sql_login', 'sql_password')}),
         (_(u'SSH params'), {
             'classes': ['collapse-closed'],
-            'fields': ('ssh_user', 'ssh_password', 'ssh_host')}),
+            'fields': ('ssh_user', 'ssh_host')}),
         )
 
 class ConfAdmin(admin.ModelAdmin):

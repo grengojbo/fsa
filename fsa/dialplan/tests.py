@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 """
 This file demonstrates two different styles of tests (one doctest and one
 unittest). These will both pass when you run "manage.py test".
@@ -6,25 +6,31 @@ unittest). These will both pass when you run "manage.py test".
 Replace these with more appropriate tests for your application.
 """
 
-__author__ = '$Author:$'
-__revision__ = '$Revision:$'
+__author__ = '$Author$'
+__revision__ = '$Revision$'
 
 import unittest
+from django import test
 from django.test.client import Client
-#from django.test import TestCase
+from django.contrib.auth.models import User
+#from fsadmin.directory.models import Endpoint, SipRegistration
+from fsa.dialplan.models import SipProfile
+import logging as l
 
-class NameTestCase(unittest.TestCase):
+class DialPLanTestCase(test.TestCase):
+    fixtures = ['testsite', 'acl', 'extension', 'context']
     def setUp(self):
-        # Every test needs a client.
-        #self.client = Client()
-		pass
+        self.user = User.objects.create_user('test', 'test@test.com', 'test')
+        self.client = Client()
 
-    def test_name(self):
+    def testDialPlan(self):
         """
         Tests 
         """
-        self.failUnlessEqual(1 + 1, 2)
-        #response = self.client.post('/cdr/set/', {'name': 'param'})
+        pass
+        #self.failUnlessEqual(1 + 1, 2)
+        
+            #response = self.client.post('/cdr/set/', {'name': 'param'})
         #self.failUnlessEqual(response.status_code, 200)
 
 

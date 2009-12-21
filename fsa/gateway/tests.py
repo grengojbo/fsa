@@ -20,21 +20,11 @@ import logging as l
 
 class DirectoryTestCase(test.TestCase):
     # TODO добавить тесты
-    fixtures = ['testsite', 'acl', 'context', 'extension', 'server', 'server_conf', 'gateway']
+    fixtures = ['testsite', 'acl', 'extension', 'context', 'server', 'server_conf', 'gateway']
     def setUp(self):
-        #cont1 = Context(name="default", default_context=True)
-        #cont1.save()
-        #cont2 = Context(name="public", default_context=False)
-        #cont2.save()
-        #cont3 = Context(name="private", default_context=False)
-        #cont3.save()
         self.user = User.objects.create_user('test', 'test@test.com', 'test')
         # Every test needs a client.
         self.client = Client()
-        #self.uid = 3000
-        #self.p = "123456"
-        #self.effective_caller_id_name = self.uid
-        #self.enable = True
 
     def testGateway(self):
         """

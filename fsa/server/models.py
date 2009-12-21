@@ -43,7 +43,7 @@ class Server(models.Model):
     sql_login = models.CharField(_(u'SQL Login'), max_length=25, blank=True)
     sql_password = models.CharField(_(u'SQL Password'), max_length=25, blank=True)
     ssh_user = models.CharField(_(u'SSH User'), max_length=25, blank=True)
-    ssh_password = models.CharField(_(u'SSH Password'), max_length=25, blank=True)
+    #ssh_password = models.CharField(_(u'SSH Password'), max_length=25, blank=True)
     ssh_host = models.CharField(_(u'SSH Host'), max_length=100, blank=True)
     enabled = models.BooleanField(_(u'Enable'), default=False)
     

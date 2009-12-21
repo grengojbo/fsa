@@ -12,7 +12,7 @@ import logging as l
 class CoreTestCase(test.TestCase):
     #fixtures = ['context', 'extension', 'alias', 'server', 'acl', 'gateway', 'fsgroup', 'sipprofile', 'testnp', 'testenpoint']
     #fixtures = ['testsite', 'alias', 'context', 'extension', 'server', 'acl', 'gateway', 'fsgroup', 'sipprofile', 'testnp', 'testendpoint', 'testcdr']
-    fixtures = ['testsite', 'acl', 'context', 'extension', 'server', 'server_conf']
+    fixtures = ['testsite', 'acl', 'extension', 'context', 'server', 'server_conf']
     def setUp(self):
         # Every test needs a client.
         self.user = User.objects.create_user('test', 'test@test.com', 'test')

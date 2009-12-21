@@ -11,7 +11,6 @@
   <field type="CharField" name="sql_login">freeswitch</field>
   <field type="CharField" name="sql_password">freeswitch</field>
   <field type="CharField" name="ssh_user"></field>
-  <field type="CharField" name="ssh_password"></field>
   <field type="CharField" name="ssh_host"></field>
   <field type="BooleanField" name="enabled">True</field>
   <field type="PositiveSmallIntegerField" name="server_version">0</field>
@@ -28,7 +27,6 @@
   <field type="CharField" name="sql_login"></field>
   <field type="CharField" name="sql_password"></field>
   <field type="CharField" name="ssh_user"></field>
-  <field type="CharField" name="ssh_password"></field>
   <field type="CharField" name="ssh_host"></field>
   <field type="BooleanField" name="enabled">False</field>
   <field type="PositiveSmallIntegerField" name="server_version">0</field>

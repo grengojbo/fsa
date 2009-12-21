@@ -1,0 +1,212 @@
+[
+ {
+  "pk": 1, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "dx", 
+   "continue_on": false, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<action application=\"answer\"/>\r\n<action application=\"read\" data=\"11 11 'tone_stream://%(10000,0,350,440)' digits 5000 #\"/>\r\n<action application=\"execute_extension\" data=\"is_transfer XML features\"/>", 
+   "is_condition": false, 
+   "is_temporary": true, 
+   "dest_num": "^dx$", 
+   "desc": "In call Transfer for phones without a transfer button"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "is_transfer", 
+   "continue_on": false, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<condition field=\"destination_number\" expression=\"^is_transfer$\"/>\r\n<condition field=\"${digits}\" expression=\"^(\\d+)$\">\r\n    <action application=\"transfer\" data=\"-bleg ${digits} XML default\"/>\r\n    <anti-action application=\"eval\" data=\"cancel transfer\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "^is_transfer$", 
+   "desc": "Is Transfer"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "cf", 
+   "continue_on": false, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<action application=\"answer\"/>\r\n<action application=\"transfer\" data=\"-both 30${dialed_extension:2} XML default\"/>", 
+   "is_condition": false, 
+   "is_temporary": true, 
+   "dest_num": "^cf$", 
+   "desc": "Used to transfer both legs into a conference"
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "please_hold", 
+   "continue_on": false, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<action application=\"set\" data=\"transfer_ringback=$${hold_music}\"/>\r\n<action application=\"answer\"/>\r\n<action application=\"sleep\" data=\"1500\"/>\r\n<action application=\"playback\" data=\"ivr/ivr-hold_connect_call.wav\"/>\r\n<action application=\"transfer\" data=\"$1 XML default\"/>", 
+   "is_condition": false, 
+   "is_temporary": true, 
+   "dest_num": "^(10[01][0-9])$", 
+   "desc": "Please Hold"
+  }
+ }, 
+ {
+  "pk": 5, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "is_zrtp_secure", 
+   "continue_on": true, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<condition field=\"${zrtp_secure_media_confirmed}\" expression=\"^true$\">\r\n\t<action application=\"sleep\" data=\"1000\"/>\r\n\t<action application=\"playback\" data=\"misc/call_secured.wav\"/>\r\n\t<anti-action application=\"eval\" data=\"not_secure\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "Is zrtp secure"
+  }
+ }, 
+ {
+  "pk": 6, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "is_secure", 
+   "continue_on": true, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<condition field=\"${sip_via_protocol}\" expression=\"tls\"/>\r\n<condition field=\"${sip_secure_media_confirmed}\" expression=\"^true$\">\r\n\t<action application=\"sleep\" data=\"1000\"/>\r\n\t<action application=\"playback\" data=\"misc/call_secured.wav\"/>\r\n\t<anti-action application=\"eval\" data=\"not_secure\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "Only Truly consider it secure if its TLS and SRTP"
+  }
+ }, 
+ {
+  "pk": 7, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "public_did", 
+   "continue_on": false, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<action application=\"set\" data=\"domain_name=$${domain}\"/>\r\n<!-- This example maps the DID 5551212 to ring 1000 in the default context -->\r\n<action application=\"transfer\" data=\"1000 XML default\"/>", 
+   "is_condition": false, 
+   "is_temporary": true, 
+   "dest_num": "^(5551212)$", 
+   "desc": "If you're hosting multiple domains  you will want to set the  target_domain on these calls so they hit the proper domain after you   transfer the caller into the default context."
+  }
+ }, 
+ {
+  "pk": 8, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "check_auth", 
+   "continue_on": true, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<condition field=\"${sip_authorized}\" expression=\"^true$\" break=\"never\">\r\n    <anti-action application=\"respond\" data=\"407\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "check_auth public context"
+  }
+ }, 
+ {
+  "pk": 9, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "transfer_to_default", 
+   "continue_on": false, 
+   "enabled": false, 
+   "priority_position": 0, 
+   "actions_xml": "<condition>\r\n    <action application=\"transfer\" data=\"${destination_number} XML default\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "transfer to default (public context)"
+  }
+ }, 
+ {
+  "pk": 10, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "unloop", 
+   "continue_on": false, 
+   "enabled": true, 
+   "priority_position": 0, 
+   "actions_xml": "<condition field=\"${unroll_loops}\" expression=\"^true$\"/>\r\n<condition field=\"${sip_looped_call}\" expression=\"^true$\">\r\n    <action application=\"deflect\" data=\"${destination_number}\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "unloop public context"
+  }
+ }, 
+ {
+  "pk": 11, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "outside_call", 
+   "continue_on": true, 
+   "enabled": true, 
+   "priority_position": 0, 
+   "actions_xml": "<condition>\r\n\t<action application=\"set\" data=\"outside_call=true\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "Tag anything pass thru here as an outside_call so you can make sure not \tto create any routing loops based on the conditions that it came from  \tthe outside of the switch."
+  }
+ }, 
+ {
+  "pk": 12, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "call_debug", 
+   "continue_on": true, 
+   "enabled": true, 
+   "priority_position": 0, 
+   "actions_xml": "<condition field=\"${call_debug}\" expression=\"^true$\" break=\"never\">\r\n\t<action application=\"info\"/>\r\n</condition>", 
+   "is_condition": true, 
+   "is_temporary": true, 
+   "dest_num": "all", 
+   "desc": "Debug Call"
+  }
+ }, 
+ {
+  "pk": 13, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "public_extensions", 
+   "continue_on": false, 
+   "enabled": true, 
+   "priority_position": 0, 
+   "actions_xml": "<action application=\"transfer\" data=\"$1 XML default\"/>", 
+   "is_condition": false, 
+   "is_temporary": true, 
+   "dest_num": "^(10[01][0-9])$", 
+   "desc": "public extensions"
+  }
+ }, 
+ {
+  "pk": 14, 
+  "model": "dialplan.extension", 
+  "fields": {
+   "name": "global-intercept", 
+   "continue_on": false, 
+   "enabled": true, 
+   "priority_position": 0, 
+   "actions_xml": "<action application=\"answer\"/>\r\n<action application=\"intercept\" data=\"${hash(select/${domain_name}-last_dial/global)}\"/>\r\n<action application=\"sleep\" data=\"2000\"/>", 
+   "is_condition": false, 
+   "is_temporary": true, 
+   "dest_num": "^886$", 
+   "desc": "welcome message"
+  }
+ }
+]
