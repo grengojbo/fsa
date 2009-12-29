@@ -3,6 +3,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 import re, os, shutil
+from managers import DialPLanManager
 
 #from .managers import 
 
@@ -58,7 +59,20 @@ class Extension(models.Model):
     # so the "top" extension corresponds to priority position 0,
     # the one below to 1, etc.  nothing fancy here, just a simple ordering.
     priority_position = models.IntegerField(_(u'Priority position'), default=0, help_text='the "top" extension corresponds to priority position 0, the one below to 1, etc.  nothing fancy here, just a simple ordering.')
+    objects = DialPLanManager()
 
+    @property
+    def preview(self):
+        if self.continue_on:
+            vext = '<extension name="%s" continue="true">' % self.name
+        else:
+            vext = '<extension name="%s">' % self.name
+        if self.is_condition:
+            vcond = self.actions_xml
+        else:
+            vcond = '<condition field="destination_number" expression="%s">%s</condition>' % (self.dest_num, self.actions_xml)
+        return vext+vcond+'</extension>'
+        
     @property
     def dest_num_matches(self, destnum2test):
         groups = re.findall(self.dest_num, destnum2test)

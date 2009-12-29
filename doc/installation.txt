@@ -1,18 +1,8 @@
 ============
-Installation
+Установка
 ============
 
-This guide is the new (and hopefully improved) Satchmo installation process. It is meant to be a cookbook
-approach for most users. Advanced users may wish to modify this in order to integrate into their own projects.
 
-This guide assumes you are working on a unix variant and that you are installing it somewhere into a directory
-you have write access to. In the below example, we use /home/user/src. You are expected to modify the path to fit your needs.
-
-.. warning::
-   You must have Django 1.1.x (Django trunk) properly installed and all of the dependencies mentioned in the requirements_ section properly installed. 
-   
-The easiest way to install satchmo requirements, is to use the python setuptools program to download egg and tar packages. The next section describes
-one simple method to install the dependencies. You may manually install them if you wish.
 
 Installing Dependencies
 -----------------------
