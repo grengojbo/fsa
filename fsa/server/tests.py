@@ -20,7 +20,7 @@ from fsa.acl.models import FSAcl
 
 class ServerTestCase(test.TestCase):
     # TODO проблемы при загрузке таблицы alias почемуто несоздается колонка alias_type
-    fixtures = ['testsite', 'acl', 'extension', 'context', 'server', 'server_conf']
+    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf']
     #fixtures = ['testsite', 'acl', 'alias', 'context', 'server', 'server.conf', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr']
     
     def setUp(self):

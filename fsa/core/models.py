@@ -148,8 +148,8 @@ class LimitData(models.Model):
     class Meta:
         db_table = u'limit_data'
 
-class SipAlias(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=150)
-    class Meta:
-        db_table = u'sip_alias'
+# class SipAlias(models.Model):
+#     id = models.IntegerField(primary_key=True)
+#     name = models.CharField(max_length=150)
+#     class Meta:
+#         db_table = u'sip_alias'

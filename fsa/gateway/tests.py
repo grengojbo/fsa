@@ -20,7 +20,7 @@ import logging as l
 
 class DirectoryTestCase(test.TestCase):
     # TODO добавить тесты
-    fixtures = ['testsite', 'acl', 'extension', 'context', 'server', 'server_conf', 'gateway']
+    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway']
     def setUp(self):
         self.user = User.objects.create_user('test', 'test@test.com', 'test')
         # Every test needs a client.

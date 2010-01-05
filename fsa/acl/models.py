@@ -51,7 +51,7 @@ class FSAclNode(models.Model):
     acl = models.ForeignKey(FSAcl, verbose_name=u"Acl", related_name='relnode')
     enabled = models.BooleanField(_(u'Enabled'), default=True)
     node_type = models.CharField(_(u'Default Permission'), choices=ACL_CHOICES, max_length=5, default='deny')
-    node = models.CharField(_(u'Default Permission'), choices=NODE_CHOICES, max_length=5, default='domain')
+    node = models.CharField(_(u'Default Permission'), choices=NODE_CHOICES, max_length=6, default='domain')
     node_val = models.CharField(_(u'Value'), default='test.example.com', max_length=100)
 
     class Meta:

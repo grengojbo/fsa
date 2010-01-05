@@ -20,7 +20,7 @@ import logging as l
 
 
 class DialPLanTestCase(test.TestCase):
-    fixtures = ['testsite', 'acl', 'extension', 'context']
+    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context']
     def setUp(self):
         self.user = User.objects.create_user('test', 'test@test.com', 'test')
         self.client = Client()

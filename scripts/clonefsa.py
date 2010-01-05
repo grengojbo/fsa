@@ -7,7 +7,7 @@ Created by jbo on 2009-12-12.
 Copyright (c) 2009 __MyCompanyName__. All rights reserved.
 
 Then run:
-    python clonesatchmo.py
+    python clonefsa.py
 
 """
 
@@ -18,6 +18,7 @@ from random import choice
 import re
 from optparse import OptionParser
 import string
+import settings
 
 __VERSION__ = "0.1"
 
@@ -46,23 +47,30 @@ def media_copy():
      from django.contrib import admin
      src_g = join(dirname(grappelli.__path__[0]), 'grappelli/media')
      src_admin = join(dirname(admin.__file__), 'media')
-     #'cp -R /Users/jbo/.virtualenvs/fs_test/src/django-grappelli/grappelli/media/ ./media/admin'
-     #'cp -R /Users/jbo/.virtualenvs/fs_test/lib/python2.5/site-packages/django/contrib/admin/media ./media/admin'
+     dest_media = join(settings.PROJECT_ROOT, 'media')
+     #os.path.isdir()
+     #os.mkdir()
+     # /home/www/u00014/test.linktel.com.ua/www
+     #crypt.crypt('freeswitch','freeswitch') 
+     # frpOsE5ExXNZw
+     #/ cp -f -R /home/www/u00014/.virtualenvs/test.linktel.com.ua/lib/python2.5/site-packages/django/contrib/admin/media/*  /home/www/u00014/test.linktel.com.ua/www/media/admin
+     # cp -f -R /home/www/u00014/.virtualenvs/test.linktel.com.ua/src/django-grappelli/grappelli/media/* /home/www/u00014/test.linktel.com.ua/www/media/admin
      #'cp -R /Users/jbo/.virtualenvs/fs_test/src/django-grappelli/grappelli/templates ./'
      
     
 def setup_fsa(site_name, local_site_name):
     """
-    Do the final configs for satchmo
+    Do the final configs for FreeSWITCH Admin
     """
     #os.system('cd %s && python manage.py satchmo_copy_static' % site_name)
     os.system('cd %s && python manage.py syncdb' % site_name) 
-    
+    # ./manage.py migrate
+    os.system('cd %s && python manage.py loaddata testsite acl alias extension context server server_conf --settings=settings' % site_name)
     os.system('cd %s && python manage.py loaddata grappelli_navigation.json --settings=settings' % site_name)
     os.system('cd %s && python manage.py loaddata grappelli_help.json --settings=settings' % site_name)
     #os.system('cd %s && ' % site_name)
-    #os.system('cd %s && python manage.py satchmo_load_l10n' % site_name)
-    #os.system('cd %s && python manage.py satchmo_load_store' % site_name)
+    #os.system('cd %s && python manage.py  l10n_data' % site_name)
+    #os.system('cd %s && python manage.py loaddata acl ' % site_name)
     #os.system('cd %s && python manage.py satchmo_rebuild_pricing' % site_name)
     
 if __name__ == '__main__':

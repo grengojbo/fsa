@@ -1,0 +1,177 @@
+[
+ {
+  "pk": 1, 
+  "model": "acl.fsacl", 
+  "fields": {
+   "acl_type": 0, 
+   "enabled": true, 
+   "name": "lan", 
+   "acl_default": "deny"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "acl.fsacl", 
+  "fields": {
+   "acl_type": 0, 
+   "enabled": true, 
+   "name": "domains", 
+   "acl_default": "deny"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "acl.fsacl", 
+  "fields": {
+   "acl_type": 0, 
+   "enabled": true, 
+   "name": "basix", 
+   "acl_default": "deny"
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "192.168.42.0/24", 
+   "node_type": "deny", 
+   "enabled": true, 
+   "acl": 1
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "192.168.1.0/16", 
+   "node_type": "allow", 
+   "enabled": true, 
+   "acl": 1
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "192.168.42.42/32", 
+   "node_type": "allow", 
+   "enabled": false, 
+   "acl": 1
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "domain", 
+   "node_val": "test.example.com", 
+   "node_type": "allow", 
+   "enabled": true, 
+   "acl": 2
+  }
+ }, 
+ {
+  "pk": 5, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "domain", 
+   "node_val": "test.example.com", 
+   "node_type": "deny", 
+   "enabled": false, 
+   "acl": 2
+  }
+ }, 
+ {
+  "pk": 6, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "200.225.81.74/32", 
+   "node_type": "allow", 
+   "enabled": true, 
+   "acl": 3
+  }
+ }, 
+ {
+  "pk": 7, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "192.168.193.20/32", 
+   "node_type": "allow", 
+   "enabled": true, 
+   "acl": 3
+  }
+ }, 
+ {
+  "pk": 8, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "200.225.81.66/32", 
+   "node_type": "allow", 
+   "enabled": false, 
+   "acl": 3
+  }
+ }, 
+ {
+  "pk": 9, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "200.225.93.156/32", 
+   "node_type": "allow", 
+   "enabled": false, 
+   "acl": 3
+  }
+ }, 
+ {
+  "pk": 10, 
+  "model": "acl.fsaclnode", 
+  "fields": {
+   "node": "cidr", 
+   "node_val": "[EXTERNALIP]/32", 
+   "node_type": "allow", 
+   "enabled": false, 
+   "acl": 3
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "acl.aclnetworklist", 
+  "fields": {
+   "enabled": true, 
+   "name": "test2", 
+   "acl": [
+    2
+   ]
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "acl.aclnetworklist", 
+  "fields": {
+   "enabled": true, 
+   "name": "test1", 
+   "acl": [
+    1, 
+    2
+   ]
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "acl.aclnetworklist", 
+  "fields": {
+   "enabled": false, 
+   "name": "test3", 
+   "acl": [
+    1, 
+    2
+   ]
+  }
+ }
+]

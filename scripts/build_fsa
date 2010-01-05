@@ -2,12 +2,14 @@
 
 # wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/build_fsa
 #chmod 744 build_fsa
-#build_fsa dev fs_test
+# ./build_fsa dev fs_test
 # sudo apt-get install python-setuptools
 
 #virtualenv .env --no-site-packages
 #source .env/bin/activate
 #./manage.py runserver
+
+
 source ~/.bashrc
 if [ ! $PYTHONPATH ]; then
  if [ ! -d $HOME/lib/python2.5/site-packages ]; then
@@ -69,7 +71,10 @@ build_stable() {
     pip install -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements.txt
     pip install -e hg+http://bitbucket.org/jbo/fsa/#egg=fsa
 }
-
+build_project () {
+    if [ ! -d ]
+    hg clone http://bitbucket.org/jbo/fs_project/ $1
+}
 case "$1" in
     global)
         build_global
