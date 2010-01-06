@@ -5,7 +5,57 @@
   "fields": {
    "xml_conf": "<configuration name=\"local_stream.conf\" description=\"stream files from local dir\">\r\n  <!-- fallback to default if requested moh class isn't found -->\r\n  <directory name=\"default\" path=\"$${base_dir}/sounds/music/8000\">\r\n    <param name=\"rate\" value=\"8000\"/>\r\n    <param name=\"shuffle\" value=\"true\"/>\r\n    <param name=\"channels\" value=\"1\"/>\r\n    <param name=\"interval\" value=\"20\"/>\r\n    <param name=\"timer-name\" value=\"soft\"/>\r\n    <!-- list of short files to break in with every so often -->\r\n    <!--<param name=\"chime-list\" value=\"file1.wav,file2.wav\"/>-->\r\n    <!-- frequency of break-in (seconds)-->\r\n    <!--<param name=\"chime-freq\" value=\"30\"/>-->\r\n    <!-- limit to how many seconds the file will play -->\r\n    <!--<param name=\"chime-max\" value=\"500\"/>-->\r\n  </directory>\r\n\r\n  <directory name=\"moh/8000\" path=\"$${base_dir}/sounds/music/8000\">\r\n    <param name=\"rate\" value=\"8000\"/>\r\n    <param name=\"shuffle\" value=\"true\"/>\r\n    <param name=\"channels\" value=\"1\"/>\r\n    <param name=\"interval\" value=\"20\"/>\r\n    <param name=\"timer-name\" value=\"soft\"/>\r\n  </directory>\r\n\r\n  <directory name=\"moh/16000\" path=\"$${base_dir}/sounds/music/16000\">\r\n    <param name=\"rate\" value=\"16000\"/>\r\n    <param name=\"shuffle\" value=\"true\"/>\r\n    <param name=\"channels\" value=\"1\"/>\r\n    <param name=\"interval\" value=\"20\"/>\r\n    <param name=\"timer-name\" value=\"soft\"/>\r\n  </directory>\r\n\r\n  <directory name=\"moh/32000\" path=\"$${base_dir}/sounds/music/32000\">\r\n    <param name=\"rate\" value=\"32000\"/>\r\n    <param name=\"shuffle\" value=\"true\"/>\r\n    <param name=\"channels\" value=\"1\"/>\r\n    <param name=\"interval\" value=\"20\"/>\r\n    <param name=\"timer-name\" value=\"soft\"/>\r\n  </directory>\r\n  <!--\r\n  <directory name=\"moh/48000\" path=\"$${base_dir}/sounds/music/48000\">\r\n    <param name=\"rate\" value=\"48000\"/>\r\n    <param name=\"shuffle\" value=\"true\"/>\r\n    <param name=\"channels\" value=\"1\"/>\r\n    <param name=\"interval\" value=\"10\"/>\r\n    <param name=\"timer-name\" value=\"soft\"/>\r\n  </directory>\r\n  -->\r\n</configuration>", 
    "enabled": true, 
-   "name": "local_stream.conf", 
+   "name": "local_stream", 
+   "server": 2
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "server.conf", 
+  "fields": {
+   "xml_conf": "<configuration name=\"lua.conf\" description=\"LUA Configuration\">\r\n  <settings>\r\n\r\n    <!-- \r\n    Specify local directories that will be searched for LUA modules\r\n    These entries will be pre-pended to the LUA_CPATH environment variable\r\n    -->\r\n    <!-- <param name=\"module-directory\" value=\"/usr/lib/lua/5.1/?.so\"/> -->\r\n    <!-- <param name=\"module-directory\" value=\"/usr/local/lib/lua/5.1/?.so\"/> -->\r\n\r\n    <!-- \r\n    Specify local directories that will be searched for LUA scripts\r\n    These entries will be pre-pended to the LUA_PATH environment variable\r\n    -->\r\n    <!-- <param name=\"script-directory\" value=\"/usr/local/lua/?.lua\"/> -->\r\n    <!-- <param name=\"script-directory\" value=\"$${base_dir}/scripts/?.lua\"/> -->\r\n\r\n    <!--<param name=\"xml-handler-script\" value=\"/dp.lua\"/>-->\r\n    <!--<param name=\"xml-handler-bindings\" value=\"dialplan\"/>-->\r\n\r\n    <!--\r\n\tThe following options identifies a lua script that is launched\r\n\tat startup and may live forever in the background.\r\n\tYou can define multiple lines, one for each script you \r\n\tneed to run.\r\n    -->\r\n    <!--<param name=\"startup-script\" value=\"startup_script_1.lua\"/>-->\r\n    <!--<param name=\"startup-script\" value=\"startup_script_2.lua\"/>-->\r\n  </settings>\r\n</configuration>", 
+   "enabled": false, 
+   "name": "lua", 
+   "server": 2
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "server.conf", 
+  "fields": {
+   "xml_conf": "<configuration name=\"spidermonkey.conf\" description=\"Spider Monkey JavaScript Plug-Ins\">\r\n  <modules>\r\n    <load module=\"mod_spidermonkey_teletone\"/>\r\n    <load module=\"mod_spidermonkey_core_db\"/>\r\n    <load module=\"mod_spidermonkey_socket\"/>\r\n    <!--<load module=\"mod_spidermonkey_odbc\"/>-->\r\n  </modules>\r\n</configuration> ", 
+   "enabled": false, 
+   "name": "spidermonkey", 
+   "server": 2
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "server.conf", 
+  "fields": {
+   "xml_conf": "<configuration name=\"voicemail.conf\" description=\"Voicemail\">\r\n  <settings>\r\n  </settings>\r\n  <profiles>\r\n    <profile name=\"default\">\r\n      <param name=\"file-extension\" value=\"wav\"/>\r\n      <param name=\"terminator-key\" value=\"#\"/>\r\n      <param name=\"max-login-attempts\" value=\"3\"/>\r\n      <param name=\"digit-timeout\" value=\"10000\"/>\r\n      <param name=\"min-record-len\" value=\"3\"/>\r\n      <param name=\"max-record-len\" value=\"300\"/>\r\n      <param name=\"max-retries\" value=\"3\"/>\r\n      <param name=\"tone-spec\" value=\"%(1000, 0, 640)\"/>\r\n      <param name=\"callback-dialplan\" value=\"XML\"/>\r\n      <param name=\"callback-context\" value=\"default\"/>\r\n      <param name=\"play-new-messages-key\" value=\"1\"/>\r\n      <param name=\"play-saved-messages-key\" value=\"2\"/>\r\n      <param name=\"login-keys\" value=\"0\"/>\r\n      <param name=\"main-menu-key\" value=\"0\"/>\r\n      <param name=\"config-menu-key\" value=\"5\"/>\r\n      <param name=\"record-greeting-key\" value=\"1\"/>\r\n      <param name=\"choose-greeting-key\" value=\"2\"/>\r\n      <param name=\"change-pass-key\" value=\"6\"/>\r\n      <param name=\"record-name-key\" value=\"3\"/>\r\n      <param name=\"record-file-key\" value=\"3\"/>\r\n      <param name=\"listen-file-key\" value=\"1\"/>\r\n      <param name=\"save-file-key\" value=\"2\"/>\r\n      <param name=\"delete-file-key\" value=\"7\"/>\r\n      <param name=\"undelete-file-key\" value=\"8\"/>\r\n      <param name=\"email-key\" value=\"4\"/>\r\n      <param name=\"pause-key\" value=\"0\"/>\r\n      <param name=\"restart-key\" value=\"1\"/>\r\n      <param name=\"ff-key\" value=\"6\"/>\r\n      <param name=\"rew-key\" value=\"4\"/>\r\n      <param name=\"skip-greet-key\" value=\"#\"/>\r\n      <param name=\"record-silence-threshold\" value=\"200\"/>\r\n      <param name=\"record-silence-hits\" value=\"2\"/>\r\n      <param name=\"web-template-file\" value=\"web-vm.tpl\"/>\r\n      <!-- if you need to change the sample rate of the recorded files e.g. gmail voicemail player -->\r\n      <!--<param name=\"record-sample-rate\" value=\"11025\"/>-->\r\n      <!-- the next two both must be set for this to be enabled\r\n           the extension is in the format of <dest> [<dialplan>] [<context>]\r\n       -->\r\n      <param name=\"operator-extension\" value=\"operator XML default\"/>\r\n      <param name=\"operator-key\" value=\"9\"/>\r\n      <param name=\"vmain-extension\" value=\"vmain XML default\"/>\r\n      <param name=\"vmain-key\" value=\"*\"/>\r\n      <!-- playback created files as soon as they were recorded by default -->\r\n      <!--<param name=\"auto-playback-recordings\" value=\"true\"/>-->\r\n      <email>\r\n\t<param name=\"template-file\" value=\"voicemail.tpl\"/>\r\n\t<param name=\"notify-template-file\" value=\"notify-voicemail.tpl\"/>\r\n\t<!-- this is the format voicemail_time will have -->\r\n        <param name=\"date-fmt\" value=\"%A, %B %d %Y, %I %M %p\"/>\r\n        <param name=\"email-from\" value=\"${voicemail_account}@${voicemail_domain}\"/>\r\n      </email>\r\n      <!--<param name=\"storage-dir\" value=\"/tmp\"/>-->\r\n      <!--<param name=\"odbc-dsn\" value=\"dsn:user:pass\"/>-->\r\n      <!--<param name=\"record-comment\" value=\"Your Comment\"/>-->\r\n      <!--<param name=\"record-title\" value=\"Your Title\"/>-->\r\n      <!--<param name=\"record-copyright\" value=\"Your Copyright\"/>-->\r\n    </profile>\r\n  </profiles>\r\n</configuration>", 
+   "enabled": true, 
+   "name": "voicemail", 
+   "server": 2
+  }
+ }, 
+ {
+  "pk": 5, 
+  "model": "server.conf", 
+  "fields": {
+   "xml_conf": "<configuration name=\"fifo.conf\" description=\"FIFO Configuration\">\r\n  <fifos>\r\n    <fifo name=\"cool_fifo@$${domain}\" importance=\"0\">\r\n      <!--<member timeout=\"60\" simo=\"1\" lag=\"20\">{member_wait=nowait}user/1005@$${domain}</member>-->\r\n    </fifo>\r\n  </fifos>\r\n</configuration> ", 
+   "enabled": false, 
+   "name": "fifo", 
+   "server": 2
+  }
+ }, 
+ {
+  "pk": 6, 
+  "model": "server.conf", 
+  "fields": {
+   "xml_conf": "<configuration name=\"cdr_csv.conf\" description=\"CDR CSV Format\">\r\n  <settings>\r\n    <!-- 'cdr-csv' will always be appended to log-base -->\r\n    <!--<param name=\"log-base\" value=\"/var/log\"/>-->\r\n    <param name=\"default-template\" value=\"example\"/>\r\n    <!-- This is like the info app but after the call is hung up -->\r\n    <!--<param name=\"debug\" value=\"true\"/>-->\r\n    <param name=\"rotate-on-hup\" value=\"true\"/>\r\n    <!-- may be a b or ab -->\r\n    <param name=\"legs\" value=\"a\"/>\r\n  </settings>\r\n  <templates>\r\n    <template name=\"sql\">INSERT INTO cdr VALUES (\"${caller_id_name}\",\"${caller_id_number}\",\"${destination_number}\",\"${context}\",\"${start_stamp}\",\"${answer_stamp}\",\"${end_stamp}\",\"${duration}\",\"${billsec}\",\"${hangup_cause}\",\"${uuid}\",\"${bleg_uuid}\", \"${accountcode}\");</template>\r\n    <template name=\"example\">\"${caller_id_name}\",\"${caller_id_number}\",\"${destination_number}\",\"${context}\",\"${start_stamp}\",\"${answer_stamp}\",\"${end_stamp}\",\"${duration}\",\"${billsec}\",\"${hangup_cause}\",\"${uuid}\",\"${bleg_uuid}\",\"${accountcode}\",\"${read_codec}\",\"${write_codec}\"</template>\r\n    <template name=\"snom\">\"${caller_id_name}\",\"${caller_id_number}\",\"${destination_number}\",\"${context}\",\"${start_stamp}\",\"${answer_stamp}\",\"${end_stamp}\",\"${duration}\",\"${billsec}\",\"${hangup_cause}\",\"${uuid}\",\"${bleg_uuid}\", \"${accountcode}\",\"${read_codec}\",\"${write_codec}\",\"${sip_user_agent}\",\"${call_clientcode}\",\"${sip_rtp_rxstat}\",\"${sip_rtp_txstat}\",\"${sofia_record_file}\"</template>\r\n    <template name=\"linksys\">\"${caller_id_name}\",\"${caller_id_number}\",\"${destination_number}\",\"${context}\",\"${start_stamp}\",\"${answer_stamp}\",\"${end_stamp}\",\"${duration}\",\"${billsec}\",\"${hangup_cause}\",\"${uuid}\",\"${bleg_uuid}\",\"${accountcode}\",\"${read_codec}\",\"${write_codec}\",\"${sip_user_agent}\",\"${sip_p_rtp_stat}\"</template>\r\n    <template name=\"asterisk\">\"${accountcode}\",\"${caller_id_number}\",\"${destination_number}\",\"${context}\",\"${caller_id}\",\"${channel_name}\",\"${bridge_channel}\",\"${last_app}\",\"${last_arg}\",\"${start_stamp}\",\"${answer_stamp}\",\"${end_stamp}\",\"${duration}\",\"${billsec}\",\"${hangup_cause}\",\"${amaflags}\",\"${uuid}\",\"${userfield}\"</template>\r\n  </templates>\r\n</configuration>  ", 
+   "enabled": false, 
+   "name": "cdr_csv", 
    "server": 2
   }
  }

@@ -6,7 +6,7 @@ from fsa.dialplan.models import Context, Extension
 from fsa.gateway.models import SofiaGateway
 from fsa.server.managers import ServerManager
 from fsa.acl.models import FSAcl
-
+import config
 
 # Create your models here.
 VERSION_CHOICES = ( (0, '1.0.5'),)

@@ -4,8 +4,8 @@
   <network-lists>{% for nl in nls %}
 	{{ nl.vacl }}
 	{% for n in nl.nodes %}
-		{{ n }}{% endfor%}  
-    </list>{% endfor%}
+		{{ n }}{% endfor %}  
+    </list>{% endfor %}
   </network-lists>
   </section>
 </document>{% endcache %}

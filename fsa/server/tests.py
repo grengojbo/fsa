@@ -14,6 +14,7 @@ from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
 from fsa.server.models import Server, SipProfile, Conf
+from fsa.server.config import active_modules
 from fsa.dialplan.models import Context
 from fsa.server import views as sv
 from fsa.acl.models import FSAcl
@@ -45,8 +46,9 @@ class ServerTestCase(test.TestCase):
                 
     def testConf(self):
         key_value = 'local_stream.conf'
-        ls = Conf.objects.get(server__name__exact=self.serv_name, enabled=True, name__exact=key_value)
-        self.assertEquals(ls.name, 'local_stream.conf')
+        conf_name = key_value.split('.')[0]
+        ls = Conf.objects.get(server__name__exact=self.serv_name, name__exact=conf_name, enabled=True)
+        self.assertEquals(ls.name, 'local_stream')
         try:
             ls = Conf.objects.get(server__name__exact=self.serv_name, enabled=True, name__exact='no_key_value')
             xml_context = None
@@ -56,7 +58,13 @@ class ServerTestCase(test.TestCase):
         self.assertEquals(xml_context, '<result status="not found" />')
         self.assertEquals(ls, None)    
         
-        
+    def testPostLoadModules(self):
+            key_value = 'post_load_modules.conf'
+            #ls = Conf.objects.get(server__name__exact=self.serv_name, enabled=True)
+            #ls = Conf.objects.select_related('name').values_list('name').filter(server__name__exact=self.serv_name, enabled=True)
+            ls = Conf.objects.select_related('name').filter(server__name__exact=self.serv_name, enabled=True)
+            self.assertEquals(ls.count(), 2)
+                
     def testGetServer(self):
         """
         Tests 

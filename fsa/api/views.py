@@ -35,6 +35,9 @@ def get(request):
                 elif (request.POST['key_value'] == "limit.conf"):
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return sv.get_limit(request)
+                elif (request.POST['key_value'] == "post_load_modules.conf"):
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
+                    return sv.post_modules(request)
                 else:
                     return sv.get(request)
             except Exception, e:

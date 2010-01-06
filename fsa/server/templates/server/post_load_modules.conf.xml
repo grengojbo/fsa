@@ -1,4 +1,11 @@
+{% cache ("fs", key_value), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+<section name="{{ name }}">
 <configuration name="post_load_modules.conf" description="Modules">
-  <modules>
-  </modules>
+  <modules>{% for s in sml %}
+	<load module="mod_{{ s }}"/>{% endfor %}
+	{% for m in ml %}<load module="mod_{{ m }}"/>
+  {% endfor %}</modules>
 </configuration>
+</section>
+</document>{% endcache %}
