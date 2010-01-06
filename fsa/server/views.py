@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 #from lib.helpers import reverse
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.server.config import active_modules
+
 import logging as l
 
 #render_to('server/event_socket.conf.xml')
@@ -62,7 +63,8 @@ def get(request):
 
 def post_switch(request):
     """переменные софт свича"""
-    return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
+    es = get_object_or_404(Server, name=request.POST.get('hostname'), enabled=True)
+    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER']}).render_response('server/switch.conf.xml')
     
 def post_modules(request):
     """

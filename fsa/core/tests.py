@@ -57,8 +57,9 @@ class CoreTestCase(test.TestCase):
         self.failUnlessEqual(response.status_code, 200)
         #l.debug(response)
          
-        #{'key_value': 'post_load_switch.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': 'icall.com.ua', 'tag_name': 'configuration'}
-        
+        response = self.client.post('/api/get/', {'key_value': 'post_load_switch.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        self.failUnlessEqual(response.status_code, 200)
+        #l.debug(response)
         
         #self.assertEquals(response.context['xml_context'], self.xml_context)
     

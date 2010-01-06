@@ -7,7 +7,7 @@ from fsa.gateway.models import SofiaGateway
 from fsa.server.managers import ServerManager
 from fsa.acl.models import FSAcl
 import config
-
+from livesettings import ConfigurationSettings, config_value, config_choice_values
 # Create your models here.
 VERSION_CHOICES = ( (0, '1.0.5'),)
 TYPE_CHOICES = ( (0, _(u'SyStem')), (1, _(u'User')),)
@@ -53,7 +53,12 @@ class Server(models.Model):
 
     def __unicode__(self):
         return self.name
-        
+    
+    @property
+    def options(self):
+        """Options from confi"""
+        return ConfigurationSettings()
+            
     @property
     def odbc_dsn(self):
         """string connect ODBC"""

@@ -1,14 +1,21 @@
-<configuration name="switch.conf" description="Core Configuration">
+{% cache ("post_load_switch", name), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+  <section name="configuration">
+<configuration name="post_load_switch.conf" description="Core Configuration">
   <settings>
-    <!-- Default Global Log Level - value is one of debug,info,notice,warning,err,crit,alert -->
-    <param name="loglevel" value="debug"/>
+    <param name="max-sessions" value="{{ s.max_sessions }}"/>
+    <param name="sessions-per-second" value="{{ s.sessions_per_second }}"/>
+    <param name="loglevel" value="{{ s.loglevel }}"/>
     <!--Try to catch any crashes that can be recoverable (in the context of a call)-->
-    <param name="crash-protection" value="false"/>
-    <!--<param name="max_dtmf_duration" value="192000"/>-->
-    <!--<param name="default_dtmf_duration" value="8000"/>-->
-    <!--RTP port range -->
-    <!--<param name="rtp-start-port" value="16384"/>-->
-    <!--<param name="rtp-end-port" value="32768"/>-->
+    <!--<param name="crash-protection" value="false"/>-->
+	<param name="min-dtmf-duration" value="{{ s.min_dtmf_duration }}"/>
+    <param name="max_dtmf_duration" value="{{ s.max_dtmf_duration }}"/>
+    <param name="default_dtmf_duration" value="{{ s.default_dtmf_duration }}"/>
+    <param name="rtp-start-port" value="{{ s.rtp_start_port }}"/>
+    <param name="rtp-end-port" value="{{ s.rtp_end_port }}"/>
+	<param name="rtp-enable-zrtp" value="{{ s.rtp_enable_zrtp }}"/>
+    <param name="core-db-dsn" value="{{ odbc_dsn }}" />
   </settings>
 </configuration>
-
+</section>
+</document>{% endcache %}
