@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.conf.urls.defaults import *
 from django.conf import settings
 #from django.utils.translation import ugettext_lazy as _
-from fsadmin.cdr import views
+from fsa.cdr import views
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.http import HttpResponseNotFound
 from sugar.views.decorators import render_to
@@ -33,11 +33,11 @@ def get(request):
                     l.debug("hostname: %s" % request.POST.get('hostname'))
                     return sv.get_sofia(request)
                 elif (request.POST['key_value'] == "cdr_csv.conf"):
-                    from fsadmin.cdr import views as cv
+                    from fsa.cdr import views as cv
                     l.debug("key_ value cdr_csv.conf hostname: %s" % request.POST.get('hostname'))
                     return cv.get_csv_conf(request)
                 elif (request.POST['key_value'] == "xml_cdr.conf"):
-                    from fsadmin.cdr import views as cv
+                    from fsa.cdr import views as cv
                     l.debug("key_ value xml_cdr.conf hostname: %s" % request.POST.get('hostname'))
                     return cv.get_xml_conf(request)
                 elif (request.POST['key_value'] == "acl.conf"):

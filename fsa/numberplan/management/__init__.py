@@ -1,2 +1,2 @@
-# -*- coding: UTF-8 -*- 
+# -*- mode: python; coding: utf-8; -*- 
 

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.db import models
 from django.db.models import signals
 from lib.composition import CompositionField, AttributesAggregation, ChildsAggregation, ForeignAttribute

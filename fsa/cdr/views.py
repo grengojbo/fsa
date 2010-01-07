@@ -1,7 +1,7 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.cdr.models import Cdr, Conf
+from fsa.cdr.models import Cdr, Conf
 #from fsa.server.models import Server
 from django.views.generic.list_detail import object_list
 from sugar.views.decorators import render_to
@@ -12,7 +12,7 @@ import time, datetime
 import urllib
 import logging
 
-l = logging.getLogger('fsadmin.cdr.views')
+l = logging.getLogger('fsa.cdr.views')
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'

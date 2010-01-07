@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-  
+# -*- mode: python; coding: utf-8; -*-  
 #from django.core.management.base import NoArgsCommand
 from django.core.management.color import no_style 
 from django.core.exceptions import ImproperlyConfigured

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-  
+# -*- mode: python; coding: utf-8; -*-  
 from django.core.management.base import NoArgsCommand
 from django.core.management import call_command
 from django.core.management.color import no_style
@@ -9,7 +9,7 @@ import zipfile
 from optparse import make_option
 from BeautifulSoup import BeautifulStoneSoup as Soup
 import time, datetime
-from fsadmin.cdr.models import Cdr, Conf
+from fsa.cdr.models import Cdr, Conf
 import urllib
 
 from django.core.management.base import BaseCommand
@@ -30,7 +30,7 @@ class Command(BaseCommand):
         from django.core import serializers
         from django.db import connection, transaction
         from django.conf import settings
-        import fsadmin.cdr
+        import fsa.cdr
 
         self.style = no_style()
 
@@ -78,7 +78,7 @@ class Command(BaseCommand):
         if has_bz2:
             compression_types['bz2'] = bz2.BZ2File
 
-        #app_fixtures = os.path.join(os.path.dirname(fsadmin.cdr.__file__), 'fixtures')
+        #app_fixtures = os.path.join(os.path.dirname(fsa.cdr.__file__), 'fixtures')
         #print app_fixtures
         time_format = "%Y-%m-%d %H:%M:%S"
         objects_in_fixture = 0

@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 
 from django.contrib import admin
 #from batchadmin.admin import BatchModelAdmin

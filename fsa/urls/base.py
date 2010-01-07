@@ -18,7 +18,7 @@ fsa_urlpatterns = patterns('',
     #url(r'^server/', include('fsa.server.urls')),
     #url(r'^dialplan/', include('fsa.dialplan.urls')),
     #url(r'^directory/', include('fsadmin.directory.urls')),
-    #url(r'^cdr/', include('fsadmin.cdr.urls')),
+    #url(r'^cdr/', include('fsa.cdr.urls')),
     #url(r'^acl/', include('fsa.acl.urls')),
     url(r'^gw/', include('fsa.gateway.urls')),
 ) 

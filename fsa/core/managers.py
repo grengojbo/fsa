@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 """
 http://webnewage.org/2009/1/23/kak-pravilno-otdavat-komandyi/
 """

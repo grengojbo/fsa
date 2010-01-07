@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- mode: python; coding: utf-8; -*-
 from fsa.acl.models import FSAcl
 from fsa.server.models import Server
 import logging
