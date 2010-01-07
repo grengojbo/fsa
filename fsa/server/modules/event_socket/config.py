@@ -17,7 +17,7 @@ SERVER_MODULES.add_choice(('event_socket', _('event socket')))
 SERVER_GROUP = ConfigurationGroup('event_socket', 
     _('Is a TCP based interface to control FreeSWITCH'), 
     requires=SERVER_MODULES,
-    ordering = 102)
+    ordering = 103)
 
 config_register_list(
    ModuleValue(SERVER_GROUP,

@@ -10,9 +10,9 @@ from fsa.core import is_app
 import logging as l
 
 class CoreTestCase(test.TestCase):
-    #fixtures = ['context', 'extension', 'alias', 'server', 'acl', 'gateway', 'fsgroup', 'sipprofile', 'testnp', 'testenpoint']
+    #fixtures = ['context', 'extension', 'alias', 'server', 'acl', 'fsgroup', 'sipprofile', 'testnp', 'testenpoint']
     #fixtures = ['testsite', 'alias', 'context', 'extension', 'server', 'acl', 'gateway', 'fsgroup', 'sipprofile', 'testnp', 'testendpoint', 'testcdr']
-    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf']
+    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         # Every test needs a client.
         self.user = User.objects.create_user('test', 'test@test.com', 'test')
@@ -60,6 +60,10 @@ class CoreTestCase(test.TestCase):
         response = self.client.post('/api/get/', {'key_value': 'post_load_switch.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.failUnlessEqual(response.status_code, 200)
         #l.debug(response)
+        
+        response = self.client.post('/api/get/', {'key_value': 'sofia.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        self.failUnlessEqual(response.status_code, 200)
+        l.debug(response)
         
         #self.assertEquals(response.context['xml_context'], self.xml_context)
     

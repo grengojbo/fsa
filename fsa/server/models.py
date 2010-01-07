@@ -121,9 +121,9 @@ class SipProfile(models.Model):
     # Имя sofia профиля
     name = models.CharField(_(u'Name'), max_length=50, default='internal')
     
-    server = models.ForeignKey(u'Server')
-    alias = models.ManyToManyField('Alias', blank=True, db_table='alias_many')
-    gateway = models.ManyToManyField(SofiaGateway, blank=True, db_table='server_gateway')
+    server = models.ForeignKey(Server, verbose_name=_('FreeSWITCH Server'), default=2, related_name='sfs')
+    alias = models.ManyToManyField('Alias', blank=True, db_table='alias_many', verbose_name=_(u"Alias"), related_name='relalias')
+    gateway = models.ManyToManyField(SofiaGateway, blank=True, db_table='server_gateway', verbose_name=_(u"Gateways"), related_name='relgw')
     #admins = models.ManyToManyField('UserProfile',related_name="admins")
     enabled = models.BooleanField(_(u'Enable'), default=True)
     proxy_media  = models.BooleanField(_(u'Proxy Media'), default=False)
@@ -148,9 +148,11 @@ class SipProfile(models.Model):
     #context = 
     #dialplan =
     #gateways = 
-    codec_prefs = models.CharField(_(u'Codec'), max_length=100, default="G729,PCMU,GSM")
+    codec_prefs = models.CharField(_(u'Inbound Codec'), max_length=100, default="G729,PCMU,GSM")
+    outbound_codec_prefs = models.CharField(_(u'Outbound Codec'), max_length=100, default="G729,PCMU,GSM")
     context = models.ForeignKey(Context, blank=True)
     other_param = models.XMLField(_(u'Other Param'), blank=True)
+    no_view_param = models.XMLField(_(u'No View Param'), default='<!-- no view -->')
     comments = models.CharField(_(u'Comments'), max_length=254, blank=True)
 
     class Meta:
@@ -161,7 +163,10 @@ class SipProfile(models.Model):
 
     def __unicode__(self):
         return self.name
-
+    @property
+    def nodes(self):
+        return self.alias.select_related('name')
+        
     def get_domain(self):
         # return domain, or ext_sip_ip if no domain set
         if self.domain:

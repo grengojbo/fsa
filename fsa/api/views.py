@@ -28,9 +28,6 @@ def get(request):
                 if (request.POST.get('key_value') == "event_socket.conf"):
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return sv.get_event_socket(request)
-                elif (request.POST['key_value'] == "sofia.conf"):
-                    l.debug("hostname: %s" % request.POST.get('hostname'))
-                    return sv.get_sofia(request)
                 elif (request.POST['key_value'] == "acl.conf"):
                     from fsa.acl import views as av
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
@@ -43,7 +40,10 @@ def get(request):
                     return sv.post_modules(request)
                 elif (request.POST['key_value'] == "post_load_switch.conf"):
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
-                    return sv.post_switch(request)
+                    return sv.post_switch(request) 
+                elif (request.POST['key_value'] == "sofia.conf"):
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
+                    return sv.get_sofia(request)
                 else:
                     return sv.get(request)
             except Exception, e:

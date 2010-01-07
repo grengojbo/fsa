@@ -12,17 +12,18 @@ from django.utils.translation import ugettext_lazy as _
 gettext = lambda s: s
 
 SERVER_MODULES = config_get('SERVER', 'MODULES')
-SERVER_MODULES.add_choice(('limit', _('limit')))
+SERVER_MODULES.add_choice(('sofia', _('SIP Profiles')))
 
-SERVER_GROUP = ConfigurationGroup('limit', 
-    _('Resource limitation'), 
+SERVER_GROUP = ConfigurationGroup('sofia', 
+    _('SIP Profiles allow you to define paths to devices or carriers that may live inside or outside your network.'), 
     requires=SERVER_MODULES,
-    ordering = 102)
+    ordering = 101)
 
 config_register_list(
    ModuleValue(SERVER_GROUP,
        'MODULE',
        description=_('Implementation module'),
        hidden=True,
-       default = 'fsa.server.modules.limit') 
+       default = 'fsa.server.modules.sofia')
 )
+# <!-- <param name="auto-restart" value="false"/> -->

@@ -47,8 +47,6 @@ class XmlCurlTestCase(test.TestCase):
         #response1a = self.client.post('/xmlcurl/get/', {'key_value': 'xml_cdr.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': 'error.example.com', 'tag_name': 'configuration'})
         #self.assertEquals(response1a.status_code, 200)
 
-        response2 = self.client.post('/xmlcurl/get/', {'key_value': 'sofia.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
-        self.assertEquals(response2.status_code, 200)
         #l.debug("sofia.conf >>> %s " % response2.context['ss'])
         #self.assertEquals(response2.context['sofia.server.sql_name'], 'fsmysql') 
         

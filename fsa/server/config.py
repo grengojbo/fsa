@@ -35,11 +35,18 @@ config_register_list(
             ('crit', _('Crit')),
             ('alert', _('Alert'))
         )),
+    PositiveIntegerValue(SERVER_GROUP, 'log_level', default = 0,
+        description = _('Log level')
+    ),
+    PositiveIntegerValue(SERVER_GROUP, 'debug_presence', default = 0,
+       description = _('Debug presence'),
+               
+    ),
     MultipleStringValue(SERVER_GROUP,
         'MODULES',
         description=_("Enable FreeSWITH modules"),
         help_text=_("""Select the FreeSWITH modules you want to use with your server."""),
-        default=["acl", "event_socket", "limit"]),
+        default=["acl", "sofia", "event_socket", "limit"]),
     PositiveIntegerValue(
         SERVER_GROUP,
             'max_sessions',
@@ -103,7 +110,7 @@ for module in _default_modules:
         log.debug('Could not load default module configuration: %s', module)
 
 # --- Load any extra payment modules. ---
-extra_modules = ('event_socket','limit')
+extra_modules = ('event_socket','limit', 'sofia')
 
 for extra in extra_modules:
     try:

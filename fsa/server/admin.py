@@ -32,6 +32,18 @@ class ConfAdmin(admin.ModelAdmin):
 class SipProfileAdmin(admin.ModelAdmin):
     list_display = ('name', 'server', 'domain', 'sip_ip', 'sip_port', 'enabled',)
     order = 1
+    fieldsets = (
+        (None, {'fields': ('name', 'domain', ('server', 'enabled', 'proxy_media'), 'accept_blind_reg', 'comments')}),
+        (_(u'IP address'), {
+            'classes': ('collapse-open',),
+            'fields': (('sip_ip', 'rtp_ip', 'sip_port'), 'ext_sip_ip', 'ext_rtp_ip')}),
+        (_(u'Other'), {
+            'classes':['collapse-closed'],
+            'fields': ('context', 'codec_prefs', 'outbound_codec_prefs', ('alias', 'gateway'))}),
+        (_(u'XML params'), {
+            'classes': ['collapse-closed'],
+            'fields': ('other_param', 'no_view_param')}),
+        )
 
 class AliasAdmin(admin.ModelAdmin):
     list_display = ('name', 'alias_type',)

@@ -1,17 +1,46 @@
+{% cache ("sofia", hostname), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
   <section name="configuration">
 <configuration name="sofia.conf" description="sofia Endpoint">
-
-  <global_settings>
-    <param name="log-level" value="0"/>
+<global_settings>
+    <param name="log-level" value="{{ s.log_level }}"/>
     <!-- <param name="auto-restart" value="false"/> -->
-    <param name="debug-presence" value="0"/>
+    <param name="debug-presence" value="{{ s.debug_presence }}"/>
   </global_settings>
-  <profiles>
-{% for sofia in ss %}
-{% include "server/sip_profile.xml" %}
-{% endfor %}
-  </profiles>
+<profiles>{% for sofia in ss %}
+<profile name="{{ sofia.name }}">
+<aliases>{% for alias in sofia.nodes %}
+	<alias name="{{ alias }}"/>{% endfor %}
+</aliases>
+<gateways>{% for gw in sofia.gateway.lactive() %}
+	{% include "gateway/gateways.xml" %}
+{% endfor %}</gateways>
+<domains>
+	<domain name="all" alias="true" parse="false"/> 
+</domains>
+<settings>
+    <param name="debug" value="{{ s.log_level }}"/>
+    <param name="sip-trace" value="no"/>
+	<param name="context" value="{{ sofia.context.name }}"/>
+    <param name="sip-port" value="{{ sofia.sip_port }}"/>
+    <param name="inbound-codec-prefs" value="{{ sofia.codec_prefs }}"/>
+    <param name="outbound-codec-prefs" value="{{ sofia.codec_prefs }}"/>
+    <!-- ip address to use for rtp, DO NOT USE HOSTNAMES ONLY IP ADDRESSES -->
+    <param name="rtp-ip" value="{{ sofia.rtp_ip }}"/>
+    <!-- ip address to bind to, DO NOT USE HOSTNAMES ONLY IP ADDRESSES -->
+    <param name="sip-ip" value="{{ sofia.sip_ip }}"/>
+    <param name="odbc-dsn" value="{{ odbc_dsn }}"/>
+    <!--Uncomment to set all inbound calls to proxy media mode-->
+    {% if sofia.proxy_media %}<param name="inbound-proxy-media" value="true"/>{% endif %}
+   <!-- this lets anything register -->
+    <!--  comment the next line and uncomment one or both of the other 2 lines for call authentication -->
+    <!-- TODO: Verify !!! -->
+    <param name="accept-blind-reg" value="{{ sofia.accept_blind_reg }}"/>
+    {% if sofia.ext_rtp_ip %}<param name="ext-rtp-ip" value="auto-nat"/>{% endif %}
+    {% if sofia.ext_sip_ip %}<param name="ext-sip-ip" value="auto-nat"/>{% endif %}
+	{{ sofia.other_param|safe }}
+</settings>
+</profile>	
+{% endfor %}</profiles>
 </configuration>
-
-</section></document>
+</section></document>{% endcache %}

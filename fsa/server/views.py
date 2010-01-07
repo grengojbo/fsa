@@ -27,9 +27,9 @@ def get_sofia(request):
     reguest -- сами знаете что
     возвращает конфиг для SIP
     """
-    ss = SipProfile.objects.filter(enabled=True)
-    #return {'ss':ss}
-    return request.Context({'ss':ss}).render_response('server/sofia.conf.xml')
+    es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
+    ss = SipProfile.objects.filter(server=es, enabled=True)
+    return request.Context({'hostname':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 'ss':ss, 's': es.options['SERVER']}).render_response('server/sofia.conf.xml')
     
 def get_limit(request):
     """

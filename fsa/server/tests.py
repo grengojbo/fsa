@@ -18,10 +18,11 @@ from fsa.server.config import active_modules
 from fsa.dialplan.models import Context
 from fsa.server import views as sv
 from fsa.acl.models import FSAcl
+from django.shortcuts import get_object_or_404
 
 class ServerTestCase(test.TestCase):
     # TODO проблемы при загрузке таблицы alias почемуто несоздается колонка alias_type
-    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf']
+    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     #fixtures = ['testsite', 'acl', 'alias', 'context', 'server', 'server.conf', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr']
     
     def setUp(self):
@@ -43,7 +44,14 @@ class ServerTestCase(test.TestCase):
     def testAcl(self):
         nls = FSAcl.objects.filter(server_acl__name__exact=self.serv_name,enabled=True)
         self.assertEquals(nls.count(), 2)
-                
+    
+    def testSipProfile(self):
+        es = Server.objects.get(name=self.serv_name, enabled=True) 
+        self.assertEquals(es.name, self.serv_name)
+        ss = SipProfile.objects.filter(server=es, enabled=True)
+        self.assertEquals(ss.count(), 1)
+        self.assertEquals(ss[0].name, 'internal')
+        
     def testConf(self):
         key_value = 'local_stream.conf'
         conf_name = key_value.split('.')[0]
