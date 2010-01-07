@@ -46,7 +46,7 @@ config_register_list(
         'MODULES',
         description=_("Enable FreeSWITH modules"),
         help_text=_("""Select the FreeSWITH modules you want to use with your server."""),
-        default=["acl", "sofia", "event_socket", "limit"]),
+        default=["acl", "sofia", "event_socket", "limit", "xml_cdr"]),
     PositiveIntegerValue(
         SERVER_GROUP,
             'max_sessions',
@@ -101,7 +101,7 @@ config_register_list(
         default = True)
 )
 #_default_modules = ('acl','event_socket')
-_default_modules = ('acl','event_socket', 'xml_cdr')
+_default_modules = ('acl','cdr')
 for module in _default_modules:
     try:
         load_module("fsa.%s.config" % module)

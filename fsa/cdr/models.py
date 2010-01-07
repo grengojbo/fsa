@@ -1,8 +1,8 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.db import models
-from django.conf import settings
+#from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsa.server.models import Server
+#from fsa.server.models import Server
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
@@ -32,25 +32,25 @@ class Cdr(models.Model):
         verbose_name = _(u'CDR')
         verbose_name_plural = _(u'CDRs')
 
-class Conf(models.Model):
-    name = models.CharField(_(u'Name'), max_length=25)
-    server = models.ForeignKey(Server)
-    url = models.CharField(_(u'URL'), max_length=50, default="http://localhost/cdr/set/", help_text=_(u"the url to post to if blank web posting is disabled"))
-    user =  models.CharField(_(u'User'), max_length=25, blank=True, help_text=_(u'optional: credentials to send to web server'))
-    passwd =  models.CharField(_(u'Password'), max_length=25, blank=True, help_text=_(u'optional: credentials to send to web server'))
-    retries =  models.PositiveIntegerField(_(u'Retries'), default=2, help_text=_(u'the total number of retries (not counting the first try) to post to webserver incase of failure'))
-    delay =  models.PositiveIntegerField(_(u'Delay'), blank=True, default=1, help_text=_(u'delay between retries in seconds, default is 5 seconds'))
-    log_dir =  models.CharField(_(u'Log DIR'), max_length=240, blank=True, help_text=_(u'optional: if not present we do not log every record to disk either an absolute path, a relative path assuming ${prefix}/logs or a blank value will default to ${prefix}/logs/xml_cdr '))
-    log_b_leg =  models.BooleanField(_(u'Log b leg'), default=False, help_text=_(u'optional: if not present we do log the b leg true or false if we should create a cdr for the b leg of a call'))
-    prefix_a_leg =  models.BooleanField(_(u'Prefix a leg'), default=True, help_text=_(u'optional: if not present, all filenames are the uuid of the call true or false if a leg files are prefixed "a_"'))
-    #encode = models.BooleanField(_(u'Encode'), default=True, help_text=_(u'encode the post data may be true for url encoding, false for no encoding or base64 for base64 encoding'))
-    lighttpd =  models.BooleanField(_(u'Lighttpd'),default=True, help_text=_(u'optional: set to true to disable Expect: 100-continue lighttpd requires this setting'))
-    err_log =  models.CharField(_(u'Error Log DIR'), max_length=240, blank=True, default="log/xml_cdr", help_text=_(u'optional: full path to the error log dir for failed web posts if not specified its the same as log-dir, either an absolute path, a relative path assuming ${prefix}/logs or a blank or omitted value will default to ${prefix}/logs/xml_cdr'))
-    cdr_ca =  models.BooleanField(_(u'Disable CA'), default=True, help_text=_(u'optional: if enabled this will disable CA root certificate checks by libcurl note: default value is disabled. only enable if you want this!'))
-    enabled = models.BooleanField(_(u'Enable'), default=False)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        db_table = u'cdr_conf'
+# class Conf(models.Model):
+#     name = models.CharField(_(u'Name'), max_length=25)
+#     server = models.ForeignKey(Server)
+#     url = models.CharField(_(u'URL'), max_length=50, default="http://localhost/cdr/set/", help_text=_(u"the url to post to if blank web posting is disabled"))
+#     user =  models.CharField(_(u'User'), max_length=25, blank=True, help_text=_(u'optional: credentials to send to web server'))
+#     passwd =  models.CharField(_(u'Password'), max_length=25, blank=True, help_text=_(u'optional: credentials to send to web server'))
+#     retries =  models.PositiveIntegerField(_(u'Retries'), default=2, help_text=_(u'the total number of retries (not counting the first try) to post to webserver incase of failure'))
+#     delay =  models.PositiveIntegerField(_(u'Delay'), blank=True, default=1, help_text=_(u'delay between retries in seconds, default is 5 seconds'))
+#     log_dir =  models.CharField(_(u'Log DIR'), max_length=240, blank=True, help_text=_(u'optional: if not present we do not log every record to disk either an absolute path, a relative path assuming ${prefix}/logs or a blank value will default to ${prefix}/logs/xml_cdr '))
+#     log_b_leg =  models.BooleanField(_(u'Log b leg'), default=False, help_text=_(u'optional: if not present we do log the b leg true or false if we should create a cdr for the b leg of a call'))
+#     prefix_a_leg =  models.BooleanField(_(u'Prefix a leg'), default=True, help_text=_(u'optional: if not present, all filenames are the uuid of the call true or false if a leg files are prefixed "a_"'))
+#     #encode = models.BooleanField(_(u'Encode'), default=True, help_text=_(u'encode the post data may be true for url encoding, false for no encoding or base64 for base64 encoding'))
+#     lighttpd =  models.BooleanField(_(u'Lighttpd'),default=True, help_text=_(u'optional: set to true to disable Expect: 100-continue lighttpd requires this setting'))
+#     err_log =  models.CharField(_(u'Error Log DIR'), max_length=240, blank=True, default="log/xml_cdr", help_text=_(u'optional: full path to the error log dir for failed web posts if not specified its the same as log-dir, either an absolute path, a relative path assuming ${prefix}/logs or a blank or omitted value will default to ${prefix}/logs/xml_cdr'))
+#     cdr_ca =  models.BooleanField(_(u'Disable CA'), default=True, help_text=_(u'optional: if enabled this will disable CA root certificate checks by libcurl note: default value is disabled. only enable if you want this!'))
+#     enabled = models.BooleanField(_(u'Enable'), default=False)
+# 
+#     def __unicode__(self):
+#         return self.name
+# 
+#     class Meta:
+#         db_table = u'cdr_conf'

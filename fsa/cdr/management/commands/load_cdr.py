@@ -9,7 +9,7 @@ import zipfile
 from optparse import make_option
 from BeautifulSoup import BeautifulStoneSoup as Soup
 import time, datetime
-from fsa.cdr.models import Cdr, Conf
+from fsa.cdr.models import Cdr
 import urllib
 
 from django.core.management.base import BaseCommand
