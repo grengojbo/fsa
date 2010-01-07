@@ -101,7 +101,7 @@ config_register_list(
         default = True)
 )
 #_default_modules = ('acl','event_socket')
-_default_modules = ('acl','event_socket')
+_default_modules = ('acl','event_socket', 'xml_cdr')
 for module in _default_modules:
     try:
         load_module("fsa.%s.config" % module)

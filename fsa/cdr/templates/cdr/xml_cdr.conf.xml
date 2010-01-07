@@ -1,4 +1,4 @@
-<document type="freeswitch/xml">{% load tf %}
+<document type="freeswitch/xml">
   <section name="configuration">
 <configuration name="xml_cdr.conf" description="XML CDR CURL logger">
   <settings>
