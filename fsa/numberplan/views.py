@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from fsa.core import is_app 
 import logging
 
-l = logging.getLogger('fsadmin.numberplan.views')
+l = logging.getLogger('fsa.numberplan.views')
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'

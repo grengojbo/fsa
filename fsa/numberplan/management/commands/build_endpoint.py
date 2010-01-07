@@ -32,7 +32,7 @@ class Command(BaseCommand):
         from django.core import serializers
         from django.db import connection, transaction
         from django.conf import settings
-        from fsadmin.numberplan.models import NumberPlan
+        from fsa.numberplan.models import NumberPlan
         
         ns = options.get('ns','')
         ne = options.get('ne','')

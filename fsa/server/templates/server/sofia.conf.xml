@@ -9,7 +9,7 @@
   </global_settings>
 <profiles>{% for sofia in ss %}
 <profile name="{{ sofia.name }}">
-<aliases>{% for alias in sofia.nodes %}
+<aliases>{% for alias in sofia.alias.all() %}
 	<alias name="{{ alias }}"/>{% endfor %}
 </aliases>
 <gateways>{% for gw in sofia.gateway.lactive() %}

@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
-#from fsadmin.numberplan.models import NumberPlan
+#from fsa.numberplan.models import NumberPlan
 #from fsadmin.directory.models import Endpoint as e
 from django.conf import settings
 from django.db.models import Avg, Max, Min, Count
@@ -36,7 +36,7 @@ class EndpointManager(models.Manager):
         """
         Добавляем новый номер
         """
-        from fsadmin.numberplan.models import NumberPlan
+        from fsa.numberplan.models import NumberPlan
         
         n = self.model()
         n.uid = NumberPlan.objects.set_number()

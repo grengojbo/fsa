@@ -7,16 +7,21 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
-from fsadmin.numberplan.managers import NumberPlanManager
+from fsa.numberplan.managers import NumberPlanManager
 
 #from .managers import 
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'
-
-N_TYPES = ((0, _(u'Action')),
+N_STATUS = ((0, _(u'Free')),
+           (1,_(u'Work')),
+           (2,_(u'Park')),
+           (3,_(u'Action')),
+        )
+N_TYPES = ((0, _(u'Partner')),
            (1,_(u'Default')),
-           (2,_(u'Gold')),
+           (2,_(u'Silver')),
+           (3,_(u'Gold')),
         )
 
 class NumberPlan(models.Model):
@@ -25,6 +30,8 @@ class NumberPlan(models.Model):
     phone_number = models.PositiveIntegerField(_(u'Phone Number'), unique=True)
     nt = models.PositiveSmallIntegerField(_(u'Type'), max_length=1, choices=N_TYPES, default=1, blank=False)
     enables = models.BooleanField(_(u'Enables'), default=False)
+    status = models.PositiveSmallIntegerField(_(u'Status'), max_length=1, choices=N_STATUS, default=0, blank=False)
+    date_active = models.DateField(_(u'Activation Date'), blank=True, null=True)
     objects = NumberPlanManager()
 
     class Meta:
