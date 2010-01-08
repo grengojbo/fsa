@@ -147,7 +147,7 @@ Arguments sent with this signal:
     ``initial_data``
         A dicionary of initial data to populate the form with on rendering
 
-fsadmin.directory.signals
+fsa.directory.signals
 ++++++++++++++++++++++++++++++
 
 endpoint_signal

@@ -1,6 +1,6 @@
 # -*- mode: python; coding: utf-8; -*-
 import django_tables as tables
-from fsadmin.directory.models import Endpoint
+from fsa.directory.models import Endpoint
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 

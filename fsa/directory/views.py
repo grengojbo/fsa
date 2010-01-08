@@ -1,8 +1,8 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.directory.models import Endpoint, FSGroup, SipRegistration
-from fsadmin.directory.forms import EndpointForm
+from fsa.directory.models import Endpoint, FSGroup, SipRegistration
+from fsa.directory.forms import EndpointForm
 from django.views.generic.list_detail import object_list
 from sugar.views.decorators import render_to, ajax_request
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 from fsa.core import is_app 
 import logging
 
-l = logging.getLogger('fsadmin.directory.views')
+l = logging.getLogger('fsa.directory.views')
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
@@ -18,7 +18,7 @@ __revision__ = '$Revision:$'
 # Create your views here.
 xml_context = '<result status="not found" />'
 
-@render_to('directory/sip.xml')
+#@render_to('directory/sip.xml')
 def profile(request):
     """ 
     reguest -- 
@@ -28,7 +28,7 @@ def profile(request):
     gr = FSGroup.objects.all()
     return {'sd':endpoint,'groups':gr, 'domain':request.POST.get('domain')}
 
-@render_to('server/fs.xml')
+#@render_to('server/fs.xml')
 def get(request):
     """
     xml по умолчанию 
@@ -37,7 +37,7 @@ def get(request):
     name = 'result'
     return {'name':name, 'xml_context':xml_context}
 
-@render_to('directory/sip_reg.xml')
+#@render_to('directory/sip_reg.xml')
 def set(request):
     """
     return
@@ -82,9 +82,9 @@ def new_endpoint(request):
         return {'success': True, 'uid': new_endpoint.uid}
     else:
         return {'error': {'type': 400, 'message': 'Bad request'}}
-        
+
+#render_to('directory/edit.html')        
 @login_required
-@render_to('directory/edit.html')
 def directory_edit(request, object_id):
     """docstring for directory_edit"""
     endpoint = Endpoint.objects.get(pk = object_id, enable=True, accountcode = request.user)

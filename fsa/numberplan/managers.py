@@ -4,9 +4,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
-#from fsadmin.directory.models import Endpoint as e
+#from fsa.directory.models import Endpoint as e
 from django.conf import settings
-#from fsadmin.directory.models import Endpoint, NumberPlan
+#from fsa.directory.models import Endpoint, NumberPlan
 from django.db.models import Avg, Max, Min, Count
 import logging
 import datetime

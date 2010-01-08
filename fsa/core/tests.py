@@ -20,6 +20,7 @@ class CoreTestCase(test.TestCase):
         self.hostip = '192.168.51.100'
         self.domainname = '192.168.51.100'
         self.xml_context = '<result status="not found" />'
+        self.profile = 'internal'
         self.client = Client()
 
     def testAppcheck(self):
@@ -70,6 +71,18 @@ class CoreTestCase(test.TestCase):
         #l.debug(response)
         
         #self.assertEquals(response.context['xml_context'], self.xml_context)
-    
+        
+    def testDirectory(self):
+        """
+        Test Directory section
+        """
+        # response = self.client.post('/api/directory/', {'profile': self.profile, 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        # l.debug(response)
+        # self.assertEquals(response.status_code, 200)
+        
+        # response = self.client.post('/api/directory/', {'key_value': self.hostip, 'key_name': 'name', 'section': 'directory', 'hostname': self.hostname, 'domain': self.domainname, 'tag_name': 'domain', 'purpose': 'network-list'})
+        # self.assertEquals(response.status_code, 200)
+        # l.debug(response)
+        pass
 
 

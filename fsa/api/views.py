@@ -18,9 +18,37 @@ l = logging.getLogger('fsa.api.views')
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
 
-def get(request):
+def directory(request):
+    """directory"""
     try:
         l.debug("post: %s" % request.POST)
+        if request.POST['section'] == "directory":
+            from fsa.directory import views as d
+            from fsa.gateway import views as gw
+            from fsa.server import views as sv
+            if request.POST.get('profile') and request.POST['purpose'] == 'gateways':
+                # TODO сейчас выдает пустушку но если раскоментировать то будет выдавать список шлюзов
+                # но тогда наверное нужно убрать из server/sip_profile.xml секцию gateways  
+                # но зачем это надо непойму и так они подгружаются через server/sip_profile
+                #return gw.profile(request)
+                return sv.get(request)
+            elif request.POST.get('purpose') == 'network-list':
+                # TODO так и непонял нах оно надо в доке пишут
+                # This last post is regarding mod_sofia asking for users with cidr = attributes for adding them to the acls.
+                return sv.get(request)
+            elif request.POST.get('sip_auth_nc'):
+                return d.set(request)
+            else:
+                return d.get(request)
+        else:
+            l.debug("IS NOT section %s " % request.POST.get('section'))
+            return HttpResponseNotFound('<h1>section %s</h1>' % request.POST.get('section'))
+    except Exception, e:
+        l.error("Error generating confg %s" % e)
+        return HttpResponseNotFound('<h1>Error generating config</h1>')
+    
+def get(request):
+    
         if request.POST['section'] == "configuration":
             try:
                 # TODO добавить загрузку конфигурации lcr.conf

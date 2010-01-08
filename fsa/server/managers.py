@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 #from fsa.dialplan.models import Context
 #from django.conf import settings
-#from fsadmin.directory import Endpoint
+#from fsa.directory import Endpoint
 from django.db.models import Avg, Max, Min, Count
 #import logging as l
 

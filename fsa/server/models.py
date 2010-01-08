@@ -154,7 +154,8 @@ class SipProfile(models.Model):
     other_param = models.XMLField(_(u'Other Param'), blank=True)
     no_view_param = models.XMLField(_(u'No View Param'), default='<!-- no view -->')
     comments = models.CharField(_(u'Comments'), max_length=254, blank=True)
-
+    default_profile = models.BooleanField(_(u'Default'),default=False)
+    
     class Meta:
         db_table = 'sip_profile'
         unique_together = ('name', 'server')

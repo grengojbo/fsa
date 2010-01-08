@@ -13,7 +13,7 @@ import unittest
 from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
-#from fsadmin.directory.models import Endpoint, SipRegistration
+#from fsa.directory.models import Endpoint, SipRegistration
 from fsa.acl.models import FSAcl, AclNetworkList
 #from django.test import TestCase
 

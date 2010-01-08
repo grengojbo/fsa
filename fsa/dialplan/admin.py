@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from fsa.dialplan.models import Context, Extension
 
 class ContextAdmin(admin.ModelAdmin):
-    #list_display = ()
+    list_display = ('name', 'default_context',)
     #list_filter = ()
     #search_fields = []
     actions = ['delete_selected']

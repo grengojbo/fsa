@@ -1,9 +1,9 @@
 # -*- mode: python; coding: utf-8; -*-
 
-from django.contrib import databrowse, admin
+from django.contrib import admin
 #from batchadmin.admin import BatchModelAdmin
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.directory.models import Endpoint, FSGroup
+from fsa.directory.models import Endpoint, FSGroup
 
 def make_enable(modeladmin, request, queryset):
     rows_updated = queryset.update(enable=True)

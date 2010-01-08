@@ -7,10 +7,10 @@ Copyright (c) 2009 __MyCompanyName__. All rights reserved.
 """
 
 from django import template
-from fsadmin.directory.models import Endpoint, FSGroup, SipRegistration
+from fsa.directory.models import Endpoint, FSGroup, SipRegistration
 import logging
 
-l = logging.getLogger('fsadmin.directory.views')
+l = logging.getLogger('fsa.directory.views')
 
 register = template.Library()
 

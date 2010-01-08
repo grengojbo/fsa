@@ -30,10 +30,10 @@ class ConfAdmin(admin.ModelAdmin):
     order = 4
 
 class SipProfileAdmin(admin.ModelAdmin):
-    list_display = ('name', 'server', 'domain', 'sip_ip', 'sip_port', 'enabled',)
+    list_display = ('name', 'server', 'domain', 'sip_ip', 'sip_port', 'enabled', 'default_profile',)
     order = 1
     fieldsets = (
-        (None, {'fields': ('name', 'domain', ('server', 'enabled', 'proxy_media'), 'accept_blind_reg', 'comments')}),
+        (None, {'fields': ('name', 'domain', ('server', 'enabled', 'proxy_media'), ('default_profile', 'accept_blind_reg'), 'comments')}),
         (_(u'IP address'), {
             'classes': ('collapse-open',),
             'fields': (('sip_ip', 'rtp_ip', 'sip_port'), 'ext_sip_ip', 'ext_rtp_ip')}),

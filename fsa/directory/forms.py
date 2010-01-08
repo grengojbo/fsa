@@ -1,7 +1,7 @@
 # -*- mode: python; coding: utf-8; -*-
 from django import forms
 from django.conf import settings
-from fsadmin.directory.models import Endpoint
+from fsa.directory.models import Endpoint
 from django.utils.translation import ugettext_lazy as _
 
 __author__ = '$Author: $'

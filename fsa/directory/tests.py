@@ -13,12 +13,12 @@ import unittest
 from django import test
 from django.test.client import Client
 from django.contrib.auth.models import User
-from fsadmin.directory.models import Endpoint, SipRegistration
+from fsa.directory.models import Endpoint, SipRegistration
 from fsa.dialplan.models import Context
-#from django.test import TestCase
 
 class DirectoryTestCase(test.TestCase):
-    fixtures = ['context', 'extension', 'alias', 'server', 'acl', 'gateway', 'fsgroup', 'sipprofile', 'testnp', 'testenpoint']
+    #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()
@@ -43,7 +43,7 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(self.user.username, 'test')
         self.assertEquals(self.user.is_active, True)
         self.assertEquals(new_endpoint.is_registered, False)
-        self.assertEquals(new_endpoint.uid, 2001)
+        self.assertEquals(new_endpoint.uid, 1003)
         
     def testNewEndpoint(self):
         """docstring for testNewEndpoint"""

@@ -5,13 +5,13 @@ from django.contrib.auth.models import User
 from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
 #from fsa.numberplan.models import NumberPlan
-#from fsadmin.directory.models import Endpoint as e
+#from fsa.directory.models import Endpoint as e
 from django.conf import settings
 from django.db.models import Avg, Max, Min, Count
 import logging
 import datetime
 
-l = logging.getLogger('fsadmin.directory.managers')
+l = logging.getLogger('fsa.directory.managers')
 
 class EndpointManager(models.Manager):
     """
@@ -39,17 +39,17 @@ class EndpointManager(models.Manager):
         from fsa.numberplan.models import NumberPlan
         
         n = self.model()
-        n.uid = NumberPlan.objects.set_number()
+        n.uid = NumberPlan.objects.lphonenumber()
         n.password = User.objects.make_random_password(6, "0123456789")
         n.accountcode = user
         # TODO: добавить значение по умолчанию
-        n.user_context = Context.objects.all()[0]
-        n.sip_profile =  SipProfile.objects.all()[0]
-        #Context.objects.filter(default_context=True).values()[0]
+        n.user_context = Context.objects.get(default_context=True)
+        n.sip_profile =  SipProfile.objects.get(default_profile=True)
         n.effective_caller_id_name = user.username
         n.enable = True
         n.phone_type = 'S'
         n.save()
+        NumberPlan.objects.lactivate(n.uid)
         l.debug(n.uid)
         return n
 

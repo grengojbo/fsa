@@ -9,7 +9,7 @@ from fsa.core.utils import CsvData
 from django.contrib.auth.models import User
 #from fsa.dialplan.models import Context
 #from django.conf import settings
-#from fsadmin.directory import Endpoint
+#from fsa.directory import Endpoint
 from django.utils.encoding import force_unicode
 from django.db.models import F, Q
 from django.db.models import Max, Min, Avg, Sum, Count, StdDev, Variance

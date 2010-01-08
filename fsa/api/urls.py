@@ -12,6 +12,7 @@ fsa_api = Resource(handler=FreeSwitchAdminHandler, authentication=auth)
 
 urlpatterns = patterns('',
     url(r'^get/$', views.get),
+    url(r'^directory/$', views.directory),
     url(r'^cdr/$', set_cdr),
     #url(r'^posts/(?P<emitter_format>.+)/$', blogposts),
     #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),

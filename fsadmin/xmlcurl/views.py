@@ -64,7 +64,7 @@ def get(request):
             # TODO Add module dialplan
             l.debug("got post: key_value %s section: directory" % request.POST['key_value'])
             try:
-                from fsadmin.directory import views as d
+                from fsa.directory import views as d
                 from fsa.gateway import views as gw
                 from fsa.server import views as sv
                 if request.POST.get('profile') and request.POST['purpose'] == 'gateways':

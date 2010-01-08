@@ -31,7 +31,7 @@ admin.site.groups = {
     0: {
         'title': 'User Management Administration', # optional
         'name': 'User Management',
-        'apps': ['auth', 'cdr', 'numberplan', 'l10n'],
+        'apps': ['directory', 'cdr', 'auth', 'numberplan', 'l10n'],
         #'template': 'custom/index_group_usermanagement.html', # optional
         'classes': ['collapse-open'], # optional
         'show_apps': False, # optional

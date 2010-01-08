@@ -1,14 +1,14 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.db import models
-#from django.db.models import signals
-from lib.composition import CompositionField, AttributesAggregation, ChildsAggregation, ForeignAttribute
+#from lib.composition import CompositionField, AttributesAggregation, ChildsAggregation, ForeignAttribute
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
-from fsadmin.directory.managers import EndpointManager, SipRegistrationManager
-
+from fsa.directory.managers import EndpointManager, SipRegistrationManager
+import config
+from livesettings import ConfigurationSettings, config_value, config_choice_values
 #from .managers import 
 
 __author__ = '$Author: $'
