@@ -37,7 +37,6 @@ def get(request):
     name = 'result'
     return {'name':name, 'xml_context':xml_context}
 
-#@render_to('directory/sip_reg.xml')
 def set(request):
     """
     return
@@ -46,7 +45,9 @@ def set(request):
         domain - Domain Name 
         xml_context - Not Found
     """
-    p = request.POST  
+    p = request.POST
+    key_value = name = 'result'
+    xml_context = '<result status="not found" />'  
     if is_app('fsbilling.core'):
         fsb = True
     else:
@@ -57,10 +58,12 @@ def set(request):
         l.debug("uid: %s register: %d" % (p.get('user'), r))
         if r == 1:
             return {'sip':e, 'domain':p.get('domain'), 'fsb':fsb}
+            key_value = p.get('user')
+            return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain'), 'fsb':fsb }).render_response('directory/sip_reg.xml')
         else:
-            return {'name': 'result', 'xml_context':xml_context}, 'server/fs.xml'
+            return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
     except Endpoint.DoesNotExist:
-        return {'name': 'result', 'xml_context':xml_context}, 'server/fs.xml'
+        return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
 
 @login_required
 def directory_view(request):

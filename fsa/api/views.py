@@ -39,7 +39,7 @@ def directory(request):
             elif request.POST.get('sip_auth_nc'):
                 return d.set(request)
             else:
-                return d.get(request)
+                return sv.get(request)
         else:
             l.debug("IS NOT section %s " % request.POST.get('section'))
             return HttpResponseNotFound('<h1>section %s</h1>' % request.POST.get('section'))

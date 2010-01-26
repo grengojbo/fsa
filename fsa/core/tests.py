@@ -79,10 +79,9 @@ class CoreTestCase(test.TestCase):
         # response = self.client.post('/api/directory/', {'profile': self.profile, 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
         # l.debug(response)
         # self.assertEquals(response.status_code, 200)
-        
+        # 
         # response = self.client.post('/api/directory/', {'key_value': self.hostip, 'key_name': 'name', 'section': 'directory', 'hostname': self.hostname, 'domain': self.domainname, 'tag_name': 'domain', 'purpose': 'network-list'})
         # self.assertEquals(response.status_code, 200)
         # l.debug(response)
-        pass
 
 
