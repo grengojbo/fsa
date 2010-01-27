@@ -44,9 +44,9 @@ def get(request):
                     from fsa.acl import views as av
                     l.debug("key_ value acl.conf hostname: %s" % request.POST.get('hostname'))
                     return av.get(request)
-                elif is_app('fsadmin.lcr') and request.POST.get('key_value') == "lcr.conf":
+                elif is_app('fsa.lcr') and request.POST.get('key_value') == "lcr.conf":
                     l.debug("hostname: %s (lcr.conf)" % request.POST.get('hostname'))
-                    from fsadmin.lcr import views as lv
+                    from fsa.lcr import views as lv
                     return lv.get_conf(request)
                 elif is_app('fsbilling.core') and request.POST.get('key_value') == "nibblebill.conf":
                     l.debug("hostname: %s (nibblebill.conf)" % request.POST.get('hostname'))

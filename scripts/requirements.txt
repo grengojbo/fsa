@@ -1,5 +1,6 @@
-django>=1.1.1
+django=1.1.1
 BeautifulSoup
+pytils
 -e hg+http://dev.pocoo.org/hg/jinja2-main#egg=jinja2
 -e hg+http://bitbucket.org/andrewgodwin/south/#egg=south
 -e hg+http://bitbucket.org/jbo/django-keyedcache/#egg=django-keyedcache

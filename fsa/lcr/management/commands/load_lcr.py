@@ -30,7 +30,7 @@ class Command(BaseCommand):
         from django.core import serializers
         from django.db import connection, transaction
         from django.conf import settings
-        from fsadmin.lcr.models import Lcr
+        from fsa.lcr.models import Lcr
         from fsa.gateway.models import SofiaGateway
         
         gw = options.get('gw','')

@@ -4,10 +4,10 @@ from django import forms
 from django.contrib import databrowse, admin
 #from batchadmin.admin import BatchModelAdmin
 from django.utils.translation import ugettext_lazy as _
-from fsadmin.lcr.models import Lcr
+from fsa.lcr.models import Lcr
 import logging
 
-l = logging.getLogger('fsadmin.lcr.admin')
+l = logging.getLogger('fsa.lcr.admin')
 
 class LcrLoadForm(forms.ModelForm):
     class Meta:

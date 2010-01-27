@@ -13,8 +13,8 @@ from django.contrib.auth.models import User
 from django.utils.encoding import force_unicode
 from django.db.models import F, Q
 from django.db.models import Max, Min, Avg, Sum, Count, StdDev, Variance
-import logging
-l = logging.getLogger('fsadmin.lcr.managers')
+
+l = logging.getLogger('fsa.lcr.managers')
 
 class LcrManager(models.Manager):
     """

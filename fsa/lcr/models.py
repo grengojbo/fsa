@@ -14,7 +14,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 #from django.contrib.auth.models import User
 #from fsa.dialplan.models import Context
-from fsadmin.lcr.managers import LcrManager
+from fsa.lcr.managers import LcrManager
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
 
