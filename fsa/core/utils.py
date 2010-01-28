@@ -43,13 +43,13 @@ class CsvData(object):
             d = re.compile(r"(?P<pref_country>.*)\((?P<pref_arr>.*)\)$|(?P<country>.*)$")
             r = d.match(pref_digits).groupdict()
             if r.get('country'):
-                l.debug("country=%s (%s)" % (r.get('country'), pref_digits)) 
+                #l.debug("country=%s (%s)" % (r.get('country'), pref_digits)) 
                 country_list.extend(delim_re.split(r.get('country')))
                 country = r.get('country')
             elif r.get('pref_arr') and r.get('pref_country'):
                 #country_list.extend(delim_re.split(r.get('pref_country')))
                 country = r.get('pref_country')
-                l.debug("country=%s pref_arr=%s  (%s)" % (r.get('pref_country'), r.get('pref_arr'), pref_digits))
+                #l.debug("country=%s pref_arr=%s  (%s)" % (r.get('pref_country'), r.get('pref_arr'), pref_digits))
                 for pref in delim_re.split(r.get('pref_arr')):
                     country_list.append("%s%s" % (r.get('pref_country'), pref))
                     

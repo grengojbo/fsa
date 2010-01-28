@@ -17,6 +17,7 @@ from fsa.lcr.models import Lcr
 from fsa.gateway.models import SofiaGateway
 import csv, sys, os
 import time, datetime
+from decimal import *
 from fsa.core.utils import CsvData
 import logging
 l = logging.getLogger('fsa.lcr.tests')
@@ -26,7 +27,9 @@ class LcrTestCase(test.TestCase):
     def setUp(self):
         # Every test needs a client.
         self.client = Client()
+    
         
+    
     def testLoadCSV(self):
         """docstring for testLoadCSV"""
         f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'lcr.csv'), "rt")
@@ -36,6 +39,12 @@ class LcrTestCase(test.TestCase):
             # delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate
             reader = csv.reader(f, delimiter=';', dialect='excel')
             #l.debug
+            brand = 'GOLDENTELECOM'
+            curency_grn = '2.5'
+            fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'tarif_all.csv'), "wt")
+            writer = csv.writer(fw, delimiter=';', dialect='excel')
+            writer.writerow(('countrycode', 'pattern', 'name',	'weight', 'connectcharge', 'includedseconds', 'minimumprice', 'price', 'brand'))
+            
             no_base = []
             for row in reader:
                 save_flag = False
@@ -78,7 +87,8 @@ class LcrTestCase(test.TestCase):
                     if n['pref_digits']:
                         country_list, country_code = cd.par_pref(n['pref_digits'].replace(" ", ''), n['name'])
                         for country in country_list:
-                            l.debug(country)
+                            price = Decimal(n['rate']) * Decimal(curency_grn)
+                            writer.writerow((country_code, country, n["name"],	0, Decimal('0.0000'), Decimal('0.0000'), Decimal('0.0000'), price, brand))
                     elif n["digits"] != '':
                         d = '%s%s' % (n['country_code'], n["digits"])
                         #save_cnt += self.add_lcr(gw, n, d)
@@ -86,6 +96,31 @@ class LcrTestCase(test.TestCase):
                 n.clear()
         except csv.Error, e:
             raise            
+        finally:
+            fw.close()
+            f.close()
+    # def testSaveCSV(self):
+    #     """docstring for testSaveCSV"""
+    #     f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'prepaid.csv'), "rt")
+    #     fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'prepaids.csv'), "wt")
+    #     try:
+    #         reader = csv.reader(f, delimiter=';', dialect='excel')
+    #         writer = csv.writer(fw, delimiter=';', dialect='excel')
+    #         writer.writerow( ('Number', 'Code', 'Money') )
+    #         m = 0
+    #         for row in reader:
+    #             if m < 4000:
+    #                 mon = 30
+    #             elif m < 7000:
+    #                 mon = 50
+    #             else:
+    #                 mon = 80
+    #             m += 1 
+    #             writer.writerow( (row[0], '%s%s' % (row[1], row[2]), mon) )
+    #     finally:
+    #         fw.close()
+    #         f.close()
+            
     # def testLcrLoad(self):
     #     """docstring for testLcrLoad"""
     #     f = open(os.path.join(os.path.dirname(__file__), 'fixtures', '15.csv'), "rt")
