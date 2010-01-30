@@ -21,12 +21,12 @@ setup(name='fsa',
     #packages = packages,
     #data_files = data_files,
     zip_safe = False,
-    install_requires=[
-        'Django>=1.1',
-        'django-extensions',
-        'BeautifulSoup',
-        #'userprofile',
-    ],
+    # install_requires=[
+    #     'Django>=1.1',
+    #     'django-extensions',
+    #     'BeautifulSoup',
+    #     #'userprofile',
+    # ],
     classifiers = [
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: BSD License',

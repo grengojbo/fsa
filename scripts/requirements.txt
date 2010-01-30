@@ -1,4 +1,4 @@
-django=1.1.1
+django==1.1.1
 BeautifulSoup
 pytils
 -e hg+http://dev.pocoo.org/hg/jinja2-main#egg=jinja2
