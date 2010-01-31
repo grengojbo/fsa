@@ -9,7 +9,7 @@ Copyright (c) 2009 __MyCompanyName__. All rights reserved.
 import time, datetime, re, csv  
 import logging
 from pytils.translit import translify
-
+from decimal import *
 l = logging.getLogger('fsa.core.utils')
 
 __author__ = '$Author$'
@@ -25,59 +25,146 @@ class CsvData(object):
         rp = re.compile(r"delimiter='([,.;_\t|]{1,2})'time_format='(.*)'(.*)", re.IGNORECASE | re.DOTALL)
         (self.delimiter, self.time_format, dc ) = rp.findall(cf)[0]
         self.data_col = dc.split('|')
+        self.line_num = 0
+        self.line_error_list = list()
+        self.line_ok = 0
+        self.row = None 
         
     def set_num(self, n):
         """docstring for set_num"""
-        return n.replace(',','.')
-                
+        return Decimal(n.strip().replace(',','.').replace(" ", ''))
+    def set_int(self, n):
+        """docstring for set_int"""
+        return int(n.strip().replace(" ", ''))
     def set_time(self, t):
         """docstring for set_time"""
         return datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(t + " 00:00", self.time_format)))    
     
-    def par_pref(self, pref_digits, name):
+    def reader(self, f, delimiter=';', dialect='excel'):
+        try:
+            return csv.reader(f, delimiter=';', dialect='excel')
+        finally:
+            f.close()
+    
+    def parse(self, row):
+        """docstring for parse"""
+        save_flag = False
+        self.row = row
+        self.line_num += 1
+        n = {}
+        n['country_code'] = 0
+        n['special_digits'] = False
+        n['pref_digits'] = False
+        n['date_start'] = datetime.datetime.now()
+        n['date_end'] = datetime.datetime.max
+        for index, c in enumerate(self.data_col):
+            try:
+                #l.debug("%s=%s" % (c,row[index].strip()))
+                if c != 'zeros' and len(row[index].strip()) > 0:
+                    if c == 'name':
+                        n["name"] = row[index].strip()
+                    elif c == 'rate':
+                        n['rate'] = self.set_num(row[index])
+                    elif c == 'country_code':
+                        n['country_code'] = self.set_int(row[index])
+                    elif c == 'special_digits':
+                        save_flag = True
+                        n["special_digits"] = row[index].strip().replace(" ", '')
+                    elif c == 'pref_digits':
+                        save_flag = True
+                        n["pref_digits"] = row[index].strip().replace(" ", '')
+                    elif c == 'date_start' and len(row[index].strip()) > 1:
+                        n['date_start'] = cd.set_time(row[index].strip())
+                    elif c == 'date_end' and len(row[index].strip()) > 1:
+                        n['date_end'] = cd.set_time(row[index].strip())
+                    elif c == 'digits':
+                        save_flag = True
+                        n["digits"] = self.set_int(row[index])
+                    elif row[index].strip() != '':
+                        n[c]=row[index].strip()
+            except:
+                l.error(self.row)
+                self.line_error_list.append(self.row)
+        if save_flag:
+            if n['pref_digits']:
+                country_list, country_code = self.par_pref(n['pref_digits'], n['country_code'])
+                return (country_list, country_code, n)
+            elif n["digits"] != '':
+                country_list = list()
+                #country_list.append('%s%s' % (n['country_code'], n["digits"]))
+                country_list.append(int('%s' % n["digits"]))
+                return (country_list, n['country_code'], n) 
+                 
+    def par_pref(self, special_digits, name):
         """docstring for par_spec"""
         country_list = list()
         country = None
         try:
+            dig_re=re.compile(r"(\d+)-(\d+)")
             delim_re = re.compile(r"[:,;]")
             d = re.compile(r"(?P<pref_country>.*)\((?P<pref_arr>.*)\)$|(?P<country>.*)$")
-            r = d.match(pref_digits).groupdict()
-            if r.get('country'):
-                #l.debug("country=%s (%s)" % (r.get('country'), pref_digits)) 
-                country_list.extend(delim_re.split(r.get('country')))
-                country = r.get('country')
-            elif r.get('pref_arr') and r.get('pref_country'):
-                #country_list.extend(delim_re.split(r.get('pref_country')))
-                country = r.get('pref_country')
-                #l.debug("country=%s pref_arr=%s  (%s)" % (r.get('pref_country'), r.get('pref_arr'), pref_digits))
-                for pref in delim_re.split(r.get('pref_arr')):
-                    country_list.append("%s%s" % (r.get('pref_country'), pref))
-                    
-            else:
-                l.debug("no add: %s" % pref_digits)
-                
-        except:
-            l.debug("except: (%s)" % pref_digits)
-            #continue
-        l.debug(country_list)
-        try:
-            if re.compile(r"\d+").match(country):
+            #l.debug(special_digits)
+            for dig in special_digits.split(';'):
+                pref_digits = dig_re.match(dig)
+                if pref_digits:
+                    for digit in range(int(pref_digits.groups()[0]), int(pref_digits.groups()[1])+1):
+                        if name != 0:
+                            country = name
+                            country_list.append(int('%i%i' % (name, digit)))
+                        else:
+                            country = digit
+                            country_list.append(digit)
+                else:
+                    r = d.match(dig).groupdict()
+                    if r.get('country'): 
+                        for prefs in delim_re.split(r.get('country')):
+                            pref = dig_re.match(prefs)
+                            if pref:
+                                for digit in range(int(pref.groups()[0]), int(pref.groups()[1])+1):
+                                    #l.debug("digit: %i countrys=%s <= %s" % (digit, prefs, r.get('country')))
+                                    country_list.append(digit)
+                                    country = digit
+                            else:
+                                #l.debug("country=%s <= %s" % (prefs, r.get('country')))
+                                country_list.append(int(prefs))
+                                country = prefs
+                    elif r.get('pref_arr') and r.get('pref_country'):
+                        country = r.get('pref_country')
+                        for prefs in delim_re.split(r.get('pref_arr')):
+                            pref = dig_re.match(prefs)
+                            if pref:
+                                for digit in range(int(pref.groups()[0]), int(pref.groups()[1])+1):
+                                    #l.debug("digit: %i countrys=%s <= %s" % (digit, prefs, r.get('pref_country')))
+                                    country_list.append(int("%s%i" % (r.get('pref_country'), digit)))
+                                    country = digit
+                            else:
+                                #l.debug("country=%s pref_arr=%s  (%s)" % (r.get('pref_country'), r.get('pref_arr'), prefs))
+                                country_list.append(int("%s%s" % (r.get('pref_country'), prefs)))
+                                country = prefs
+                    else:
+                        l.debug("no add: %s" % pref_digits)
+            #l.debug(country_list)
+            #l.debug("-------------------")
+            if name != 0:
+                return (country_list, name)
+            elif re.compile(r"\d+").match(country):
                 return (country_list, int(country))
             else:
                 return (country_list, 0)
         except Exception, e:
-            return (country_list, 0)
+            self.line_error_list.append(self.row)
+            l.error("line:%i except: %s => %s" % (self.line_num, pref_digits, e))
         
-    def par_spec(self, special_digits, country_code, name):
-        """docstring for par_spec"""
-        l.debug(special_digits)
-        for dig in special_digits.split(';'):
-            digit = dig.split('-')
-            if len(digit) == 2:
-                for digits in range(int(digit[0]), int(digit[1])+1):
-                    d = '%s%s' % (country_code.strip(), digits)
-                    l.debug('digits: %s/%s/' % (d,name))
-                    #save_cnt += self.add_lcr(gw, n, d)
-            elif len(dig) > 0 and dig != '':
-                d = '%s%s' % (country_code, dig.strip())
-                l.debug('digits: %s/%s/%s/' % (d,name,dig))
+    # def par_spec(self, special_digits, country_code, name):
+    #     """docstring for par_spec"""
+    #     l.debug(special_digits)
+    #     for dig in special_digits.split(';'):
+    #         digit = dig.split('-')
+    #         if len(digit) == 2:
+    #             for digits in range(int(digit[0]), int(digit[1])+1):
+    #                 d = '%s%s' % (country_code.strip(), digits)
+    #                 l.debug('digits: %s/%s/' % (d,name))
+    #                 #save_cnt += self.add_lcr(gw, n, d)
+    #         elif len(dig) > 0 and dig != '':
+    #             d = '%s%s' % (country_code, dig.strip())
+    #             l.debug('digits: %s/%s/%s/' % (d,name,dig))

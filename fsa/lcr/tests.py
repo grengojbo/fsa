@@ -32,73 +32,50 @@ class LcrTestCase(test.TestCase):
     
     def testLoadCSV(self):
         """docstring for testLoadCSV"""
-        f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'lcr.csv'), "rt")
-        save_cnt = 0
         try:
-            cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'name|other|pref_digits|rate")
+            #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_all.csv'), "rt")
+            f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'tarif_rus.csv'), "rt")
+            save_cnt = 0
+            default_currency = 'GRN'
+            curency_grn = '8.11'
+            #All
+            #cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|other|pref_digits|rate|currency|brand")
+            # Ukraina
+            #cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|rate|brand|currency")
+            # Russian
+            cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|pref_digits|rate|currency|brand")
             # delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate
-            reader = csv.reader(f, delimiter=';', dialect='excel')
-            #l.debug
-            brand = 'GOLDENTELECOM'
-            curency_grn = '2.5'
-            fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'tarif_all.csv'), "wt")
-            writer = csv.writer(fw, delimiter=';', dialect='excel')
+            fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_result.csv'), "wt")
+            writer = csv.writer(fw, delimiter=',', dialect='excel')
+            # Abill price
             writer.writerow(('countrycode', 'pattern', 'name',	'weight', 'connectcharge', 'includedseconds', 'minimumprice', 'price', 'brand'))
-            
-            no_base = []
+            #Abill route
+            #writer.writerow(('countrycode', 'routename', 'pattern', 'costplan', 'connectcharge', 'includedseconds', 'billincrement', 'minimumcost', 'cost', 'trunk'))
+            reader = csv.reader(f, delimiter=';', dialect='excel')
             for row in reader:
-                save_flag = False
-                n = {}
-                row_save = []
-                n['country_code'] = ''
-                n['special_digits'] = False
-                n['date_start'] = datetime.datetime.now()
-                n['date_end'] = datetime.datetime.max
-                for index, c in enumerate(cd.data_col):
-                    try:
-                        #l.debug("%s=%s" % (c,row[index].strip()))
-                        if c != 'zeros' and len(row[index].strip()) > 0:
-                            if c == 'name':
-                                n["name"] = row[index].strip()
-                            elif c == 'rate':
-                                n['rate'] = cd.set_num(row[index].strip())
-                            elif c == 'country_code':
-                                n['country_code'] = row[index].strip()
-                            elif c == 'special_digits':
-                                save_flag = True
-                                n["special_digits"] = row[index].strip()
-                            elif c == 'pref_digits':
-                                save_flag = True
-                                n["pref_digits"] = row[index].strip()
-                            elif c == 'date_start' and len(row[index].strip()) > 1:
-                                n['date_start'] = cd.set_time(row[index].strip())
-                            elif c == 'date_end' and len(row[index].strip()) > 1:
-                                n['date_end'] = cd.set_time(row[index].strip())
-                            elif c == 'digits':
-                                save_flag = True
-                                n["digits"] = row[index].strip()
-                            elif row[index].strip() != '':
-                                n[c]=row[index].strip()
-                    except:
-                        pass
-                if save_flag:
-                    if n['special_digits']:
-                        cd.par_spec(n['special_digits'].replace(" ", ''), n['country_code'].replace(" ", ''), n['name']) 
-                    if n['pref_digits']:
-                        country_list, country_code = cd.par_pref(n['pref_digits'].replace(" ", ''), n['name'])
-                        for country in country_list:
+                try:
+                    #l.debug(row)
+                    country_list, country_code, n = cd.parse(row)
+                    l.debug(country_list)
+                    for country in country_list:
+                        if n['currency'] and n['currency'] != default_currency:
                             price = Decimal(n['rate']) * Decimal(curency_grn)
-                            writer.writerow((country_code, country, n["name"],	0, Decimal('0.0000'), Decimal('0.0000'), Decimal('0.0000'), price, brand))
-                    elif n["digits"] != '':
-                        d = '%s%s' % (n['country_code'], n["digits"])
-                        #save_cnt += self.add_lcr(gw, n, d)
-                        #l.debug('digits: %s/%s/' % (d,n["name"]))
-                n.clear()
-        except csv.Error, e:
-            raise            
+                        else:
+                            price = Decimal(n['rate'])
+                        # price
+                        writer.writerow((country_code, country, n["name"],	0, Decimal('0.0000'), Decimal('0.0000'), Decimal('0.0000'), price, n['brand']))
+                        # route
+                        #writer.writerow((country_code, n["name"], country, 0, Decimal('0.0000'), Decimal('0.0000'), 1,   Decimal('0.0000'), price, n['brand']))
+                        
+                except Exception, e:
+                    l.error("line: %i => %s" % (cd.line_num, e)) 
+                    pass
+        except Exception, e:
+            l.error(e)            
         finally:
             fw.close()
             f.close()
+
     # def testSaveCSV(self):
     #     """docstring for testSaveCSV"""
     #     f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'prepaid.csv'), "rt")
