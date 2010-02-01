@@ -33,5 +33,5 @@ setup(name='fsa',
         'Operating System :: OS Independent', 
         'Topic :: Office/Business',
     ],
-    scripts=['scripts/build_fsa'],
+    scripts=['scripts/fsa-build', 'scripts/fsa-backup'],
 )

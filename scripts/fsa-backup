@@ -1,0 +1,58 @@
+#!/bin/sh
+# MySQL Backup script
+
+export LANG=C
+export LC_ALL=C
+
+# define vars
+prefix=$HOME/backup
+db_login=
+db_passw=
+i=-1
+
+if [ ! -d $prefix ]; then
+   mkdir $prefix
+   echo "mkdir $prefix"
+fi
+
+bk_mysql () {
+    echo "Dumping MySQL Databases..."
+    backup=$prefix/mysql/`date "+%Y%m%d"`/
+    if test -d $backup ; then
+        rm -rf $backup
+    fi
+    mkdir -p $backup
+    cd $backup
+    for database in "astbill"
+    do
+        if /usr/bin/mysqldump -u${1} -p${2} --add-drop-table -c --opt ${database} > ${database}.sql;
+        /usr/bin/gzip ${database}.sql
+        then
+            echo "  ${database}             dump OK"
+        else
+            echo "  ${database}             dump FAILED"
+        fi
+        # 
+    done
+    echo ""
+    echo "Dump Complete!"
+}
+#for database in `echo "SHOW DATABASES;" | /usr/bin/mysql -u${db_login} -p${db_passw} | cut -f 1 -d " "`
+#do
+#        i=`echo "${i} + 1" | bc -l`
+#        if [ $i -gt 0 ]
+#        then
+#                if /usr/bin/mysqldump -u${db_login} -p${db_passw} --add-drop-table -c --opt ${database} > ${database}.sql; #/usr/bin/gzip ${database}.sql
+
+
+#exit 
+case "$1" in
+    mysql)
+        bk_mysql $2 $3
+        ;;
+    *)
+    echo $"Usage: $0 {mysql ligin password|site|fs}"
+    echo "mysql - Backup MySQL DB"
+    exit 1
+esac
+
