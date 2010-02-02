@@ -48,7 +48,7 @@ def directory(request):
         return HttpResponseNotFound('<h1>Error generating config</h1>')
     
 def get(request):
-    
+    try:
         if request.POST['section'] == "configuration":
             try:
                 # TODO добавить загрузку конфигурации lcr.conf
