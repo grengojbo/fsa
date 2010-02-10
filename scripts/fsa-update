@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#workon <sitename>
+#cd <sitename>
 pip install -U -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements.txt
 pip install -e hg+http://bitbucket.org/jbo/fsa/#egg=fsa
+hg pull
+hg merge
+hg ci -m"merge"
+cd www/
+./manage.py syncdb
 ./manage.py migrate

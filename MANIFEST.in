@@ -2,6 +2,4 @@
 include docs/*
 include AUTHORS CONTRIBUTORS LICENSE CHANGELOG README
 include setup.cfg
-recursive-include satchmo/static *
-recursive-include fsadmin *.po *.mo *.html *.xml
 recursive-include fsa *.po *.mo *.html *.xml
