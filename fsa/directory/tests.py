@@ -43,7 +43,7 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(self.user.username, 'test')
         self.assertEquals(self.user.is_active, True)
         self.assertEquals(new_endpoint.is_registered, False)
-        self.assertEquals(new_endpoint.uid, 1003)
+        self.assertEquals(new_endpoint.uid, '1003')
         
     def testNewEndpoint(self):
         """docstring for testNewEndpoint"""

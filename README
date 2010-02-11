@@ -15,7 +15,7 @@ FreeSWITCH Admin -это веб интерфейс для администрир
 
 1. Скачать установочный файл **wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/build_fsa**
 2. Сделать его исполняемым **chmod 744 build_fsa**
-3. Установите общие библиотеки **./build_fsa global** *(этот шаг можно днлать один раз)*
+3. Установите общие библиотеки **./build_fsa global** *(этот шаг можно делать один раз)*
 4. Установка virtualenv и FreeSWITCH Admin (fsa) **./build_fsa stable fs_stable**
 5. Переходим в виртуальное окружение workon fs_stable   
 

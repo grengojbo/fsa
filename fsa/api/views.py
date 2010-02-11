@@ -83,3 +83,4 @@ def get(request):
     except Exception, e:
         l.error("Error generating confg %s" % e)
         return HttpResponseNotFound('<h1>Error generating config</h1>')
+        

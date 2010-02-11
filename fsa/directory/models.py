@@ -27,7 +27,7 @@ PHONE_TYPES = (('S', _(u'SIP Soft Phone')),
 
 class Endpoint(models.Model):
     #uid = models.CharField(max_length=100)
-    uid = models.PositiveIntegerField(_(u'Phone Number'), unique=True)
+    uid = models.CharField(_(u'Phone Number'), max_length=12, unique=True)
     phone_type = models.CharField(_(u'Type'), max_length=1, choices=PHONE_TYPES, default='S')
     password = models.CharField(_(u'Password'), max_length=6)
     accountcode = models.ForeignKey(User)
@@ -58,8 +58,8 @@ class Endpoint(models.Model):
         verbose_name = _(u'Endpoint')
         verbose_name_plural = _(u'Endpoints')
 
-    #def __unicode__(self):
-    #    return self.uid
+    def __unicode__(self):
+        return self.uid
 
 #class ExternalPhone(PhoneNumber):
 #    def __unicode__(self):

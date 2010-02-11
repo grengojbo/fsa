@@ -66,7 +66,7 @@ class NumberPlanManager(models.Manager):
         """
         for n in range(number_start, number_end+1):
             np = self.model()
-            np.phone_number = n
+            np.phone_number = str(n)
             l.debug("number: %i" % n)
             np.save()
         

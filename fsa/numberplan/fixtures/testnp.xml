@@ -1,141 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
  <object pk="1" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1000</field>
+  <field type="CharField" name="phone_number">1000</field>
   <field type="PositiveSmallIntegerField" name="nt">3</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="2" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1001</field>
-  <field type="PositiveSmallIntegerField" name="nt">3</field>
-  <field type="BooleanField" name="enables">False</field>
+  <field type="CharField" name="phone_number">1001</field>
+  <field type="PositiveSmallIntegerField" name="nt">1</field>
+  <field type="BooleanField" name="enables">True</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
-  <field type="DateField" name="date_active"><None></None></field>
+  <field type="DateField" name="date_active">2010-02-12</field>
  </object>
  <object pk="3" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1002</field>
+  <field type="CharField" name="phone_number">1002</field>
   <field type="PositiveSmallIntegerField" name="nt">2</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="4" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1003</field>
+  <field type="CharField" name="phone_number">1003</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="5" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1004</field>
+  <field type="CharField" name="phone_number">1004</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="6" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1005</field>
-  <field type="PositiveSmallIntegerField" name="nt">3</field>
+  <field type="CharField" name="phone_number">1005</field>
+  <field type="PositiveSmallIntegerField" name="nt">2</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="7" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1006</field>
+  <field type="CharField" name="phone_number">1006</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="8" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1007</field>
+  <field type="CharField" name="phone_number">1007</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="9" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1008</field>
+  <field type="CharField" name="phone_number">1008</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="10" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1009</field>
+  <field type="CharField" name="phone_number">1009</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="11" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1010</field>
-  <field type="PositiveSmallIntegerField" name="nt">3</field>
+  <field type="CharField" name="phone_number">1010</field>
+  <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="12" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1011</field>
-  <field type="PositiveSmallIntegerField" name="nt">2</field>
+  <field type="CharField" name="phone_number">1011</field>
+  <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="13" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1012</field>
+  <field type="CharField" name="phone_number">1012</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="14" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1013</field>
+  <field type="CharField" name="phone_number">1013</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="15" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1014</field>
+  <field type="CharField" name="phone_number">1014</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="16" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1015</field>
-  <field type="PositiveSmallIntegerField" name="nt">2</field>
+  <field type="CharField" name="phone_number">1015</field>
+  <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="17" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1016</field>
+  <field type="CharField" name="phone_number">1016</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="18" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1017</field>
+  <field type="CharField" name="phone_number">1017</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="19" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1018</field>
+  <field type="CharField" name="phone_number">1018</field>
+  <field type="PositiveSmallIntegerField" name="nt">1</field>
+  <field type="BooleanField" name="enables">False</field>
+  <field type="PositiveSmallIntegerField" name="status">0</field>
+  <field type="DateField" name="date_active"><None></None></field>
+ </object>
+ <object pk="20" model="numberplan.numberplan">
+  <field type="CharField" name="phone_number">1019</field>
   <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
  </object>
  <object pk="21" model="numberplan.numberplan">
-  <field type="PositiveIntegerField" name="phone_number">1020</field>
-  <field type="PositiveSmallIntegerField" name="nt">3</field>
+  <field type="CharField" name="phone_number">1020</field>
+  <field type="PositiveSmallIntegerField" name="nt">1</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>

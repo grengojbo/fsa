@@ -22,12 +22,14 @@ N_TYPES = ((0, _(u'Partner')),
            (1,_(u'Default')),
            (2,_(u'Silver')),
            (3,_(u'Gold')),
+           (4,_(u'Starting packet')),
         )
 
 class NumberPlan(models.Model):
     """
     """
-    phone_number = models.PositiveIntegerField(_(u'Phone Number'), unique=True)
+    phone_number = models.CharField(_(u'Phone Number'), max_length=12, unique=True)
+    #models.PositiveIntegerField(_(u'Phone Number'), unique=True)
     nt = models.PositiveSmallIntegerField(_(u'Type'), max_length=1, choices=N_TYPES, default=1, blank=False)
     enables = models.BooleanField(_(u'Enables'), default=False)
     status = models.PositiveSmallIntegerField(_(u'Status'), max_length=1, choices=N_STATUS, default=0, blank=False)
@@ -40,5 +42,5 @@ class NumberPlan(models.Model):
         verbose_name_plural = _(u'Number Plans')
 
     def __unicode__(self):
-        return str(self.phone_number)
+        return self.phone_number
 

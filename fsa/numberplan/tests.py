@@ -37,21 +37,23 @@ class NumberPLanTestCase(test.TestCase):
 
     def testNumberPLan(self):
         r = NumberPlan.objects.lphonenumber()
-        self.assertEquals(r, 1003)
+        self.assertEquals(r, '1003')
         n = NumberPlan.objects.lactivate(r)
         r = NumberPlan.objects.lphonenumber()
-        self.assertEquals(r, 1004)
+        self.assertEquals(r, '1004')
         r = NumberPlan.objects.lphonenumber()
-        self.assertEquals(r, 1006)
+        self.assertEquals(r, '1006')
         
     def testNextNnumber(self):
         """
         Tests 
         """
         n = NumberPlan.objects.gen_num_plan(2011, 2020)
+        res = NumberPlan.objects.all()
+        self.assertEquals(res.count(), 31)
         res = NumberPlan.objects.filter(enables=False, nt=1)
         #res = Endpoint.objects.get_next_number()
-        self.assertEquals(res.count(), 22)
+        self.assertEquals(res.count(), 27)
         # res1 = NumberPlan.objects.set_number()
         # self.assertEquals(res1, 2001)
         #c = Context.objects.filter(name='private')
