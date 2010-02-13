@@ -1,3 +1,4 @@
+-e hg+http://bitbucket.org/jbo/django-keyedcache/#egg=django-keyedcache
 -e svn+http://django-rosetta.googlecode.com/svn/trunk/#egg=rosetta
 django-debug-toolbar==0.8
 werkzeug

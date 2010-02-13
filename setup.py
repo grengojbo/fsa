@@ -29,7 +29,7 @@ setup(name='fsa',
     # ],
     classifiers = [
         'Development Status :: 4 - Beta',
-        'License :: OSI Approved :: BSD License',
+        'License :: OSI Approved :: GPL License',
         'Operating System :: OS Independent', 
         'Topic :: Office/Business',
     ],

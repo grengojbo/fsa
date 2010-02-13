@@ -22,7 +22,7 @@ class Command(BaseCommand):
         make_option('--gw', default='', dest='gw',
         help='Gateway Name'),
     )
-    help = 'Load Lcr data ./manage.py load_lcr --gw=icall /fsadmin/lcr/fixtures/test-lcr.csv'
+    help = 'Load Lcr data ./manage.py load_lcr --gw=icall /fsa/lcr/fixtures/test-lcr.csv'
     args = '[fixture ...]'
 
     def handle(self, fixture_labels, **options):
