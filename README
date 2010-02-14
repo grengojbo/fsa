@@ -1,4 +1,3 @@
-<!--*-markdown-*-->
 # FreeSWITCH Admin v0.4.1  
 
 FreeSWITCH Admin -это веб интерфейс для администрирования VoIp програмного коммутатора FreeSWITCH.  
@@ -13,10 +12,10 @@ FreeSWITCH Admin -это веб интерфейс для администрир
 
 ### Установка  
 
-1. Скачать установочный файл **wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/build_fsa**
-2. Сделать его исполняемым **chmod 744 build_fsa**
-3. Установите общие библиотеки **./build_fsa global** *(этот шаг можно делать один раз)*
-4. Установка virtualenv и FreeSWITCH Admin (fsa) **./build_fsa stable fs_stable**
+1. Скачать установочный файл **wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/fsa-build**
+2. Сделать его исполняемым **chmod 744 fsa-build**
+3. Установите общие библиотеки **./fsa-build global** *(этот шаг можно делать один раз)*
+4. Установка virtualenv и FreeSWITCH Admin (fsa) **./fsa-build stable fs_stable**
 5. Переходим в виртуальное окружение workon fs_stable   
 
 ### Настройка FreeSWITCH Admin   

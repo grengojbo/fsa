@@ -32,6 +32,9 @@ class EndpointManager(models.Manager):
         """
         pass
 
+    def new_endpoint():
+        pass
+    
     def create_endpoint(self, user):
         """
         Добавляем новый номер

@@ -7,7 +7,8 @@ Copyright (c) 2010 __MyCompanyName__. All rights reserved.
 """
 from signals_ahoy import signals
 from signals_ahoy.asynchronous import AsynchronousListener
-from fsa.directory.signals import *
+#from fsa.directory.signals import *
+
 #from fsa.directory.models import Endpoint
 #from urls import custompatterns
 #import localsite
@@ -39,3 +40,6 @@ log = logging.getLogger('fsa.directory.listeners')
 #     #s.endpoint_signal.send(user=user, endpoint=new_endpoint)
 #     
 # signals.profile_registration.connect(handler_create_endpoint)
+
+def start_listening():
+    log.debug('Added directory listeners')

@@ -10,6 +10,12 @@ from fsa.directory.managers import EndpointManager, SipRegistrationManager
 import config
 from livesettings import ConfigurationSettings, config_value, config_choice_values
 #from .managers import 
+import logging
+import datetime
+import signals
+
+
+log = logging.getLogger('fsa.directory.models')
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'
@@ -27,13 +33,13 @@ PHONE_TYPES = (('S', _(u'SIP Soft Phone')),
 
 class Endpoint(models.Model):
     #uid = models.CharField(max_length=100)
-    uid = models.CharField(_(u'Phone Number'), max_length=12, unique=True)
+    uid = models.CharField(_(u'Phone Number'), max_length=12, unique=True, blank=True)
     phone_type = models.CharField(_(u'Type'), max_length=1, choices=PHONE_TYPES, default='S')
-    password = models.CharField(_(u'Password'), max_length=6)
+    password = models.CharField(_(u'Password'), max_length=6, blank=True)
     accountcode = models.ForeignKey(User)
     user_context = models.ForeignKey(Context)
     sip_profile = models.ForeignKey(SipProfile)
-    effective_caller_id_name = models.CharField(_(u'Caller id Name'), max_length=255)
+    effective_caller_id_name = models.CharField(_(u'Caller id Name'), max_length=255, blank=True)
     enable = models.BooleanField(_(u'Enable'), default=True)
     # is this endpoint currently registered?
     is_registered = models.BooleanField(default=False)
@@ -47,12 +53,34 @@ class Endpoint(models.Model):
     #def get_extensions(self):
     #    return self.extension_set.all()
 
-    #def delete(self):
-    #    extensions = self.extension_set.all()
-    #    for extension in extensions:
-    #        extension.delete()
-    #    super(Endpoint, self).delete() # Call the "real" delete() method
-
+    def delete(self, *args, **kwargs):
+        # TODO work signal 'Signal' object is not callable
+        log.debug('delete endpoint: %s' % self.uid)
+        #signals.endpoint_delete('EndpointDelete', endpoint=self.uid)
+        super(Endpoint, self).delete()
+    
+    def save(self, *args, **kwargs):
+            
+        if not self.uid:
+            try:
+                from fsa.numberplan.models import NumberPlan
+                self.uid = NumberPlan.objects.lphonenumber()
+            except:
+                self.uid = '0000000'
+        if not self.password:
+            self.password = User.objects.make_random_password(6, "0123456789")
+        if not self.effective_caller_id_name:
+            self.effective_caller_id_name = self.uid
+        if not self.pk:
+            log.debug('new endpoint')
+            signals.endpoint_create.send(self, endpoint=self)
+        else:
+            old_endpoint = Endpoint.objects.get(pk=self.pk)
+            log.debug('change endpoint')
+            signals.endpoint_change.send(self, endpoint=self, old_endpoint=old_endpoint)
+        log.debug('save endpoint: %s' % self.uid)
+        super(Endpoint, self).save(*args, **kwargs)
+        
     class Meta:
         db_table = 'endpoints'
         verbose_name = _(u'Endpoint')
@@ -146,3 +174,6 @@ class FSGroup(models.Model):
 
     def __unicode__(self):
         return self.name
+
+import listeners
+listeners.start_listening()

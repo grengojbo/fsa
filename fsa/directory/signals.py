@@ -15,3 +15,7 @@ __revision__ = '$Revision:$'
 
 endpoint_signal = django.dispatch.Signal(providing_args=['user', 'endpoint'])
 create_endpoint_signal = django.dispatch.Signal(providing_args=['user', 'endpoint'])
+
+endpoint_create = django.dispatch.Signal(providing_args=['endpoint'])
+endpoint_delete = django.dispatch.Signal(providing_args=['endpoint'])
+endpoint_change = django.dispatch.Signal(providing_args=['endpoint', 'old_endpoint'])

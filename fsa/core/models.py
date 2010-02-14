@@ -6,6 +6,12 @@ from django.utils.translation import ugettext_lazy as _
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'
 
+##class CsvBase(models.Model):
+##    """"""
+##    name = models.CharField(_('Name'), max_length=100)
+##    val = models.CharField(_('Value'), max_length=255)
+##    description = models.CharField(_('Description'), max_length=255)
+    
 # Create your models here.
 class VoicemailMsgs(models.Model):
     created_epoch = models.IntegerField(null=True, blank=True)

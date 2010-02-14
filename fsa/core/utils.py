@@ -59,12 +59,13 @@ class CsvData(object):
         n['date_end'] = datetime.datetime.max
         for index, c in enumerate(self.data_col):
             try:
-                #l.debug("%s=%s" % (c,row[index].strip()))
+                l.debug("%s=%s" % (c,row[index].strip()))
                 if c != 'zeros' and len(row[index].strip()) > 0:
                     if c == 'name':
                         n["name"] = row[index].strip()
                     elif c == 'rate':
                         n['rate'] = self.set_num(row[index])
+                        save_flag = True
                     elif c == 'country_code':
                         n['country_code'] = self.set_int(row[index])
                     elif c == 'special_digits':
@@ -82,7 +83,8 @@ class CsvData(object):
                         n["digits"] = self.set_int(row[index])
                     elif row[index].strip() != '':
                         n[c]=row[index].strip()
-            except:
+            except Exception, e:
+                l.error(e)
                 l.error(self.row)
                 self.line_error_list.append(self.row)
         if save_flag:
@@ -93,8 +95,10 @@ class CsvData(object):
                 country_list = list()
                 #country_list.append('%s%s' % (n['country_code'], n["digits"]))
                 country_list.append(int('%s' % n["digits"]))
-                return (country_list, n['country_code'], n) 
-                 
+                return (country_list, n['country_code'], n)
+            elif n["rate"] != '':
+                return n
+                
     def par_pref(self, special_digits, name):
         """docstring for par_spec"""
         country_list = list()

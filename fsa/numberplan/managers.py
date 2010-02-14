@@ -15,14 +15,17 @@ l = logging.getLogger('fsa.numberplan.managers')
 
 class NumberPlanManager(models.Manager):
     def lactivate(self,pn):
-        """Активируем номер"""
+        """
+         Активируем номер
+        pn - Phone Number 
+        """
         n = self.get(phone_number=pn)
         n.enables = True
         n.status = 1
         n.date_active = datetime.datetime.now()
         n.save()
         return n
-    
+
     def lphonenumber(self):
         """Возвращает случайный свободный номер"""
         p = self.filter(enables=False, nt=1, status=0)[0]
@@ -30,19 +33,28 @@ class NumberPlanManager(models.Manager):
         p.date_active = datetime.datetime.now()
         p.save()
         return p.phone_number
-        
+
     def lfree(self,pn):
         """присваиваем статус свободный номер"""
         pass
+    
     def lpark(self, pn):
-        """Паркуем номер"""
-        pass
+        """
+        Паркуем номер
+        pn - Phone Number
+        """
+        n = self.get(phone_number=pn)
+        n.enables = False
+        n.status = 2
+        n.date_active = datetime.datetime.now()
+        n.save()
+        return n
 
     def status_count(self):
         top = self.model.objects.values('status').annotate(score=Count('status'))
         #return [tag['status'] for tag in top]
         return top
-    
+
     def type_count(self):
         """
          [{'score': 13, 'nt': 1}, {'score': 3, 'nt': 2}, {'score': 4, 'nt': 3}]
@@ -50,14 +62,14 @@ class NumberPlanManager(models.Manager):
         top = self.model.objects.values('nt').annotate(score=Count('nt'))
         #return [tag['nt'] for tag in top]
         return top
-        
+
     def set_number(self):
         """docstring for set_number"""
         n = self.filter(enables=False, nt=1)[0]
         n.enables = True
         n.save()
         return n.phone_number
-        
+
     def gen_num_plan(self, number_start, number_end):
         """
         Генерация номерного плана
@@ -69,4 +81,3 @@ class NumberPlanManager(models.Manager):
             np.phone_number = str(n)
             l.debug("number: %i" % n)
             np.save()
-        
