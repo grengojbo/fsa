@@ -55,11 +55,13 @@ class CsvData(object):
         n['country_code'] = 0
         n['special_digits'] = False
         n['pref_digits'] = False
+        n["digits"] = ''
+        n["rate"] = ''
         n['date_start'] = datetime.datetime.now()
         n['date_end'] = datetime.datetime.max
         for index, c in enumerate(self.data_col):
             try:
-                l.debug("%s=%s" % (c,row[index].strip()))
+                #l.debug("%s=%s" % (c,row[index].strip()))
                 if c != 'zeros' and len(row[index].strip()) > 0:
                     if c == 'name':
                         n["name"] = row[index].strip()
@@ -75,9 +77,9 @@ class CsvData(object):
                         save_flag = True
                         n["pref_digits"] = row[index].strip().replace(" ", '')
                     elif c == 'date_start' and len(row[index].strip()) > 1:
-                        n['date_start'] = cd.set_time(row[index].strip())
+                        n['date_start'] = self.set_time(row[index].strip())
                     elif c == 'date_end' and len(row[index].strip()) > 1:
-                        n['date_end'] = cd.set_time(row[index].strip())
+                        n['date_end'] = self.set_time(row[index].strip())
                     elif c == 'digits':
                         save_flag = True
                         n["digits"] = self.set_int(row[index])
@@ -85,7 +87,7 @@ class CsvData(object):
                         n[c]=row[index].strip()
             except Exception, e:
                 l.error(e)
-                l.error(self.row)
+                #l.error(self.row)
                 self.line_error_list.append(self.row)
         if save_flag:
             if n['pref_digits']:

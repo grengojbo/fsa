@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from fsa.server.models import Server, SipProfile, Alias, Conf
+from fsa.server.models import Server, SipProfile, Alias, Conf, CsvBase
 from django.contrib.auth.models import User
 from django.conf import settings
 
@@ -51,7 +51,14 @@ class AliasAdmin(admin.ModelAdmin):
     save_on_top = True
     order = 5
     
+class CsvBaseAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name', 'description',)
+    save_as = True
+    save_on_top = True
+    order = 10
+    
 admin.site.register(Alias, AliasAdmin)
 admin.site.register(Server, ServerAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
 admin.site.register(Conf, ConfAdmin)
+admin.site.register(CsvBase, CsvBaseAdmin)

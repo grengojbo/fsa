@@ -182,6 +182,24 @@ class SipProfile(models.Model):
         else:
             return "%s.." % self.name[:8]
 
+class CsvBase(models.Model):
+    """"""
+    name = models.CharField(_('Name'), max_length=100)
+    val = models.CharField(_('Value'), max_length=255)
+    description = models.CharField(_('Description'), max_length=255)
+    
+    class Meta:
+        db_table = 'CsvBase'
+        verbose_name = _(u'Format loads csv file')
+        verbose_name_plural = _(u'Format loads csv files')
+    
+    def __unicode__(self):
+        return u''
+    
+    @models.permalink
+    def get_absolute_url(self):
+        return ('CsvBase', [self.id])
+    
 
 
     
