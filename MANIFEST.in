@@ -1,5 +1,3 @@
-#global-includes *.po *.mo
 include docs/*
 include AUTHORS CONTRIBUTORS LICENSE CHANGELOG README
-include setup.cfg
 recursive-include fsa *.po *.mo *.html *.xml

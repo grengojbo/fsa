@@ -9,6 +9,7 @@
 #source .env/bin/activate
 #./manage.py runserver
 
+# TODO: work mkvirtualenv $1 and python version
 
 source ~/.bashrc
 if [ ! $PYTHONPATH ]; then
@@ -27,6 +28,7 @@ fi
 build_global() {
     sudo easy_install -U mercurial
     sudo easy_install -U pip
+    sudo easy_install -U ipython
     sudo easy_install -U virtualenv
     sudo easy_install -U virtualenvwrapper
 
@@ -71,10 +73,10 @@ build_stable() {
     pip install -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements.txt
     pip install -e hg+http://bitbucket.org/jbo/fsa/#egg=fsa
 }
-build_project () {
-    if [ ! -d ]
-    hg clone http://bitbucket.org/jbo/fs_project/ $1
-}
+#build_project () {
+#    if [ ! -d ]
+#    hg clone http://bitbucket.org/jbo/fs_project/ $1
+#}
 case "$1" in
     global)
         build_global

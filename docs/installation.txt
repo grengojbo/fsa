@@ -1,7 +1,8 @@
 ============
 Установка
 ============
-
+Error: No module named pytils
+$ pip install pytils
 
 
 Installing Dependencies
