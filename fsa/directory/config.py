@@ -16,6 +16,12 @@ ENDPOINT_GROUP = ConfigurationGroup('directory', _('Endpoint Module Settings'))
 ENDPOINT_PREFIX = config_register(StringValue(ENDPOINT_GROUP, 'epref', default='38089', 
     description=_("Endpoint Prefix"), help_text=_(u"prefix 38089 + endpoint number 5554433 = calleredID 380895554433") 
 ))
+config_register(BooleanValue(ENDPOINT_GROUP,
+        'AUTO_CREATE',
+        description= _("Auto create endpoint"),
+        help_text=_("with the registration of user automatically it is created."),
+        default=False, 
+        ordering=5))
 
 # --- Load any extra tax modules. ---
 # extra_tax = get_satchmo_setting('CUSTOM_TAX_MODULES')

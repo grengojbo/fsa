@@ -7,9 +7,14 @@ Copyright (c) 2010 __MyCompanyName__. All rights reserved.
 """
 from signals_ahoy import signals
 from signals_ahoy.asynchronous import AsynchronousListener
+from django.contrib.auth.models import User
+from fsa.directory.signals import endpoint_create
+from livesettings import config_value, config_value_safe
+import config
+from django.db import models
 #from fsa.directory.signals import *
 
-#from fsa.directory.models import Endpoint
+from fsa.directory.models import Endpoint
 #from urls import custompatterns
 #import localsite
 import logging
@@ -34,12 +39,18 @@ log = logging.getLogger('fsa.directory.listeners')
 #     signals.collect_urls.connect(add_custom_urls, sender=localsite)
 #     async_note.connect(delayedNote.listen, sender=None)
 
-# def handler_create_endpoint(sender, user, **kwargs):
-#     l.debug("Signal ProfileRegistration")
-#     new_endpoint = Endpoint.objects.create_endpoint(user)
-#     #s.endpoint_signal.send(user=user, endpoint=new_endpoint)
-#     
+##def handler_create_endpoint(sender, **kwargs):
+##    log.debug("Signal post save User")
+##    if sender.is_active() and config_value('directory', 'AUTO_CREATE'):
+##        new_endpoint = Endpoint.objects.create_endpoint(sender)
+##        endpoint_create.send(sender=Endpoint, endpoint=new_endpoint)
+##        log.debug('Send signal endpoint_create')
+##    else:
+##        log.debug('User no active or config value AUTO_CREATE=False')
+##     
 # signals.profile_registration.connect(handler_create_endpoint)
 
 def start_listening():
+    #models.signals.post_save.connect(handler_create_endpoint, sender=User)
     log.debug('Added directory listeners')
+    

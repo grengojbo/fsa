@@ -18,7 +18,8 @@ from fsa.dialplan.models import Context
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
-    fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    fixtures = ['testsite', 'testnp',  'alias', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()

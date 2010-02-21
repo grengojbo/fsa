@@ -16,6 +16,9 @@ l = logging.getLogger('fsa.directory.managers')
 class EndpointManager(models.Manager):
     """
     """
+    # TODO: add endpoint is not number plan
+    # DoesNotExist
+    # Exception Value: NumberPlan matching query does not exist.
     def get_next_number(self):
         """
         return - Next free Endpoints Number
@@ -53,7 +56,7 @@ class EndpointManager(models.Manager):
         n.phone_type = 'S'
         n.save()
         NumberPlan.objects.lactivate(n.uid)
-        l.debug(n.uid)
+        l.debug("create endpoint: %s" % n.uid)
         return n
 
     def reg(self):

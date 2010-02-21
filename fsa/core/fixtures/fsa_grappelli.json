@@ -1,0 +1,171 @@
+[
+ {
+  "pk": 1, 
+  "model": "grappelli.navigation", 
+  "fields": {
+   "order": 0, 
+   "title": "Media Management"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "grappelli.navigation", 
+  "fields": {
+   "order": 1, 
+   "title": "Contents"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "grappelli.navigation", 
+  "fields": {
+   "order": 2, 
+   "title": "VoIp Provider"
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "grappelli.navigation", 
+  "fields": {
+   "order": 3, 
+   "title": "Documentation"
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "1", 
+   "users": [], 
+   "title": "FileBrowser", 
+   "link": "/admin/filebrowser/browse/", 
+   "groups": [], 
+   "navigation": 1, 
+   "order": 0
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "1", 
+   "users": [], 
+   "title": "Main", 
+   "link": "/admin/", 
+   "groups": [], 
+   "navigation": 2, 
+   "order": 0
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "1", 
+   "users": [], 
+   "title": "Site Settings", 
+   "link": "/settings/", 
+   "groups": [], 
+   "navigation": 2, 
+   "order": 1
+  }
+ }, 
+ {
+  "pk": 7, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "1", 
+   "users": [], 
+   "title": "Cache view", 
+   "link": "/cache/", 
+   "groups": [], 
+   "navigation": 2, 
+   "order": 2
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "2", 
+   "users": [], 
+   "title": "LoDoTi", 
+   "link": "http://lodoti.com", 
+   "groups": [], 
+   "navigation": 3, 
+   "order": 0
+  }
+ }, 
+ {
+  "pk": 5, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "1", 
+   "users": [], 
+   "title": "CMS Help", 
+   "link": "/grappelli/help/", 
+   "groups": [], 
+   "navigation": 4, 
+   "order": 0
+  }
+ }, 
+ {
+  "pk": 6, 
+  "model": "grappelli.navigationitem", 
+  "fields": {
+   "category": "1", 
+   "users": [], 
+   "title": "Technical Documentation", 
+   "link": "/admin/doc/", 
+   "groups": [], 
+   "navigation": 4, 
+   "order": 1
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "grappelli.bookmark", 
+  "fields": {
+   "user": 1
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "grappelli.bookmarkitem", 
+  "fields": {
+   "bookmark": 1, 
+   "link": "/admin/", 
+   "order": 0, 
+   "title": "\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0441\u0430\u0439\u0442\u0430"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "grappelli.bookmarkitem", 
+  "fields": {
+   "bookmark": 1, 
+   "link": "/admin/directory/endpoint/", 
+   "order": 1, 
+   "title": "Endpoints"
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "grappelli.help", 
+  "fields": {
+   "order": 0, 
+   "title": "Admin-Interface"
+  }
+ }, 
+ {
+  "pk": 1, 
+  "model": "grappelli.helpitem", 
+  "fields": {
+   "body": "<p>This is just a test entry.</p>", 
+   "order": 0, 
+   "link": "/admin/", 
+   "help": 1, 
+   "title": "Main Admin"
+  }
+ }
+]

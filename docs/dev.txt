@@ -46,6 +46,7 @@ pref_digits - обрабатывает шаблоны
 ./manage.py dumpdata --format=json --indent=1 dialplan.extension > extension.json
 ./manage.py dumpdata --format=json --indent=1 dialplan.context > context.json
 ./manage.py dumpdata --format=xml --indent=1 numberplan > ../../fsa/fsa/numberplan/fixtures/testnp.xml
+./manage.py dumpdata --format=json --indent=1 grappelli > ../../fsa/fsa/core/fixtures/fsa_grappelli.json
 
 Удаляем следующие файлы
 /conf/autoload_configs/acl.conf.xml

@@ -87,7 +87,7 @@ class Endpoint(models.Model):
         verbose_name_plural = _(u'Endpoints')
 
     def __unicode__(self):
-        return self.uid
+        return str(self.uid)
 
 #class ExternalPhone(PhoneNumber):
 #    def __unicode__(self):
