@@ -208,5 +208,31 @@
    "dest_num": "^886$", 
    "desc": "welcome message"
   }
+ },
+  {
+  "pk": 1, 
+  "model": "dialplan.context", 
+  "fields": {
+   "default_context": true, 
+   "name": "default", 
+   "extension": [
+    10, 
+    14
+   ]
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "dialplan.context", 
+  "fields": {
+   "default_context": false, 
+   "name": "public", 
+   "extension": [
+    10, 
+    11, 
+    12, 
+    13
+   ]
+  }
  }
 ]

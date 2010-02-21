@@ -66,10 +66,10 @@ def setup_fsa(site_name, local_site_name):
     os.system('cd %s && python manage.py syncdb' % site_name) 
     os.system('cd %s && python manage.py migrate' % site_name)
     os.system('cd %s && python manage.py loaddata l10n_data currency_data' % site_name)
-    os.system('cd %s && python manage.py loaddata grappelli_navigation.json --settings=settings' % site_name)
-    os.system('cd %s && python manage.py loaddata grappelli_help.json --settings=settings' % site_name)
-    
-    os.system('cd %s && python manage.py loaddata testsite acl alias extension context server server_conf gateway sipprofile --settings=settings' % site_name)
+    os.system('cd %s && python manage.py loaddata grappelli_navigation.json grappelli_help.json --settings=settings' % site_name)
+    #os.system('cd %s && python manage.py loaddata  --settings=settings' % site_name)
+    # acl extension context
+    os.system('cd %s && python manage.py loaddata testsite alias server server_conf gateway sipprofile --settings=settings' % site_name)
     #os.system('cd %s && ' % site_name)
     #os.system('cd %s && python manage.py  l10n_data currency_data' % site_name)
     #os.system('cd %s && python manage.py loaddata acl ' % site_name)

@@ -90,7 +90,7 @@ case "$1" in
         ;;
     dev)
         build_env $2
-        build_stable
+        #build_stable
         build_dev
         ;;
     *)
