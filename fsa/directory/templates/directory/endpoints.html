@@ -1,6 +1,6 @@
 {% load i18n %}
 {% for endpoint in e %}
-{{ endpoint.uid }} <small style="font-size: 11px;"><a href="{% url directory_edit object_id=endpoint.pk %}">{% trans "Learn More"%}</a></small><br />
+{{ endpoint.uid }} <small style="font-size: 11px;"><a href="">{% trans "Learn More"%}</a></small><br />
  {% empty %}
 <br />
 {% endfor %}

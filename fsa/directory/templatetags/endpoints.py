@@ -13,13 +13,14 @@ import logging
 l = logging.getLogger('fsa.directory.views')
 
 register = template.Library()
+#<a href="{% url directory_edit object_id=endpoint.pk %}">
 
 @register.inclusion_tag('directory/endpoints.html', takes_context=True)
 def endpoints(context):
     """docstring for endpoints"""
     e = Endpoint.objects.filter(accountcode = context['user'], enable=True)
     return {
-        'STATIC_URL': context['STATIC_URL'],
+        #'STATIC_URL': context['STATIC_URL'],
         #'request': context['request'],
         'e': e,
         'settings': context['settings'],

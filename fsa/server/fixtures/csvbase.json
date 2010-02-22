@@ -1,29 +1,5 @@
 [
  {
-  "pk": 2, 
-  "model": "server.alias", 
-  "fields": {
-   "alias_type": 0, 
-   "name": "default"
-  }
- }, 
- {
-  "pk": 3, 
-  "model": "server.alias", 
-  "fields": {
-   "alias_type": 0, 
-   "name": "nat"
-  }
- }, 
- {
-  "pk": 4, 
-  "model": "server.alias", 
-  "fields": {
-   "alias_type": 0, 
-   "name": "outbound"
-  }
- },
- {
   "pk": 1, 
   "model": "server.csvbase", 
   "fields": {

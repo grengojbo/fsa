@@ -40,6 +40,7 @@ pref_digits - обрабатывает шаблоны
 
 ./manage.py dumpdata --format=xml --indent=1 server.Server > server.xml
 ./manage.py dumpdata --format=json --indent=1 server.conf > ../../fsa/fsa/server/fixtures/server_conf.json
+./manage.py dumpdata --format=json --indent=1 server.csvbase > ../../fsa/fsa/server/fixtures/csvbase.json
 ./manage.py dumpdata --format=json --indent=1 server.SipProfile > ../../fsa/fsa/server/fixtures/sipprofile.json
 ./manage.py dumpdata --format=json --indent=1 server.alias > alias.json
 ./manage.py dumpdata --format=json --indent=1 acl > acl.json
