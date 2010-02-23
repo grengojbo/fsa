@@ -26,6 +26,9 @@ class NumberPlanManager(models.Manager):
         n.save()
         return n
 
+    def create_phone_number(self, phone_number, nt=0):
+        new_phone = self.create(phone_number=phone_number,nt=nt, enables=True, status=1, date_active = datetime.datetime.now())
+        return new_phone
     def lphonenumber(self):
         """Возвращает случайный свободный номер"""
         p = self.filter(enables=False, nt=1, status=0)[0]

@@ -19,7 +19,7 @@ from fsa.dialplan.models import Context
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
-    fixtures = ['testsite', 'testnp',  'alias', 'server', 'server_conf', 'gateway', 'sipprofile']
+    fixtures = ['testsite', 'testnp', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()
@@ -45,6 +45,8 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(self.user.is_active, True)
         self.assertEquals(new_endpoint.is_registered, False)
         self.assertEquals(new_endpoint.uid, '1003')
+        new_endpoint = Endpoint.objects.create_endpoint(self.user, '4433')
+        self.assertEquals(new_endpoint.uid, '4433')
         
     def testNewEndpoint(self):
         """docstring for testNewEndpoint"""

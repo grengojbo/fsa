@@ -60,3 +60,5 @@ class NumberPLanTestCase(test.TestCase):
         #self.failUnlessEqual(res, 2000)
         #response = self.client.post('/cdr/set/', {'name': 'param'})
         #self.failUnlessEqual(response.status_code, 200)
+        n = NumberPlan.objects.create_phone_number('4040', 0)
+        self.assertEquals(n.enables, True)

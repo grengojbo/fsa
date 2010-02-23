@@ -7,7 +7,13 @@ import logging
 log = logging.getLogger('fsb.numberplan.listeners')
 
 def create_phone_number(sender, endpoint, **kwargs):
-    NumberPlan.objects.lactivate(endpoint.uid)
+    log.debug(sender)
+    try:
+        NumberPlan.objects.lactivate(endpoint.uid)
+        log.debug('activate phone number: %s' % endpoint.uid)
+    except NumberPlan.DoesNotExist:
+        new_phoen = NumberPlan.objects.create_phone_number(endpoint.uid)
+        log.debug('activate phone number: %s' % new_phoen.phone_number)
     
 def change_phone_number(sender, endpoint, old_endpoint, **kwarg):
     NumberPlan.objects.lpark(old_endpoint.uid)

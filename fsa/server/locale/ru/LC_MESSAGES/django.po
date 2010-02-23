@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-31 07:11+0300\n"
+"POT-Creation-Date: 2010-02-22 20:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,94 +16,268 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:16
+#: admin.py:17
+msgid "Server Configuration"
+msgstr ""
+
+#: admin.py:20
 msgid "UnixODBC"
 msgstr ""
 
-#: admin.py:19
+#: admin.py:23
 msgid "SSH params"
 msgstr ""
 
-#: models.py:40 models.py:121 models.py:132 models.py:169
+#: admin.py:37
+msgid "IP address"
+msgstr ""
+
+#: admin.py:40
+msgid "Other"
+msgstr ""
+
+#: admin.py:43
+msgid "XML params"
+msgstr ""
+
+#: config.py:20
+msgid "Server Settings"
+msgstr ""
+
+#: config.py:25
+msgid "Default Global Log Level"
+msgstr ""
+
+#: config.py:26
+msgid ""
+"Default Global Log Level - value is one of debug,info,notice,warning,err,"
+"crit,alert"
+msgstr ""
+
+#: config.py:30
+msgid "Debug"
+msgstr ""
+
+#: config.py:31
+msgid "Info"
+msgstr ""
+
+#: config.py:32
+msgid "Notice"
+msgstr ""
+
+#: config.py:33
+msgid "Warning"
+msgstr ""
+
+#: config.py:34
+msgid "Error"
+msgstr ""
+
+#: config.py:35
+msgid "Crit"
+msgstr ""
+
+#: config.py:36
+msgid "Alert"
+msgstr ""
+
+#: config.py:39
+msgid "Log level"
+msgstr ""
+
+#: config.py:42
+msgid "Debug presence"
+msgstr ""
+
+#: config.py:47
+msgid "Enable FreeSWITH modules"
+msgstr ""
+
+#: config.py:48
+msgid "Select the FreeSWITH modules you want to use with your server."
+msgstr ""
+
+#: config.py:53
+msgid "Most channels to allow at once"
+msgstr ""
+
+#: config.py:59
+msgid "Most channels to create per second"
+msgstr ""
+
+#: config.py:65
+msgid "min dtmf duration"
+msgstr ""
+
+#: config.py:66
+msgid ""
+"The min-dtmf-duration specifies the minimum DTMF duration to use on outgoing "
+"events. Events shorter than this will be increased in duration to match "
+"min_dtmf_duration. You cannot configure a dtmf duration on a  profile that "
+"is less than this setting."
+msgstr ""
+
+#: config.py:72
+msgid "max dtmf duration"
+msgstr ""
+
+#: config.py:73
+msgid ""
+"The max-dtmf-duration caps the playout of a DTMF event at the specified "
+"duration. Events exceeding this duration will be truncated to this duration. "
+"You cannot configure a duration on a profile that exceeds this setting."
+msgstr ""
+
+#: config.py:79
+msgid "Default dtmf duration"
+msgstr ""
+
+#: config.py:80
+msgid ""
+"The default_dtmf_duration specifies the DTMF duration to use on originated "
+"DTMF events or on events that are received without a duration specified. "
+"This value can be increased or lowered. This value is lower-bounded by "
+"min_dtmf_duration and upper-bounded by max-dtmf-duration."
+msgstr ""
+
+#: config.py:86
+msgid "Start port"
+msgstr ""
+
+#: config.py:87 config.py:94
+msgid "RTP port range"
+msgstr ""
+
+#: config.py:93
+msgid "End port"
+msgstr ""
+
+#: config.py:99
+msgid "Enable zrtp"
+msgstr ""
+
+#: models.py:13
+msgid "SyStem"
+msgstr ""
+
+#: models.py:13
+msgid "User"
+msgstr ""
+
+#: models.py:36 models.py:73 models.py:85 models.py:122 models.py:187
 msgid "Name"
 msgstr ""
 
-#: models.py:59
+#: models.py:37
 msgid "Listen IP"
 msgstr ""
 
-#: models.py:59
+#: models.py:37
 msgid ""
 "The default settings allow socket connections only from the local host. To "
 "allow connections from any host on the network, use 0.0.0.0 instead of the "
 "default 127.0.0.1"
 msgstr ""
 
-#: models.py:60
+#: models.py:38
 msgid "Listen Port"
 msgstr ""
 
-#: models.py:61
+#: models.py:38
+msgid ""
+"Is a tcp based interface to control FreeSwitch. Default port listen 8021"
+msgstr ""
+
+#: models.py:39
+msgid "Acl"
+msgstr ""
+
+#: models.py:39
+msgid " Event socet param name=\"apply-inbound-acl\" value=\"lan\""
+msgstr ""
+
+#: models.py:40
+msgid "NAT Map"
+msgstr ""
+
+#: models.py:41
 msgid "Password"
 msgstr ""
 
-#: models.py:62
+#: models.py:42
 msgid "SQL Name"
 msgstr ""
 
-#: models.py:63
+#: models.py:43
 msgid "SQL Login"
 msgstr ""
 
-#: models.py:64
+#: models.py:44
 msgid "SQL Password"
 msgstr ""
 
-#: models.py:65
+#: models.py:45
 msgid "SSH User"
 msgstr ""
 
-#: models.py:66
-msgid "SSH Password"
-msgstr ""
-
-#: models.py:67
+#: models.py:47
 msgid "SSH Host"
 msgstr ""
 
-#: models.py:68 models.py:134 models.py:175
+#: models.py:48 models.py:87 models.py:128
 msgid "Enable"
 msgstr ""
 
-#: models.py:117
+#: models.py:50
+msgid "Server Version"
+msgstr ""
+
+#: models.py:69
 msgid "Freeswitch Server"
 msgstr ""
 
-#: models.py:118
+#: models.py:70
 msgid "Freeswitch Servers"
 msgstr ""
 
-#: models.py:125 models.py:126
+#: models.py:74
+msgid "Type"
+msgstr ""
+
+#: models.py:78 models.py:79
 msgid "SIP Alias"
 msgstr ""
 
-#: models.py:139
+#: models.py:86 models.py:124
+msgid "FreeSWITCH Server"
+msgstr ""
+
+#: models.py:92
 msgid "Configuration file"
 msgstr ""
 
-#: models.py:140
+#: models.py:93
 msgid "Configuration files"
 msgstr ""
 
-#: models.py:176
+#: models.py:125
+msgid "Alias"
+msgstr ""
+
+#: models.py:126
+msgid "Gateways"
+msgstr ""
+
+#: models.py:129
 msgid "Proxy Media"
 msgstr ""
 
-#: models.py:178
+#: models.py:131
 msgid "External RTP IP"
 msgstr ""
 
-#: models.py:178
+#: models.py:131
 msgid ""
 "Use the external/public IP address of the machine. If you are behind NAT, "
 "you can use the internal IP but you won't be able to use endpoints or "
@@ -112,62 +286,117 @@ msgid ""
 "can enter stun:stun.freeswitch.org."
 msgstr ""
 
-#: models.py:179
+#: models.py:132
 msgid "External SIP IP"
 msgstr ""
 
-#: models.py:179
+#: models.py:132
 msgid "See comments on External RTP IP"
 msgstr ""
 
-#: models.py:188
+#: models.py:141
 msgid "Domain"
 msgstr ""
 
-#: models.py:188
+#: models.py:141
 msgid ""
 "(Optional) the domain that sip endpoints for this account will register to. "
 "If left blank, endpoints should register to the IP given in External SIP IP"
 msgstr ""
 
-#: models.py:189
+#: models.py:142
 msgid "RTP IP"
 msgstr ""
 
-#: models.py:190
+#: models.py:143
 msgid "SIP IP"
 msgstr ""
 
-#: models.py:191
+#: models.py:144
 msgid "SIP port"
 msgstr ""
 
-#: models.py:194
+#: models.py:147
 msgid "Accept"
 msgstr ""
 
-#: models.py:194
+#: models.py:147
 msgid ""
 "If true, anyone can register to server and will not be challenged for "
 "username/password information"
 msgstr ""
 
-#: models.py:198
-msgid "Codec"
+#: models.py:151
+msgid "Inbound Codec"
 msgstr ""
 
-#: models.py:200
+#: models.py:152
+msgid "Outbound Codec"
+msgstr ""
+
+#: models.py:154
 msgid "Other Param"
 msgstr ""
 
-#: models.py:201
+#: models.py:155
+msgid "No View Param"
+msgstr ""
+
+#: models.py:156
 msgid "Comments"
 msgstr ""
 
-#: models.py:206
+#: models.py:157
+msgid "Default"
+msgstr ""
+
+#: models.py:162
 msgid "SIP Profile"
 msgstr ""
 
-#: models.py:207
+#: models.py:163 modules/sofia/config.py:15
 msgid "SIP Profiles"
+msgstr ""
+
+#: models.py:188
+msgid "Value"
+msgstr ""
+
+#: models.py:189
+msgid "Description"
+msgstr ""
+
+#: models.py:193
+msgid "Format loads csv file"
+msgstr ""
+
+#: models.py:194
+msgid "Format loads csv files"
+msgstr ""
+
+#: modules/event_socket/config.py:15
+msgid "event socket"
+msgstr ""
+
+#: modules/event_socket/config.py:18
+msgid "Is a TCP based interface to control FreeSWITCH"
+msgstr ""
+
+#: modules/event_socket/config.py:25 modules/limit/config.py:25
+#: modules/sofia/config.py:25
+msgid "Implementation module"
+msgstr ""
+
+#: modules/limit/config.py:15
+msgid "limit"
+msgstr ""
+
+#: modules/limit/config.py:18
+msgid "Resource limitation"
+msgstr ""
+
+#: modules/sofia/config.py:18
+msgid ""
+"SIP Profiles allow you to define paths to devices or carriers that may live "
+"inside or outside your network."
 msgstr ""

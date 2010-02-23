@@ -40,12 +40,21 @@ class EndpointManager(models.Manager):
     
     def create_endpoint(self, user, phone_number=None):
         """
-        Добавляем новый номер
+        Added new endpoint
+        
+        Keyword arguments:  
+        user -- User
+        phone_number -- Phone Number default: None
+        
         """
         from fsa.numberplan.models import NumberPlan
         
         n = self.model()
-        n.uid = NumberPlan.objects.lphonenumber()
+        if phone_number is None:
+            n.uid = NumberPlan.objects.lphonenumber()
+        else:
+            n.uid = phone_number
+            
         n.password = User.objects.make_random_password(6, "0123456789")
         n.accountcode = user
         # TODO: добавить значение по умолчанию
