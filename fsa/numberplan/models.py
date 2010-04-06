@@ -9,7 +9,7 @@ from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
 from fsa.numberplan.managers import NumberPlanManager
 
-#from .managers import 
+#from .managers import
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'
