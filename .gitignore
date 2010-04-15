@@ -30,4 +30,4 @@ log
 parts
 pip-log.txt
 src/*
-
+*.swp
