@@ -4,17 +4,17 @@ from piston.resource import Resource
 from piston.authentication import HttpBasicAuthentication
 from piston.doc import documentation_view
 
-from fsa.numberplan.api.handlers import NumberPlanHandler
+from fsa.directory.api.handlers import EndpointHandler
 ##
 auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 
-numberplan = Resource(handler=NumberPlanHandler, authentication=auth)
+endpoint = Resource(handler=EndpointHandler, authentication=auth)
 ##
 urlpatterns = patterns('',
-    url(r'^$', numberplan),
+    url(r'^$', endpoint),
     url(r'^doc/$', documentation_view),
-    url(r'^(?P<start>.+)/(?P<limit>.+)/$', numberplan),
-    url(r'^(?P<phone_number>.+)/$', numberplan),
+    url(r'^(?P<start>.+)/(?P<limit>.+)/$', endpoint),
+    url(r'^(?P<account>.+)/$', endpoint),
     #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
 
     # automated documentation

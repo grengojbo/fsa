@@ -5,6 +5,7 @@ from piston.authentication import HttpBasicAuthentication
 from piston.doc import documentation_view
 import views
 from fsa.api.handlers import FreeSwitchAdminHandler
+#from fsb.billing.api.handlers import
 from fsa.cdr.views import set_cdr
 auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 
@@ -15,6 +16,8 @@ urlpatterns = patterns('',
     url(r'^directory/$', views.directory),
     url(r'^cdr/$', set_cdr),
     url(r'^numberplan/', include('fsa.numberplan.api.urls')),
+    url(r'^endpoint/', include('fsa.directory.api.urls')),
+    url(r'^account/', include('fsb.billing.api.urls')),
     #url(r'^posts/(?P<emitter_format>.+)/$', blogposts),
     #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
 
