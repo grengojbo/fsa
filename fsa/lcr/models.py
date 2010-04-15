@@ -18,6 +18,9 @@ from fsa.lcr.managers import LcrManager
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
 
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
+
 #from .managers import
 
 __author__ = '$Author:$'
@@ -46,6 +49,7 @@ class Lcr(models.Model):
     digits = models.CharField(_(u'Digits'), max_length=45, blank=True, help_text=_(u'matching digits'))
     # TODO: напрвление
     name = models.CharField(_(u'Country'), max_length=200, blank=True)
+    country_code = models.IntegerField(_(u'Country Code'), default=0)
     rate = models.FloatField(_(u'Rate'))
     carrier_id = models.ForeignKey(SofiaGateway, help_text=_(u'which carrier for this entry'))
     lead_strip = models.IntegerField(_(u'Strip front'), default=0, help_text=_(u'how many digits to strip off front of passed in number'))
@@ -58,6 +62,7 @@ class Lcr(models.Model):
     quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
     reliability = models.FloatField(_(u'Reliability'), default=0, help_text=_(u'alternate field to order by'))
     enabled = models.BooleanField(_(u'Enable'), default=True)
+    site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
     objects = LcrManager()
     active_objects = GenericManager( enabled = True ) # only active entries
     inactive_objects = GenericManager( enabled = False ) # only inactive entries

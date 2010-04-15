@@ -34,7 +34,7 @@ class LcrTestCase(test.TestCase):
         """docstring for testLoadCSV"""
         try:
             #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_all.csv'), "rt")
-            f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'tarif_rus.csv'), "rt")
+            f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'lcr_test.csv'), "rt")
             save_cnt = 0
             default_currency = 'GRN'
             curency_grn = '8.11'
