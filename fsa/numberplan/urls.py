@@ -13,4 +13,5 @@ urlpatterns = patterns(
     #url(r'^edit/(?P<object_id>\d+)/$', views.directory_edit, name="directory_edit"),
     #url(r'^lists/$', views.directory_view, name="directory_view"),
     #url(r'^new/$', views.new_endpoint, name="new_endpoint"),
+    (r'^api/', include('fsa.numberplan.api.urls')),
     )

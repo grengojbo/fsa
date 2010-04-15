@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^get/$', views.get),
     url(r'^directory/$', views.directory),
     url(r'^cdr/$', set_cdr),
+    url(r'^numberplan/', include('fsa.numberplan.api.urls')),
     #url(r'^posts/(?P<emitter_format>.+)/$', blogposts),
     #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
 
