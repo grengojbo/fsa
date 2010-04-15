@@ -1,5 +1,5 @@
 # -*- mode: python; coding: utf-8; -*-
-# 
+#
 # This is an auto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #     * Rearrange models' order
@@ -18,7 +18,7 @@ from fsa.lcr.managers import LcrManager
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
 
-#from .managers import 
+#from .managers import
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
@@ -66,7 +66,7 @@ class Lcr(models.Model):
         db_table = 'lcr'
         verbose_name = _(u'LCR')
         verbose_name_plural = _(u'LCRs')
-        
+
     def __unicode__(self):
         return self.name
 
