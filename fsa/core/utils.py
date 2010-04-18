@@ -36,9 +36,20 @@ class CsvData(object):
     def set_int(self, n):
         """docstring for set_int"""
         return int(n.strip().replace(" ", ''))
+    def set_boll(self, n):
+        """docstring for set_int"""
+        try:
+            if n == '':
+                return True
+            res = int(n.strip().replace(" ", ''))
+            if res == 1:
+                return True
+            return False
+        except:
+            return False
     def set_time(self, t):
         """docstring for set_time"""
-        return datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(t + " 00:00", self.time_format)))    
+        return datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(t + " 00:00", self.time_format)))
     
     def reader(self, f, delimiter=';', dialect='excel'):
         try:
@@ -59,6 +70,7 @@ class CsvData(object):
         n["rate"] = ''
         n['date_start'] = datetime.datetime.now()
         n['date_end'] = datetime.datetime.max
+        
         for index, c in enumerate(self.data_col):
             try:
                 #l.debug("%s=%s" % (c,row[index].strip()))
@@ -67,6 +79,9 @@ class CsvData(object):
                         n["name"] = row[index].strip()
                     elif c == 'rate':
                         n['rate'] = self.set_num(row[index])
+                        save_flag = True
+                    elif c == 'price':
+                        n['price'] = self.set_num(row[index])
                         save_flag = True
                     elif c == 'country_code':
                         n['country_code'] = self.set_int(row[index])
@@ -83,10 +98,24 @@ class CsvData(object):
                     elif c == 'digits':
                         save_flag = True
                         n["digits"] = self.set_int(row[index])
+                    elif c == 'week1':
+                        n['week1'] = self.set_boll(row[index])
+                    elif c == 'week2':
+                        n['week2'] = self.set_boll(row[index])
+                    elif c == 'week3':
+                        n['week3'] = self.set_boll(row[index])
+                    elif c == 'week4':
+                        n['week4'] = self.set_boll(row[index])
+                    elif c == 'week5':
+                        n['week5'] = self.set_boll(row[index])
+                    elif c == 'week6':
+                        n['week6'] = self.set_boll(row[index])
+                    elif c == 'week7':
+                        n['week7'] = self.set_boll(row[index])
                     elif row[index].strip() != '':
                         n[c]=row[index].strip()
             except Exception, e:
-                l.error(e)
+                #l.error(e)
                 #l.error(self.row)
                 self.line_error_list.append(self.row)
         if save_flag:

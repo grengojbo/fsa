@@ -46,7 +46,7 @@ config_register_list(
         'MODULES',
         description=_("Enable FreeSWITH modules"),
         help_text=_("""Select the FreeSWITH modules you want to use with your server."""),
-        default=["acl", "sofia", "event_socket", "limit", "xml_cdr"]),
+        default=["acl", "sofia", "event_socket", "limit", "xml_cdr", "lcr"]),
     PositiveIntegerValue(
         SERVER_GROUP,
             'max_sessions',
@@ -110,7 +110,7 @@ for module in _default_modules:
         log.debug('Could not load default module configuration: %s', module)
 
 # --- Load any extra payment modules. ---
-extra_modules = ('event_socket','limit', 'sofia')
+extra_modules = ('event_socket','limit', 'sofia', 'lcr')
 
 for extra in extra_modules:
     try:

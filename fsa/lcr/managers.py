@@ -13,26 +13,49 @@ from django.contrib.auth.models import User
 from django.utils.encoding import force_unicode
 from django.db.models import F, Q
 from django.db.models import Max, Min, Avg, Sum, Count, StdDev, Variance
-
+from currency.money import Money
+from currency.models import Currency
 l = logging.getLogger('fsa.lcr.managers')
 
 class LcrManager(models.Manager):
     """
     """
-    def add_lcr(self, gw, n, digits):
+    def add_lcr(self, gw, n, digits, price, site):
         lc = self.model()
         lc.name = n['name']
         # TODO проверка на неправильный формат, замена 5,12->5.12
         lc.rate = n['rate']
         lc.date_start = n['date_start']
         lc.date_end = n['date_end']
+        if n['time_start']:
+            t = n['time_start'].split(":")
+            lc.time_start = datetime.time(int(t[0]), int(t[1]))
+        if n['time_end']:
+            t = n['time_end'].split(":")
+            lc.time_start = datetime.time(int(t[0]), int(t[1]))
         lc.lead_strip = 0
+        if n['week1']:
+            lc.week1 = n['week1']
+        if n['week2']:
+            lc.week2 = n['week2']
+        if n['week3']:
+            lc.week3 = n['week3']
+        if n['week4']:
+            lc.week4 = n['week4']
+        if n['week5']:
+            lc.week5 = n['week5']
+        if n['week6']:
+            lc.week6 = n['week6']
+        if n['week7']:
+            lc.week7 = n['week7']
         lc.trail_strip = 0
         lc.quality = 0
         lc.reliability = 0
         lc.enabled = True
         lc.carrier_id = gw
         lc.digits = digits
+        lc.price = price
+        lc.site = site
         lc.save()
         return 1
         

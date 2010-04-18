@@ -1,6 +1,6 @@
-<document type="freeswitch/xml">{% load tf %}
-  <section name="configuration">
-<configuration name="lcr.conf" description="LCR Configuration">
+{% cache ("fs", key_value), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+<section name="{{ name }}">
   <settings>
     <param name="odbc-dsn" value="{{ es.sql_name }}:{{ es.sql_login }}:{{ es.sql_password }}"/>
 <!--    <param name="odbc-dsn" value="freeswitch-pgsql:freeswitch:Fr33Sw1tch"/> -->
@@ -20,4 +20,5 @@
     </profile>
   </profiles>
 </configuration>
-</section></document> 
+</section>
+</document>{% endcache %}

@@ -17,4 +17,6 @@ INSTALLED_APPS += (
     #'fsbilling.base',
     #'fsbilling.tariff',
     #'contact',
+    'bursar',
+    'currency',
     )

@@ -76,6 +76,10 @@ def get(request):
                     from fsa.cdr import views as cv
                     l.debug("key_ value xml_cdr.conf hostname: %s" % request.POST.get('hostname'))
                     return cv.get_xml_conf(request)
+                elif is_app('fsa.lcr') and request.POST.get('key_value') == "lcr.conf":
+                    l.debug("hostname: %s (lcr.conf)" % request.POST.get('hostname'))
+                    from fsa.lcr import views as lv
+                    return lv.get_conf(request)
                 else:
                     return sv.get(request)
             except Exception, e:

@@ -5,6 +5,9 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError
 from django.core import serializers
 from django.utils.datastructures import SortedDict 
+from fsa.core.utils import CsvData
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
 import csv, sys
 import os
 import gzip
@@ -22,7 +25,7 @@ class Command(BaseCommand):
         make_option('--gw', default='', dest='gw',
         help='Gateway Name'),
     )
-    help = 'Load Lcr data ./manage.py load_lcr --gw=icall /fsa/lcr/fixtures/test-lcr.csv'
+    help = 'Load Lcr data ./manage.py load_lcr --gw=icall --sites=1 -nds=20 /fsa/lcr/fixtures/test-lcr.csv'
     args = '[fixture ...]'
 
     def handle(self, fixture_labels, **options):
@@ -34,6 +37,8 @@ class Command(BaseCommand):
         from fsa.gateway.models import SofiaGateway
         
         gw = options.get('gw','')
+        sites = options.get('sites',1)
+        nds = options.get('nds',1)
 
         self.style = no_style()
 
@@ -82,24 +87,30 @@ class Command(BaseCommand):
             compression_types['bz2'] = bz2.BZ2File
             
         #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test-lcr.csv'), "rt")
-        f = open(fixture_labels, "rt")
-        gateway = SofiaGateway.objects.get(name=gw, enabled=True)
-        d1="delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate"
+        #f = open(fixture_labels, "rt")
+        
         try:
-            #reader = csv.reader(open(filename, "rb"), delimiter=';')
-            objects_in_fixture = Lcr.objects.load_lcr(gateway, f)
+            gateway = SofiaGateway.objects.get(name=gw, enabled=True)
+            s = Site.objects.get(pk=sites)
+            #d1="delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate"
+            csb = CsvBase.objects.get(pk=format_csv)
+            cd = CsvData(csb.val)
+            log.debug(fixture_labels)
+            f = open(fixture_labels, "rt")
+            reader = csv.reader(f, delimiter=';', dialect='excel')
+            for row in reader:
+                try:
+                    n = cd.parse(row)
+                    objects_in_fixture = Lcr.objects.load_lcr(gateway, s, nds, n)
+                    log.debug("line: %i => %s" % (cd.line_num, row))
+                except Exception, e:
+                    log.error("line: %i => %s" % (cd.line_num, e))
+                    pass
             label_found = True
+        except Exception, e:
+            log.error(e)
         finally:
             f.close()
-        #try:
-        #    for row in reader:
-        #        print row
-        #    except csv.Error, e:
-        #       sys.exit('file %s, line %d: %s' % (filename, reader.line_num, e))
-        #call_command('loaddata', 'alias.xml', 'server.xml', 'sipprofile.xml', 'fsgroup.xml', 'context.xml', interactive=True)
-        
-        # If we found even one object in a fixture, we need to reset the
-        # database sequences.
         if object_count > 0:
             sequence_sql = connection.ops.sequence_reset_sql(self.style, models)
             if sequence_sql:

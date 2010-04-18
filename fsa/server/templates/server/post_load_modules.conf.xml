@@ -3,8 +3,8 @@
 <section name="{{ name }}">
 <configuration name="post_load_modules.conf" description="Modules">
   <modules>{% for s in sml %}
-	<load module="mod_{{ s }}"/>{% endfor %}
-	{% for m in ml %}<load module="mod_{{ m }}"/>
+    <load module="mod_{{ s }}"/>{% endfor %}
+    {% for m in ml %}<load module="mod_{{ m }}"/>
   {% endfor %}</modules>
 </configuration>
 </section>

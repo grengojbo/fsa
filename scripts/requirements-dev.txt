@@ -17,6 +17,8 @@ pytils
 -e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
 -e hg+http://bitbucket.org/zacharyvoase/djanjinja/#egg=djanjinja
+-e hg+http://bitbucket.org/bkroeze/django-bursar/#egg=django-bursar
+-e git+http://github.com/grengojbo/django-currency.git#egg=django-currency
 -e svn+http://django-rosetta.googlecode.com/svn/trunk/#egg=rosetta
 django-debug-toolbar==0.8
 werkzeug

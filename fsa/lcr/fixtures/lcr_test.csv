@@ -1,20 +1,13 @@
-380;"Ukraine";380;0,25;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (GOLDEN TELECOM)";38039;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Kiev";380442;0,25;"ukrtelecom";"GRN"
-380;"Ukraine-Kiev";380444;0,25;"ukrtelecom";"GRN"
-380;"Ukraine-Kiev";380445;0,25;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (UMC)";38050;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (ASTELIT)";38063;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (UMC)";38066;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (KYIV STAR)";38067;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (WELLCOM)";38068;0,55;"ukrtelecom";"GRN"
-380;"Ukraine (PNS)";38070010;0,25;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (UKRTELECOM)";38091;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (TELESYSTEMS)";38092;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (ASTELIT)";38093;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (INTERTELECOM)";38094;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (UMC)";38095;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (KYIV STAR)";38096;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (KYIV STAR)";38097;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (KYIV STAR)";38098;0,55;"ukrtelecom";"GRN"
-380;"Ukraine-Mobile (UMC)";38099;0,48;"ukrtelecom";"GRN"
+380;Ukraine;380;0,42;0,504;UAH;1;1;1;1;1;0;0;8:00;17:59
+380;Ukraine;380;0,33;0,396;UAH;1;1;1;1;1;0;0;18:00;22:59
+380;Ukraine;380;0,3;0,36;UAH;1;1;1;1;1;0;0;23:00;7:59
+380;Ukraine;380;0,29;0,348;UAH;0;0;0;0;0;1;1;0:00;23:59
+380;Ukraine-Mobile (GOLDEN TELECOM);38039;0,67;0,804;UAH;1;1;1;1;1;1;1;0:00;23:59
+380;Ukraine-Kiev;380442;0,43;0,516;UAH;1;1;1;1;1;0;0;8:00;17:59
+380;Ukraine-Kiev;380442;0,33;0,396;UAH;1;1;1;1;1;0;0;18:00;22:59
+380;Ukraine-Kiev;380442;0,21;0,252;UAH;1;1;1;1;1;0;0;23:00;7:59
+380;Ukraine-Kiev;380442;0,17;0,204;UAH;0;0;0;0;0;1;1;0:00;23:59
+380;Ukraine-Kiev;380444;0,42;0,504;UAH;1;1;1;1;1;0;0;8:00;17:59
+380;Ukraine-Kiev;380444;0,33;0,396;UAH;1;1;1;1;1;0;0;18:00;22:59
+380;Ukraine-Kiev;380444;0,3;0,36;UAH;1;1;1;1;1;0;0;23:00;7:59
+380;Ukraine-Kiev;380444;0,29;0,348;UAH;0;0;0;0;0;1;1;0:00;23:59

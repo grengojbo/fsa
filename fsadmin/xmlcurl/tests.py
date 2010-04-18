@@ -67,8 +67,8 @@ class XmlCurlTestCase(test.TestCase):
         response = self.client.post('/xmlcurl/get/', {'key_value': 'acl.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.assertEquals(response.status_code, 200)
         
-        response = self.client.post('/xmlcurl/get/', {'key_value': 'lcr.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
-        self.assertEquals(response.status_code, 200)
+        #response = self.client.post('/xmlcurl/get/', {'key_value': 'lcr.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        #self.assertEquals(response.status_code, 200)
         
         response = self.client.post('/xmlcurl/get/', {'key_value': 'nibblebill.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.assertEquals(response.status_code, 200)

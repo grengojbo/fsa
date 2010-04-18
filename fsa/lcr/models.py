@@ -15,12 +15,16 @@ from django.utils.translation import ugettext_lazy as _
 #from django.contrib.auth.models import User
 #from fsa.dialplan.models import Context
 from fsa.lcr.managers import LcrManager
+from bursar.fields import CurrencyField
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
-
+import datetime
+from decimal import Decimal
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
-
+from currency.fields import *
+from currency.money import Money
+from currency.models import Currency
 #from .managers import
 
 __author__ = '$Author:$'
@@ -50,19 +54,29 @@ class Lcr(models.Model):
     # TODO: напрвление
     name = models.CharField(_(u'Country'), max_length=200, blank=True)
     country_code = models.IntegerField(_(u'Country Code'), default=0)
-    rate = models.FloatField(_(u'Rate'))
+    rate = CurrencyField(_("Subtotal"), max_digits=18, decimal_places=4, default=Decimal("0.0"), display_decimal=4)
+    price = MoneyField(max_digits=18, decimal_places=4, default=Money(0, Currency.objects.get_default()))
     carrier_id = models.ForeignKey(SofiaGateway, help_text=_(u'which carrier for this entry'))
     lead_strip = models.IntegerField(_(u'Strip front'), default=0, help_text=_(u'how many digits to strip off front of passed in number'))
     trail_strip = models.IntegerField(_(u'Strip end'), default=0, help_text=_(u'how many digits to strip of end of passed in number'))
     prefix = models.CharField(_(u'Prefix'), max_length=100, blank=True, help_text=_(u'value to add to front of passed in numbe'))
     suffix = models.CharField(_(u'Suffix'), max_length=100, blank=True, help_text=_(u'vaulue to add to end of passed in number'))
     lcr_profile = models.CharField(_(u'LCR Profile'), max_length=96, blank=True)
-    date_start = models.DateTimeField(_(u'Date Start'))
-    date_end = models.DateTimeField(_(u'Date End'))
+    date_start = models.DateTimeField(_(u'Date Start'), default=datetime.datetime.now())
+    #date_end = models.DateTimeField(_(u'Date End'))
     quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
     reliability = models.FloatField(_(u'Reliability'), default=0, help_text=_(u'alternate field to order by'))
     enabled = models.BooleanField(_(u'Enable'), default=True)
     site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
+    week1 = models.BooleanField(_(u'Monday'), default=True)
+    week2 = models.BooleanField(_(u'Tuesday'), default=True)
+    week3 = models.BooleanField(_(u'Wednesday'), default=True)
+    week4 = models.BooleanField(_(u'Thursday'), default=True)
+    week5 = models.BooleanField(_(u'Friday'), default=True)
+    week6 = models.BooleanField(_(u'Saturday'), default=True)
+    week7 = models.BooleanField(_(u'Sunday'), default=True)
+    time_start = models.TimeField(_(u'Time Start'), default=datetime.datetime.strptime("00:00", "%H:%M"))
+    time_end = models.TimeField(_(u'Time End'), default=datetime.datetime.strptime("23:59", "%H:%M"))
     objects = LcrManager()
     active_objects = GenericManager( enabled = True ) # only active entries
     inactive_objects = GenericManager( enabled = False ) # only inactive entries
@@ -75,3 +89,4 @@ class Lcr(models.Model):
     def __unicode__(self):
         return self.name
 
+import config

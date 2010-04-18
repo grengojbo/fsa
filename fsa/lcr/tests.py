@@ -17,6 +17,7 @@ from fsa.lcr.models import Lcr
 from fsa.gateway.models import SofiaGateway
 import csv, sys, os
 import time, datetime
+from decimal import Decimal
 from decimal import *
 from fsa.core.utils import CsvData
 import logging
@@ -24,6 +25,7 @@ l = logging.getLogger('fsa.lcr.tests')
 
 class LcrTestCase(test.TestCase):
     #fixtures = ['testsite', 'alias', 'server', 'context', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr', 'acl']
+    fixtures = ['testsite', 'test_currency', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         # Every test needs a client.
         self.client = Client()
@@ -33,22 +35,32 @@ class LcrTestCase(test.TestCase):
     def testLoadCSV(self):
         """docstring for testLoadCSV"""
         try:
+            from fsa.lcr.models import Lcr
+            from fsa.gateway.models import SofiaGateway
+            from currency.money import Money
+            from currency.models import Currency
+            from django.contrib.sites.models import RequestSite
+            from django.contrib.sites.models import Site
             #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_all.csv'), "rt")
             f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'lcr_test.csv'), "rt")
+            gw = 'icall'
+            sites = 1
+            gateway = SofiaGateway.objects.get(name=gw, enabled=True)
+            s = Site.objects.get(pk=sites)
             save_cnt = 0
-            default_currency = 'GRN'
-            curency_grn = '8.11'
+            #default_currency = 'GRN'
+            #curency_grn = '8.11'
             #All
             #cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|other|pref_digits|rate|currency|brand")
             # Ukraina
             #cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|rate|brand|currency")
             # Russian
-            cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|pref_digits|rate|currency|brand")
+            cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|price|rate|currency|week1|week2|week3|week4|week5|week6|week7|time_start|time_end")
             # delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate
-            fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_result.csv'), "wt")
-            writer = csv.writer(fw, delimiter=',', dialect='excel')
+            #fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_result.csv'), "wt")
+            #writer = csv.writer(fw, delimiter=',', dialect='excel')
             # Abill price
-            writer.writerow(('countrycode', 'pattern', 'name',	'weight', 'connectcharge', 'includedseconds', 'minimumprice', 'price', 'brand'))
+            #writer.writerow(('countrycode', 'pattern', 'name',	'weight', 'connectcharge', 'includedseconds', 'minimumprice', 'price', 'brand'))
             #Abill route
             #writer.writerow(('countrycode', 'routename', 'pattern', 'costplan', 'connectcharge', 'includedseconds', 'billincrement', 'minimumcost', 'cost', 'trunk'))
             reader = csv.reader(f, delimiter=';', dialect='excel')
@@ -58,22 +70,34 @@ class LcrTestCase(test.TestCase):
                     country_list, country_code, n = cd.parse(row)
                     l.debug(country_list)
                     for country in country_list:
-                        if n['currency'] and n['currency'] != default_currency:
-                            price = Decimal(n['rate']) * Decimal(curency_grn)
-                        else:
-                            price = Decimal(n['rate'])
-                        # price
-                        writer.writerow((country_code, country, n["name"],	0, Decimal('0.0000'), Decimal('0.0000'), Decimal('0.0000'), price, n['brand']))
+                        n['country_code'] = country_code
+                        digits = n['digits']
+                        #price = Money(n['price'], n['currency'])
+                        price = Money(n['price'], 'USD')
+                        #price = n['price']
+                        objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
+                        save_cnt += objects_in_fixture
+                        #l.debug(price)
+                        l.debug(n["time_start"])
+                        #, n["name"], price )
                         # route
                         #writer.writerow((country_code, n["name"], country, 0, Decimal('0.0000'), Decimal('0.0000'), 1,   Decimal('0.0000'), price, n['brand']))
                         
                 except Exception, e:
                     l.error("line: %i => %s" % (cd.line_num, e)) 
                     pass
+            self.assertEquals(save_cnt, 13)
+            res = Lcr.objects.get(digits="38039")
+            self.assertEquals(res.rate, Decimal("0.804"))
+            self.assertEquals(res.price, Decimal("0.67"))
+            cur = Currency.objects.get_default()
+            self.assertEquals(cur.currency.iso3_code, "USD")
+            exc = Currency.objects.get_currency("EUR")
+            self.assertEquals(exc.exchange_rate, Decimal("1.39"))
+            
         except Exception, e:
             l.error(e)            
         finally:
-            fw.close()
             f.close()
 
     # def testSaveCSV(self):

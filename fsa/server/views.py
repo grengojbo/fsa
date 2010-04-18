@@ -75,6 +75,7 @@ def post_modules(request):
         name = 'configuration'
         key_value = request.POST.get('key_value')
         l.debug("key_value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
+        l.info(active_modules())
         return request.Context({'name':name, 'key_value':key_value, 'ml':ml, 'sml': active_modules()}).render_response('server/post_load_modules.conf.xml')
     except Exception, e:
         key_value = name = 'result'

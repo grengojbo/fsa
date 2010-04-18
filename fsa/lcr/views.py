@@ -25,7 +25,8 @@ def get(request):
 @render_to('lcr/lcr.conf.xml')    
 def get_conf(request):
     """return lcr config file"""
-    l.debug(request.POST.get('hostname')) 
+    name = 'configuration'
+    key_value = request.POST.get('key_value')
     es = get_object_or_404(Server, name=request.POST.get('hostname'))
-    return {'es':es}
+    return request.Context({'name':name, 'key_value':key_value, 'es':es}).render_response('lcr/lcr.conf.xml')
 
