@@ -8,7 +8,7 @@
 #virtualenv .env --no-site-packages
 #source .env/bin/activate
 #./manage.py runserver
-
+#wget http://files.freeswitch.org/npa-nxx-companytype-ocn.csv
 # TODO: work mkvirtualenv $1 and python version
 
 source ~/.bashrc
