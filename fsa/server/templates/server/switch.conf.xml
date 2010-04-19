@@ -14,7 +14,7 @@
     <param name="rtp-start-port" value="{{ s.rtp_start_port }}"/>
     <param name="rtp-end-port" value="{{ s.rtp_end_port }}"/>
 	<param name="rtp-enable-zrtp" value="{{ s.rtp_enable_zrtp }}"/>
-    <param name="core-db-dsn" value="{{ odbc_dsn }}" />
+    <!--<param name="core-db-dsn" value="{{ odbc_dsn }}" />-->
   </settings>
 </configuration>
 </section>
