@@ -65,7 +65,7 @@ class Lcr(models.Model):
     suffix = models.CharField(_(u'Suffix'), max_length=100, blank=True, help_text=_(u'vaulue to add to end of passed in number'))
     lcr_profile = models.CharField(_(u'LCR Profile'), max_length=96, blank=True)
     date_start = models.DateTimeField(_(u'Date Start'), default=datetime.datetime.now())
-    date_end = models.DateTimeField(_(u'Date End'), default=datetime.datetime.max())
+    date_end = models.DateTimeField(_(u'Date End'), default=datetime.datetime.max)
     quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
     reliability = models.FloatField(_(u'Reliability'), default=0, help_text=_(u'alternate field to order by'))
     cid = models.CharField(_(u'Callers caller id'), max_length=200, default='', help_text=_(u'regular expression to modify the callers caller id number - channel variables are also valid when called from the dial plan'))
