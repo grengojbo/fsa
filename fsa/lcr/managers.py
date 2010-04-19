@@ -1,4 +1,4 @@
-# -*- mode: python; coding: utf-8; -*- 
+# -*- mode: python; coding: utf-8; -*-
 
 from django.db import models
 from django.db import connection
@@ -25,6 +25,8 @@ class LcrManager(models.Manager):
         lc.name = n['name']
         # TODO проверка на неправильный формат, замена 5,12->5.12
         lc.rate = n['rate']
+        lc.intrastate_rate = lc.rate
+        lc.intralata_rate = lc.rate
         lc.date_start = n['date_start']
         lc.date_end = n['date_end']
         if n['time_start']:
@@ -58,12 +60,12 @@ class LcrManager(models.Manager):
         lc.site = site
         lc.save()
         return 1
-        
+
     def load_lcr(self, gw, base_file):
         """
         Загрузка данных из csv файла
         для успешной lcr загрузки необходимо в таблице gateway конфигурации
-        прописать lcr_format 
+        прописать lcr_format
         """
         save_cnt = 0
         try:
