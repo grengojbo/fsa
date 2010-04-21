@@ -8,6 +8,8 @@ from fsa.server.models import SipProfile
 from django.conf import settings
 #from fsa.directory.models import Endpoint, NumberPlan
 from django.db.models import Avg, Max, Min, Count
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
 import logging
 import datetime
 
@@ -73,14 +75,16 @@ class NumberPlanManager(models.Manager):
         n.save()
         return n.phone_number
 
-    def gen_num_plan(self, number_start, number_end):
+    def gen_num_plan(self, number_start, number_end, si=1):
         """
         Генерация номерного плана
         number_start 
         number_end
         """
+        site = Site.objects.get(pk=si)
         for n in range(number_start, number_end+1):
             np = self.model()
             np.phone_number = str(n)
+            np.site = site
             l.debug("number: %i" % n)
             np.save()

@@ -18,7 +18,7 @@ from fsa.dialplan.models import Context
 #from django.test import TestCase
 
 class NumberPLanTestCase(test.TestCase):
-    fixtures = ['testnp']
+    fixtures = ['testsite', 'testnp']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()

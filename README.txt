@@ -25,7 +25,7 @@ FreeSWITCH Admin -это веб интерфейс для администрир
 1.2 Настраиваем Списки доступа *Начало › Acl › Acls* и *Начало › Acl › Acl Network Lists*  
 1.3 Меняем и добавляем при необходимости синонимы для SIP *Начало › Server › SIP Alias*  
 1.4 Настраиваем сервер *Начало › Server › Freeswitch Servers* подробнее в разделе Настраиваем сервер  
-1.5 Добавляем Номерной план ./manage.py build_endpoint --number_start=1000 --number_end=1020
+1.5 Добавляем Номерной план ./manage.py build_endpoint --number_start=1000 --number_end=1020 --site=1
     где number_start - с какого номера   
         number_end - по какой номер генерируется номерной план   
     далее переходим в раздел Управлени Номерным планом   

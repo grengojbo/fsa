@@ -4,7 +4,8 @@ from django.core.management.color import no_style
 from django.core.exceptions import ImproperlyConfigured
 from django.core.management.base import BaseCommand, CommandError
 from django.core import serializers
-from django.utils.datastructures import SortedDict 
+from django.utils.datastructures import SortedDict
+
 import csv, sys
 import os
 import gzip
@@ -23,8 +24,10 @@ class Command(BaseCommand):
         help='Start Number'),
         make_option('--number_end', default='2999999', dest='ne',
         help='End Number'),
+        make_option('--site', default=1, dest='si',
+        help='site'),
     )
-    help = 'Generate Number Plan ./manage.py build_endpoint --number_start=2000000 --number_end=2999999'
+    help = 'Generate Number Plan ./manage.py build_endpoint --number_start=2000000 --number_end=2999999 --site=1'
     args = '[fixture ...]'
 
     def handle(self, **options):
@@ -36,6 +39,7 @@ class Command(BaseCommand):
         
         ns = options.get('ns','')
         ne = options.get('ne','')
+        si = options.get('si',1)
 
         self.style = no_style()
 
@@ -67,7 +71,7 @@ class Command(BaseCommand):
             transaction.managed(True)
 
         # TODO генерируем номерной план
-        objects_in_fixture = NumberPlan.objects.gen_num_plan(int(ns), int(ne))
+        objects_in_fixture = NumberPlan.objects.gen_num_plan(int(ns), int(ne), int(si))
         label_found = True
         # If we found even one object in a fixture, we need to reset the
         # database sequences.

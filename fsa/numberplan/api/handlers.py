@@ -36,10 +36,15 @@ class NumberPlanHandler(BaseHandler):
             limit = int(request.GET.get("limit"))
             limit += int(start)
         log.info(limit)
-        if phone_number:
-            return {"count": 1, "phonenumber": base.get(phone_number=phone_number)}
-        else:
-            return {"count": 1000, "phonenumber": base.all()[start:limit]}
+        try:
+            if phone_number:
+                return {"count": 1, "phonenumber": base.get(phone_number=phone_number, site__name__iexact=request.user)}
+            else:
+                resp = base.filter(site__name__iexact=request.user)[start:limit]
+                count = base.filter(site__name__iexact=request.user).count()
+                return {"count": count, "phonenumber": resp}
+        except:
+            return rc.NOT_HERE
 
     def update(self, request, phone_number):
         """
@@ -50,20 +55,24 @@ class NumberPlanHandler(BaseHandler):
         if self.exists(**attrs):
             return rc.DUPLICATE_ENTRY
         else:
-            np = NumberPlan.objects.get(phone_number=phone_number)
-            np.nt=attrs['nt']
-            np.save()
-
-            return np
+            try:
+                np = NumberPlan.objects.get(phone_number=phone_number, site__name__iexact=request.user)
+                np.nt=attrs['nt']
+                np.save()
+                return np
+            except:
+                return rc.BAD_REQUEST
 
     def delete(self, request, phone_number):
         """
         Update number plan type.
         """
         attrs = self.flatten_dict(request.POST)
+        try:
+            np = NumberPlan.objects.get(phone_number=phone_number, site__name__iexact=request.use)
+            np.enables=False
+            np.save()
+            return rc.DELETED
+        except:
+            return rc.NOT_HERE
 
-        np = NumberPlan.objects.get(phone_number=phone_number)
-        np.enables=False
-        np.save()
-
-        return np
