@@ -95,23 +95,17 @@ class CsvData(object):
                         n['date_start'] = self.set_time(row[index].strip())
                     elif c == 'date_end' and len(row[index].strip()) > 1:
                         n['date_end'] = self.set_time(row[index].strip())
+                    elif c == 'time_start':
+                        t = row[index].strip().replace(" ", '').split(":")
+                        n['time_start'] = datetime.time(int(t[0]), int(t[1]))
+                    elif c == 'time_end':
+                        t = row[index].strip().replace(" ", '').split(":")
+                        n['time_end'] = datetime.time(int(t[0]), int(t[1]))
                     elif c == 'digits':
                         save_flag = True
                         n["digits"] = self.set_int(row[index])
-                    elif c == 'week1':
-                        n['week1'] = self.set_boll(row[index])
-                    elif c == 'week2':
-                        n['week2'] = self.set_boll(row[index])
-                    elif c == 'week3':
-                        n['week3'] = self.set_boll(row[index])
-                    elif c == 'week4':
-                        n['week4'] = self.set_boll(row[index])
-                    elif c == 'week5':
-                        n['week5'] = self.set_boll(row[index])
-                    elif c == 'week6':
-                        n['week6'] = self.set_boll(row[index])
-                    elif c == 'week7':
-                        n['week7'] = self.set_boll(row[index])
+                    elif c == 'weeks':
+                        n['weeks'] = row[index].strip().replace(" ", '')
                     elif row[index].strip() != '':
                         n[c]=row[index].strip()
             except Exception, e:

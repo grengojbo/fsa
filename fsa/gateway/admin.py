@@ -7,7 +7,7 @@ from fsa.gateway.models import SofiaGateway
 # TODO сделать нормальное отображение шлюзов с просмотром активных шлюзов
 class SofiaGatewayAdmin(admin.ModelAdmin):
     #date_hierarchy = ''
-    list_display = ('name', 'username', 'vdescriptions', 'status', 'enabled',)
+    list_display = ('id', 'name', 'username', 'vdescriptions', 'status', 'enabled',)
     #list_filter = ()
     #search_fields = []
 

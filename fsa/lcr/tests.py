@@ -43,10 +43,10 @@ class LcrTestCase(test.TestCase):
             from django.contrib.sites.models import Site
             #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_all.csv'), "rt")
             f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'lcr_test.csv'), "rt")
-            gw = 'icall'
-            sites = 1
-            gateway = SofiaGateway.objects.get(name=gw, enabled=True)
-            s = Site.objects.get(pk=sites)
+            gw = 3
+            site = 1
+            gateway = SofiaGateway.objects.get(pk=gw, enabled=True)
+            s = Site.objects.get(pk=site)
             save_cnt = 0
             #default_currency = 'GRN'
             #curency_grn = '8.11'
@@ -55,7 +55,7 @@ class LcrTestCase(test.TestCase):
             # Ukraina
             #cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|rate|brand|currency")
             # Russian
-            cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|price|rate|currency|week1|week2|week3|week4|week5|week6|week7|time_start|time_end")
+            cd = CsvData("delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|price|rate|currency|weeks|time_start|time_end")
             # delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate
             #fw = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_result.csv'), "wt")
             #writer = csv.writer(fw, delimiter=',', dialect='excel')
@@ -68,7 +68,7 @@ class LcrTestCase(test.TestCase):
                 try:
                     #l.debug(row)
                     country_list, country_code, n = cd.parse(row)
-                    l.debug(country_list)
+                    l.debug(country_code)
                     for country in country_list:
                         n['country_code'] = country_code
                         digits = n['digits']
@@ -78,7 +78,7 @@ class LcrTestCase(test.TestCase):
                         objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
                         save_cnt += objects_in_fixture
                         #l.debug(price)
-                        l.debug(n["time_start"])
+                        #l.debug(n["time_start"])
                         #, n["name"], price )
                         # route
                         #writer.writerow((country_code, n["name"], country, 0, Decimal('0.0000'), Decimal('0.0000'), 1,   Decimal('0.0000'), price, n['brand']))
@@ -86,8 +86,11 @@ class LcrTestCase(test.TestCase):
                 except Exception, e:
                     l.error("line: %i => %s" % (cd.line_num, e)) 
                     pass
-            self.assertEquals(save_cnt, 13)
+            self.assertEquals(save_cnt, 3)
             res = Lcr.objects.get(digits="38039")
+            self.assertEquals(res.country_code, 380)
+            self.assertEquals(res.time_start, datetime.time(0, 10))
+            self.assertEquals(res.time_end, datetime.time(23, 54))
             self.assertEquals(res.rate, Decimal("0.804"))
             self.assertEquals(res.price, Decimal("0.67"))
             cur = Currency.objects.get_default()

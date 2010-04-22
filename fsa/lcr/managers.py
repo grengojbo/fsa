@@ -23,6 +23,7 @@ class LcrManager(models.Manager):
     def add_lcr(self, gw, n, digits, price, site):
         lc = self.model()
         lc.name = n['name']
+        lc.country_code = n['country_code']
         # TODO проверка на неправильный формат, замена 5,12->5.12
         lc.rate = n['rate']
         lc.intrastate_rate = lc.rate
@@ -30,26 +31,12 @@ class LcrManager(models.Manager):
         lc.date_start = n['date_start']
         lc.date_end = n['date_end']
         if n['time_start']:
-            t = n['time_start'].split(":")
-            lc.time_start = datetime.time(int(t[0]), int(t[1]))
+            lc.time_start = n['time_start']
         if n['time_end']:
-            t = n['time_end'].split(":")
-            lc.time_start = datetime.time(int(t[0]), int(t[1]))
+            lc.time_end = n['time_end']
         lc.lead_strip = 0
-        if n['week1']:
-            lc.week1 = n['week1']
-        if n['week2']:
-            lc.week2 = n['week2']
-        if n['week3']:
-            lc.week3 = n['week3']
-        if n['week4']:
-            lc.week4 = n['week4']
-        if n['week5']:
-            lc.week5 = n['week5']
-        if n['week6']:
-            lc.week6 = n['week6']
-        if n['week7']:
-            lc.week7 = n['week7']
+        if n['weeks']:
+            lc.weeks = n['weeks']
         lc.trail_strip = 0
         lc.quality = 0
         lc.reliability = 0

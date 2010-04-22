@@ -48,6 +48,8 @@ __all__ = ['main', __revision__]
 #    class Meta:
 #        db_table = u'carriers'
 
+#  DAYOFWEEK(NOW()) IN (1,2,3,4,6);
+
 class Lcr(models.Model):
     #id = models.IntegerField(primary_key=True)
     digits = models.CharField(_(u'Digits'), max_length=45, blank=True, help_text=_(u'matching digits'))
@@ -71,13 +73,14 @@ class Lcr(models.Model):
     cid = models.CharField(_(u'Callers caller id'), max_length=200, default='', help_text=_(u'regular expression to modify the callers caller id number - channel variables are also valid when called from the dial plan'))
     enabled = models.BooleanField(_(u'Enable'), default=True)
     site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
-    week1 = models.BooleanField(_(u'Monday'), default=True)
-    week2 = models.BooleanField(_(u'Tuesday'), default=True)
-    week3 = models.BooleanField(_(u'Wednesday'), default=True)
-    week4 = models.BooleanField(_(u'Thursday'), default=True)
-    week5 = models.BooleanField(_(u'Friday'), default=True)
-    week6 = models.BooleanField(_(u'Saturday'), default=True)
-    week7 = models.BooleanField(_(u'Sunday'), default=True)
+    weeks = models.CharField(_(u'Week'), max_length=13, default='1,2,3,4,5,6,7')
+    #week1 = models.BooleanField(_(u'Monday'), default=True)
+    #week2 = models.BooleanField(_(u'Tuesday'), default=True)
+    #week3 = models.BooleanField(_(u'Wednesday'), default=True)
+    #week4 = models.BooleanField(_(u'Thursday'), default=True)
+    #week5 = models.BooleanField(_(u'Friday'), default=True)
+    #week6 = models.BooleanField(_(u'Saturday'), default=True)
+    #week7 = models.BooleanField(_(u'Sunday'), default=True)
     time_start = models.TimeField(_(u'Time Start'), default=datetime.datetime.strptime("00:00", "%H:%M"))
     time_end = models.TimeField(_(u'Time End'), default=datetime.datetime.strptime("23:59", "%H:%M"))
     objects = LcrManager()

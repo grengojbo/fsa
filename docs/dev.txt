@@ -8,7 +8,10 @@
 ./manage.py do_admin
 ./manage.py do_userprofile
 ./manage.py load_fs
-./manage.py load_lcr --gw=icall /fsadmin/lcr/fixtures/test-lcr.cs
+./manage.py load_lcr --gw=3 --site=1 --format_csv=1 /fsa/lcr/fixtures/test-lcr.csv
+gw ID - 
+site ID
+format_csv
 Для загрузки LCR необходимо прописать в таблице gateway.sofiagateway lcr_format -> digits,name,rate,other,date_start,date_end
 где 
 
