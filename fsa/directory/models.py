@@ -6,6 +6,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from fsa.dialplan.models import Context
 from fsa.server.models import SipProfile
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
 from fsa.directory.managers import EndpointManager, SipRegistrationManager
 import config
 from livesettings import ConfigurationSettings, config_value, config_choice_values
@@ -47,6 +49,7 @@ class Endpoint(models.Model):
     last_registered = models.DateTimeField(null=True, blank=True)
     # the ip address it has for its contact field
     #contact_addr = models.CharField(maxlength=100, blank=True)
+    site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
     description = models.CharField(_(u'Description'), max_length=255, blank=True, default='sip number')
     objects = EndpointManager()
 
