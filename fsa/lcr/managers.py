@@ -20,6 +20,9 @@ l = logging.getLogger('fsa.lcr.managers')
 class LcrManager(models.Manager):
     """
     """
+    def phone_lcr(self, phone, site):
+        return self.filter(digits=phone, site__name__iexact=site)[0]
+
     def add_lcr(self, gw, n, digits, price, site):
         lc = self.model()
         lc.name = n['name']

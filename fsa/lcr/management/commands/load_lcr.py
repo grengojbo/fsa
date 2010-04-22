@@ -45,7 +45,7 @@ class Command(BaseCommand):
         from django.contrib.sites.models import Site
 
         gw = options.get('gw',1)
-        sites = options.get('sites',1)
+        site = options.get('site',1)
         format_csv = options.get('format_csv',1)
 
         self.style = no_style()
@@ -99,7 +99,7 @@ class Command(BaseCommand):
 
         try:
             gateway = SofiaGateway.objects.get(pk=gw, enabled=True)
-            s = Site.objects.get(pk=sites)
+            s = Site.objects.get(pk=site)
             #d1="delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate"
             csb = CsvBase.objects.get(pk=format_csv)
             cd = CsvData(csb.val)
