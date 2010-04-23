@@ -25,7 +25,7 @@ l = logging.getLogger('fsa.lcr.tests')
 
 class LcrTestCase(test.TestCase):
     #fixtures = ['testsite', 'alias', 'server', 'context', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr', 'acl']
-    fixtures = ['testsite', 'test_currency', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    fixtures = ['testsite', 'currency_default', 'test_currency', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         # Every test needs a client.
         self.client = Client()
