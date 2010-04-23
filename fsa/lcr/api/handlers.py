@@ -3,7 +3,7 @@ from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.utils import rc, require_mime, require_extended
 #from piston.doc import generate_doc
 import logging
-log = logging.getLogger('fsb.directory.api.handlers')
+log = logging.getLogger('fsa.directory.api.handlers')
 #from fsa.directory.models import Endpoint
 #from fsa.numberplan.models import NumberPlan
 from django.contrib.auth.models import User
@@ -19,7 +19,7 @@ class LcrHandler(BaseHandler):
     allowed_methods = ('GET')
     model = Lcr
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('digits', 'name', 'country_code', 'rate', 'enabled','enable', 'weeks', 'time_start', 'time_end')
+    fields = ('digits', 'name', 'country_code', 'rate', 'weeks', 'time_start', 'time_end')
 
     #@staticmethod
     #def resource_uri():
@@ -35,7 +35,11 @@ class LcrHandler(BaseHandler):
         """
         #log.debug("read endpoint % s" % account)
         base = Lcr.objects
-        #accountcode=account
+        if request.GET.get("start"):
+            start = request.GET.get("start")
+        if request.GET.get("limit"):
+            limit = int(request.GET.get("limit"))
+            limit += int(start)
         try:
             if phone is not None:
                 return {"count": 1, "lcr": base.phone_lcr(phone, request.user)}
