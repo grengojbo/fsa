@@ -43,19 +43,19 @@ def install_pil():
 s
 def media_copy():
     """docstring for media_copy"""
-        import grappelli
-        from django.contrib import admin
-        src_g = join(dirname(grappelli.__path__[0]), 'grappelli/media')
-        src_admin = join(dirname(admin.__file__), 'media')
-        dest_media = join(settings.PROJECT_ROOT, 'media')
-        #os.path.isdir()
-        #os.mkdir()
-        # /home/www/u00014/test.linktel.com.ua/www
-        #crypt.crypt('freeswitch','freeswitch') 
-        # frpOsE5ExXNZw
-        #/ cp -f -R /home/www/u00014/.virtualenvs/test.linktel.com.ua/lib/python2.5/site-packages/django/contrib/admin/media/*  /home/www/u00014/test.linktel.com.ua/www/media/admin
-        # cp -f -R /home/www/u00014/.virtualenvs/test.linktel.com.ua/src/django-grappelli/grappelli/media/* /home/www/u00014/test.linktel.com.ua/www/media/admin
-        #'cp -R /Users/jbo/.virtualenvs/fs_test/src/django-grappelli/grappelli/templates ./'
+    import grappelli
+    from django.contrib import admin
+    src_g = join(dirname(grappelli.__path__[0]), 'grappelli/media')
+    src_admin = join(dirname(admin.__file__), 'media')
+    dest_media = join(settings.PROJECT_ROOT, 'media')
+    #os.path.isdir()
+    #os.mkdir()
+    # /home/www/u00014/test.linktel.com.ua/www
+    #crypt.crypt('freeswitch','freeswitch') 
+    # frpOsE5ExXNZw
+    #/ cp -f -R /home/www/u00014/.virtualenvs/test.linktel.com.ua/lib/python2.5/site-packages/django/contrib/admin/media/*  /home/www/u00014/test.linktel.com.ua/www/media/admin
+    # cp -f -R /home/www/u00014/.virtualenvs/test.linktel.com.ua/src/django-grappelli/grappelli/media/* /home/www/u00014/test.linktel.com.ua/www/media/admin
+    #'cp -R /Users/jbo/.virtualenvs/fs_test/src/django-grappelli/grappelli/templates ./'
 
 
 def setup_fsa(site_name, local_site_name):
@@ -64,13 +64,18 @@ def setup_fsa(site_name, local_site_name):
     """
     #os.system('cd %s && python manage.py satchmo_copy_static' % site_name)
     os.system('cd %s && python manage.py syncdb' % site_name) 
-    os.system('cd %s && python manage.py migrate' % site_name)
-    os.system('cd %s && python manage.py loaddata l10n_data currency_data' % site_name)
-    os.system('cd %s && python manage.py loaddata fsa_grappelli.json  --settings=settings' % site_name)
+    os.system('cd %s && python manage.py loaddata l10n_data testsite server server_conf gateway sipprofile' % site_name)
+    os.system('cd %s && python manage.py loaddata currency_data fsa_grappelli.json --settings=settings' % site_name)
+    os.system('cd %s && python manage.py loaddata  currency_default tariffplan --settings=settings' % site_name)
+    os.system('cd %s && python manage.py migrate dialplan' % site_name)
+    os.system('cd %s && python manage.py migrate cdr' % site_name)
+    os.system('cd %s && python manage.py migrate prepaid' % site_name)
+    os.system('cd %s && python manage.py migrate directory' % site_name)
+    #os.system('cd %s && python manage.py migrate ' % site_name)
+    #os.system('cd %s && python manage.py loaddata fsa_grappelli.json --settings=settings' % site_name)
     #os.system('cd %s && python manage.py loaddata grappelli_help.json --settings=settings' % site_name)
     # acl extension context alias
-    os.system('cd %s && python manage.py loaddata testsite server server_conf gateway sipprofile currency_default --settings=settings' % site_name)
-    os.system('cd %s && python manage.py loaddata tariffplan --settings=settings' % site_name)
+    #os.system('cd %s && python manage.py loaddata tariffplan --settings=settings' % site_name)
     #os.system('cd %s && ' % site_name)
     #os.system('cd %s && python manage.py loaddata test_prepaid' % site_name)
     #os.system('cd %s && python manage.py loaddata acl ' % site_name)
