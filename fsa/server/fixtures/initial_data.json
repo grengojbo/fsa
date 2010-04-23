@@ -46,8 +46,8 @@
   "model": "server.csvbase", 
   "fields": {
    "name": "Lcr Ukraina", 
-   "val": "delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|rate|brand|currency", 
-   "description": "country_code|name|digits|rate|brand|currency"
+   "val": "delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|price|rate|currency|weeks|time_start|time_end", 
+   "description": "country_code|name|digits|price|rate|currency|weeks|time_start|time_end"
   }
  }, 
  {

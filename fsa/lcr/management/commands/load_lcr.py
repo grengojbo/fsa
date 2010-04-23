@@ -97,6 +97,7 @@ class Command(BaseCommand):
         #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test-lcr.csv'), "rt")
         #f = open(fixture_labels, "rt")
 
+        f = open(fixture_labels, "rt")
         try:
             gateway = SofiaGateway.objects.get(pk=gw, enabled=True)
             s = Site.objects.get(pk=site)
@@ -104,7 +105,6 @@ class Command(BaseCommand):
             csb = CsvBase.objects.get(pk=format_csv)
             cd = CsvData(csb.val)
             log.debug(fixture_labels)
-            f = open(fixture_labels, "rt")
             reader = csv.reader(f, delimiter=';', dialect='excel')
             for row in reader:
                 try:
@@ -112,8 +112,8 @@ class Command(BaseCommand):
                     for country in country_list:
                         n['country_code'] = country_code
                         digits = n['digits']
-                        #price = Money(n['price'], n['currency'])
-                        price = Money(n['price'], 'USD')
+                        price = Money(n['price'], n['currency'])
+                        #price = Money(n['price'], 'USD')
                         #price = n['price']
                         objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
                         object_count += objects_in_fixture
@@ -123,8 +123,8 @@ class Command(BaseCommand):
             label_found = True
         except Exception, e:
             log.error(e)
-##        finally:
-##            f.close()
+        finally:
+            f.close()
         if object_count > 0:
             sequence_sql = connection.ops.sequence_reset_sql(self.style, models)
             if sequence_sql:
