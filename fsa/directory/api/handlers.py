@@ -18,7 +18,7 @@ class EndpointHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Endpoint
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('uid', 'phone_type', 'password', 'accountcode', 'effective_caller_id_name','enable', 'is_registered', 'last_registered', 'description')
+    fields = ('uid', 'password', 'accountcode', 'effective_caller_id_name','enable', 'is_registered', 'last_registered', 'description')
     
     #@staticmethod
     #def resource_uri():
