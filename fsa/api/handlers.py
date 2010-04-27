@@ -9,7 +9,7 @@ class FreeSwitchAdminHandler(BaseHandler):
    model = User
    fields = ('username',)
    def create(self, request):
-       pass
-       
+      pass
+
    def read(self, request, title=None):
-       return User.objects.get(user=request.user)
+      return User.objects.get(user=request.user)
