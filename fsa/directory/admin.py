@@ -16,7 +16,7 @@ def make_enable(modeladmin, request, queryset):
 
 
 class EndpointAdmin(admin.ModelAdmin):
-    list_display = ('uid', 'accountcode', 'phone_type', 'enable', 'is_registered',)
+    list_display = ('uid', 'accountcode', 'phone_type', 'enable', 'is_registered', 'user_context', 'sip_profile', 'site',)
     list_filter = ('enable', 'is_registered')
     #list_editable = ('enable',)
     search_fields = ('uid',)

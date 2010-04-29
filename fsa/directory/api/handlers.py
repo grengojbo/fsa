@@ -24,7 +24,7 @@ class EndpointHandler(BaseHandler):
     #def resource_uri():
     #    return ('api_numberplan_handler', ['phone_number'])
     #@require_mime('json', 'yaml')
-    def read(self, request, start=0, limit=5, phone=None, account=None):
+    def read(self, request, start=0, limit=50, phone=None, account=None):
         """
         Returns a blogpost, if `title` is given,
         otherwise all the posts.
@@ -35,16 +35,24 @@ class EndpointHandler(BaseHandler):
         log.debug("read endpoint % s" % account)
         base = Endpoint.objects
         #accountcode=account
-        if phone is not None:
-            return {"count": 1, "phone": base.get(uid=phone, site__name__iexact=request.user)}
-        elif account is not None:
-            resp = base.filter(accountcode__username__iexact=account, site__name__iexact=request.user)[start:limit]
-            count = base.filter(accountcode__username__iexact=account, site__name__iexact=request.user).count()
-            return {"count": count, "phone": resp}
-        else:
-            resp = base.filter(site__name__iexact=request.user)[start:limit]
-            count = base.filter(site__name__iexact=request.user).count()
-            return {"count": count, "phone": resp}
+        if request.GET.get("start"):
+            start = request.GET.get("start")
+        if request.GET.get("limit"):
+            limit = int(request.GET.get("limit"))
+            limit += int(start)
+        try:
+            if phone is not None:
+                return {"count": 1, "phone": base.get(uid=phone, site__name__iexact=request.user)}
+            elif account is not None:
+                resp = base.filter(accountcode__username__iexact=account, site__name__iexact=request.user)[start:limit]
+                count = base.filter(accountcode__username__iexact=account, site__name__iexact=request.user).count()
+                return {"count": count, "phone": resp}
+            else:
+                resp = base.filter(site__name__iexact=request.user)[start:limit]
+                count = base.filter(site__name__iexact=request.user).count()
+                return {"count": count, "phone": resp}
+        except:
+            return rc.NOT_HERE
 
     @transaction.commit_on_success
     def update(self, request, phone):
