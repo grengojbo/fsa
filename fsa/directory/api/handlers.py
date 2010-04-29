@@ -84,8 +84,12 @@ class EndpointHandler(BaseHandler):
         attrs = self.flatten_dict(request.POST)
         try:
             endpoint = Endpoint.objects.get(uid=phone, site__name__iexact=request.user)
+            np = NumberPlan.objects.get(phone_number=phone, site__name__iexact=request.user)
             endpoint.enable=False
+            np.status=2
             endpoint.save()
+            np.save()
+            # TODO add parking
             return rc.DELETED
         except:
             return rc.NOT_HERE

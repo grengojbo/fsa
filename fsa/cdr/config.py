@@ -50,7 +50,7 @@ config_register_list(
     BooleanValue(SERVER_GROUP, 'lighttpd', default=True, 
         description=_("Lighttpd"), help_text=_(u"optional: set to true to disable Expect: 100-continue lighttpd requires this setting") 
     ),
-    StringValue(SERVER_GROUP, 'err_log', default='log/xml_cdr', 
+    StringValue(SERVER_GROUP, 'err_log', default='log/xml_cdr/', 
         description=_("Error Log DIR"), help_text=_(u"optional: full path to the error log dir for failed web posts if not specified its the same as log-dir, either an absolute path, a relative path assuming ${prefix}/logs or a blank or omitted value will default to ${prefix}/logs/xml_cdr") 
     ),
     BooleanValue(SERVER_GROUP, 'cdr_ca', default=True, 
