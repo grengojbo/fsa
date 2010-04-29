@@ -21,7 +21,7 @@ class ServerAdmin(admin.ModelAdmin):
             'classes':['collapse-open'],
             'fields': ('sql_name', 'sql_login', 'sql_password')}),
         (_(u'SSH params'), {
-            'classes': ['collapse-closed'],
+            'classes': ['collapse-open'],
             'fields': ('ssh_user', 'ssh_host')}),
         )
 
@@ -38,10 +38,10 @@ class SipProfileAdmin(admin.ModelAdmin):
             'classes': ('collapse-open',),
             'fields': (('sip_ip', 'rtp_ip', 'sip_port'), 'ext_sip_ip', 'ext_rtp_ip')}),
         (_(u'Other'), {
-            'classes':['collapse-closed'],
+            'classes':['collapse-open'],
             'fields': ('context', 'codec_prefs', 'outbound_codec_prefs', ('alias', 'gateway'))}),
         (_(u'XML params'), {
-            'classes': ['collapse-closed'],
+            'classes': ['collapse-open'],
             'fields': ('other_param', 'no_view_param')}),
         )
 

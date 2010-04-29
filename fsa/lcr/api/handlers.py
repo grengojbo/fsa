@@ -11,6 +11,9 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from django.db import transaction
 from fsa.lcr.models import Lcr
+from xmlrpclib import ServerProxy
+from livesettings import ConfigurationSettings, config_value
+from BeautifulSoup import BeautifulStoneSoup as Soup
 
 class LcrHandler(BaseHandler):
     """
@@ -42,7 +45,11 @@ class LcrHandler(BaseHandler):
             limit += int(start)
         try:
             if phone is not None:
-                return {"count": 1, "lcr": base.phone_lcr(phone, request.user)}
+                server = ServerProxy("http://%s:%s@%s:%s" % (config_value('SERVER', 'rcpuser'), config_value('SERVER', 'rcppasswd'), config_value('SERVER', 'rcphost'), config_value('SERVER', 'rcpport')))
+                qphone = "%s default as xml" % phone
+                resp = server.freeswitch.api("lcr", qphone)
+                xml_resp = Soup(resp)
+                return {"count": 1, "rate": xml_resp.row.rate.string}
             else:
                 resp = base.filter(site__name__iexact=request.user)[start:limit]
                 count = base.filter(site__name__iexact=request.user).count()

@@ -20,6 +20,9 @@ import time, datetime
 from decimal import Decimal
 from decimal import *
 from fsa.core.utils import CsvData
+from livesettings import ConfigurationSettings, config_value, config_choice_values
+from BeautifulSoup import BeautifulStoneSoup as Soup
+
 import logging
 l = logging.getLogger('fsa.lcr.tests')
 
@@ -125,9 +128,15 @@ class LcrTestCase(test.TestCase):
     #         fw.close()
     #         f.close()
             
-    # def testLcrLoad(self):
-    #     """docstring for testLcrLoad"""
-    #     f = open(os.path.join(os.path.dirname(__file__), 'fixtures', '15.csv'), "rt")
+    def testLcrLoad(self):
+        """docstring for testLcrLoad"""
+        resp = '<result>\n  <row id="1">    <prefix>380</prefix>    <carrier_name>ukrtelecom</carrier_name>    <rate>0.22800</rate>    <codec></codec>    <cid></cid>    <dialstring>[lcr_carrier=ukrtelecom,lcr_rate=0.22800]sofia/external/380443615162</dialstring>  </row></result>'
+        self.assertEquals(config_value('SERVER', 'rcphost'), '127.0.0.1')
+        self.assertEquals(config_value('SERVER', 'rcpport'), '8080')
+        self.assertEquals(config_value('SERVER', 'rcpuser'), 'freeswitch')
+        self.assertEquals(config_value('SERVER', 'rcppasswd'), 'works')
+        xml_resp = Soup(resp)
+        self.assertEquals(xml_resp.row.rate.string, '0.22800')
     #     gw = SofiaGateway.objects.get(name='testgw', enabled=True)
     #     try:
     #         #reader = csv.reader(open(filename, "rb"), delimiter=';')
