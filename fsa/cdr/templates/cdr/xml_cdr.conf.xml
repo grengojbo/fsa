@@ -9,7 +9,7 @@
     <!-- <param name="delay" value="{{ xc.delay }}"/> -->
     <param name="log-dir" value="{{ xc.log_dir }}"/>
     <param name="log-b-leg" value="{{ xc.log_b_leg|lower }}"/>
-    <param name="prefix-a-leg" value="{{ xc.prefix_a_leg|lower }} "/>
+    <param name="prefix-a-leg" value="{{ xc.prefix_a_leg|lower }}"/>
       <param name="encode" value="{{ xc.encode|lower }}"/>
       <!--<param name="disable-100-continue" value="true"/>--> 
       <param name="err-log-dir" value="{{ xc.err_log }}"/>
