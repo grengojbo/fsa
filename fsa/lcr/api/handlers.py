@@ -28,7 +28,7 @@ class LcrHandler(BaseHandler):
     #def resource_uri():
     #    return ('api_numberplan_handler', ['phone_number'])
     #@require_mime('json', 'yaml')
-    def read(self, request, start=0, limit=5, phone=None):
+    def read(self, request, start=0, limit=50, phone=None):
         """
         Returns a blogpost, if `title` is given,
         otherwise all the posts.
@@ -46,6 +46,7 @@ class LcrHandler(BaseHandler):
         try:
             if phone is not None:
                 server = ServerProxy("http://%s:%s@%s:%s" % (config_value('SERVER', 'rcpuser'), config_value('SERVER', 'rcppasswd'), config_value('SERVER', 'rcphost'), config_value('SERVER', 'rcpport')))
+                log.debug('connect to server: %s' % config_value('SERVER', 'rcpuser'))
                 qphone = "%s default as xml" % phone
                 resp = server.freeswitch.api("lcr", qphone)
                 xml_resp = Soup(resp)

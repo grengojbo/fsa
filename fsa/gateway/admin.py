@@ -19,10 +19,10 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
                     'classes': ['collapse-open'],
                     'fields': ('from_user', 'from_domain', 'exten', 'proxy', 'register_proxy',)}),
                 (_(u'Other Param'), {
-                    'classes': ['collapse-closed'],
+                    'classes': ['collapse-open'],
                     'fields': (('ping', 'expire_seconds', 'retry_seconds',), ('register_transport', 'caller_id_in_from', 'extension_in_contact',), ('direction', 'acl',),)}),
                 (_(u'To Dial Plan'), {
-                    'classes': ['collapse-closed'],
+                    'classes': ['collapse-open'],
                     'fields': ('context', ('max_concurrent', 'in_progress_calls',), 'prefix', 'suffix', 'lcr_format',)}),
             )
     

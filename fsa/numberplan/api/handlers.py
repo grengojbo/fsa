@@ -20,7 +20,7 @@ class NumberPlanHandler(BaseHandler):
     #def resource_uri():
     #    return ('api_numberplan_handler', ['phone_number'])
     #@require_mime('json', 'yaml')
-    def read(self, request, start=0, limit=5, phone_number=None):
+    def read(self, request, start=0, limit=50, phone_number=None):
         """
         Returns a blogpost, if `title` is given,
         otherwise all the posts.
