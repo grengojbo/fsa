@@ -13,6 +13,9 @@ from fsa.cdr.models import Cdr
 from xmlrpclib import ServerProxy
 from livesettings import ConfigurationSettings, config_value
 from BeautifulSoup import BeautifulStoneSoup as Soup
+from fsa.server.models import Server
+import time, datetime
+import urllib
 
 log = logging.getLogger('fsa.cdr.api.handlers')
 
@@ -62,8 +65,56 @@ class CdrHandler(BaseHandler):
 
     #transaction.commit_on_success
     def create(self, request):
+        time_format = "%Y-%m-%d %H:%M:%S"
         attrs = self.flatten_dict(request.POST)
         log.debug(attrs.get('cdr'))
+        #xml_cdr = Soup(request.raw_post_data)
+        xml_cdr = Soup(attrs.get('cdr'))
+        #l.debug("billsec: %i %i" % xml_cdr.cdr.variables.billsec, xml_cdr.cdr.variables.billmsec)
+        
+        new_cdr = Cdr(caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string, caller_id_number = xml_cdr.cdr.callflow.caller_profile.caller_id_number.string)
+        if xml_cdr.cdr.variables.accountcode is not None:
+            log.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode)
+            new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
+        new_cdr.destination_number = xml_cdr.cdr.callflow.caller_profile.destination_number.string
+        log.debug("destination_number %s" % xml_cdr.cdr.callflow.caller_profile.destination_number.string)
+        new_cdr.context = xml_cdr.cdr.callflow.caller_profile.context.string
+        log.debug("context %s" % xml_cdr.cdr.callflow.caller_profile.context.string)
+        new_cdr.start_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.start_stamp.string), time_format)))
+        log.debug("start_stamp: %s" % new_cdr.start_timestamp)
+        
+        new_cdr.answer_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.answer_stamp.string), time_format)))
+        #log.debug("answer_stamp: %s" % xml_cdr.cdr.variables.answer_stamp.string)
+        new_cdr.end_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.end_stamp.string), time_format)))
+        #log.debug("end_stamp: %s" % xml_cdr.cdr.variables.end_stamp.string)
+        new_cdr.duration = xml_cdr.cdr.variables.duration.string
+        log.debug("duration: %s" % xml_cdr.cdr.variables.duration.string)
+        new_cdr.billsec = int(xml_cdr.cdr.variables.billsec.string)
+        log.debug("billsec %s" % xml_cdr.cdr.variables.billsec.string)
+        new_cdr.hangup_cause = xml_cdr.cdr.variables.hangup_cause.string
+        log.debug("hangup_cause %s" % xml_cdr.cdr.variables.hangup_cause.string)
+        new_cdr.uuid = xml_cdr.cdr.callflow.caller_profile.uuid.string
+        log.debug("uuid %s" % xml_cdr.cdr.callflow.caller_profile.uuid.string)
+        new_cdr.read_codec = xml_cdr.cdr.variables.read_codec.string
+        log.debug("read_codec %s" % new_cdr.read_codec)
+        new_cdr.write_codec = xml_cdr.cdr.variables.write_codec.string
+        log.debug("write_codec %s" % new_cdr.write_codec)
+        #sip_user_agent
+        #<endpoint_disposition>ANSWER</endpoint_disposition>
+        #<proto_specific_hangup_cause>sip%3A200</proto_specific_hangup_cause>
+        #<sip_hangup_phrase>OK</sip_hangup_phrase>
+##        <sip_use_codec_name>GSM</sip_use_codec_name>
+##        <sip_use_codec_rate>8000</sip_use_codec_rate>
+##        <sip_use_codec_ptime>20</sip_use_codec_ptime>
+##        <read_codec>GSM</read_codec>
+##        <read_rate>8000</read_rate>
+##        <write_codec>GSM</write_codec>
+##        <write_rate>8000</write_rate>
+        new_cdr.save()
+        
+        log.debug("caller_id_name %s" % new_cdr.caller_id_name)
+        log.debug("caller_id_number %s" % new_cdr.caller_id_number)
+        #log.debug("bridge_channel %s" % new_cdr.bridge_channel)
         resp = rc.CREATED
         #resp.write(endpoint)
         return resp

@@ -38,7 +38,9 @@ def set_cdr(request):
     xml_cdr = Soup(request.raw_post_data)
     #l.debug("billsec: %i %i" % xml_cdr.cdr.variables.billsec, xml_cdr.cdr.variables.billmsec)
     new_cdr = Cdr(caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string, caller_id_number = xml_cdr.cdr.callflow.caller_profile.caller_id_number.string)
-    new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
+    if xml_cdr.cdr.variables.accountcode.string is not None:
+        l.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode.string)
+        new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
     new_cdr.destination_number = xml_cdr.cdr.callflow.caller_profile.destination_number.string
     new_cdr.context = xml_cdr.cdr.callflow.caller_profile.context.string
     new_cdr.start_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.start_stamp.string), time_format)))
@@ -53,7 +55,7 @@ def set_cdr(request):
     new_cdr.write_codec = xml_cdr.cdr.variables.write_codec.string
     new_cdr.save()
 
-    l.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode.string)
+    
     #l.debug("caller_id_name %s" % new_cdr.caller_id_name)
     #l.debug("caller_id_number %s" % new_cdr.caller_id_number)
     #l.debug("destination_number %s" % xml_cdr.cdr.callflow.caller_profile.destination_number.string)
