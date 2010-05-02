@@ -115,7 +115,8 @@ class CdrHandler(BaseHandler):
         log.debug("caller_id_name %s" % new_cdr.caller_id_name)
         log.debug("caller_id_number %s" % new_cdr.caller_id_number)
         #log.debug("bridge_channel %s" % new_cdr.bridge_channel)
-        resp = rc.CREATED
+        #resp = rc.CREATED
+        resp = rc.ALL_OK
         #resp.write(endpoint)
         return resp
 ##        attrs = self.flatten_dict(request.POST)
