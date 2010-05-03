@@ -31,15 +31,20 @@ class NumberPlanManager(models.Manager):
     def create_phone_number(self, phone_number, nt=0):
         new_phone = self.create(phone_number=phone_number,nt=nt, enables=True, status=1, date_active = datetime.datetime.now())
         return new_phone
+    
     def lphonenumber(self, site=None):
         """Возвращает случайный свободный номер"""
         if site is None:
             site = Site.objects.get(pk=1)
-        p = self.filter(enables=False, nt=1, status=0, site=site)[0]
-        p.status = 3
-        p.date_active = datetime.datetime.now()
-        p.save()
-        return p.phone_number
+        l.debug("site: %s" %site.name)
+        try:
+            p = self.filter(enables=False, nt=1, status=0, site=site)[0]
+            p.status = 3
+            p.date_active = datetime.datetime.now()
+            p.save()
+            return p.phone_number
+        except:
+            return None
 
     def lfree(self,pn):
         """присваиваем статус свободный номер"""

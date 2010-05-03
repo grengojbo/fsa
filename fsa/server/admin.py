@@ -16,7 +16,7 @@ class ServerAdmin(admin.ModelAdmin):
         (None, {'fields': ('name', 'password', ('listen_ip', 'listen_port', 'listen_acl'), 'enabled')}),
         (_(u'Server Configuration'), {
             'classes': ('collapse',),
-            'fields': ('server_version', 'acl', 'sites')}),
+            'fields': ('server_version', 'acl')}),
         (_(u'UnixODBC'), {
             'classes':['collapse-open'],
             'fields': ('sql_name', 'sql_login', 'sql_password')}),

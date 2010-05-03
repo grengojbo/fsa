@@ -57,7 +57,7 @@ def set(request):
         r = SipRegistration.objects.sip_auth_nc(p,e)
         l.debug("uid: %s register: %d" % (p.get('user'), r))
         if r == 1:
-            return {'sip':e, 'domain':p.get('domain'), 'fsb':fsb}
+            #return {'sip':e, 'domain':p.get('domain'), 'fsb':fsb}
             key_value = p.get('user')
             return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain'), 'fsb':fsb }).render_response('directory/sip_reg.xml')
         else:
@@ -65,6 +65,17 @@ def set(request):
     except Endpoint.DoesNotExist:
         return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
 
+def gateways(request):
+    p = request.POST
+    key_value = name = 'result'
+    xml_context = '<result status="not found" />'
+    try:
+        es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
+        sofia = SipProfile.objects.get(server=es, enabled=True, name=request.POST.get('hostname'))
+        return request.Context({'hostname':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 'sofia':sofia, 's': es.options['SERVER']}).render_response('gateway/profile.xml')
+    except:
+        return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
+    
 @login_required
 def directory_view(request):
     """

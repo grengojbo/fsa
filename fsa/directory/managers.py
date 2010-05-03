@@ -54,19 +54,21 @@ class EndpointManager(models.Manager):
             n.uid = NumberPlan.objects.lphonenumber()
         else:
             n.uid = phone_number
-            
-        n.password = User.objects.make_random_password(6, "0123456789")
-        n.accountcode = user
-        # TODO: добавить значение по умолчанию
-        n.user_context = Context.objects.get(default_context=True)
-        n.sip_profile =  SipProfile.objects.get(default_profile=True)
-        n.effective_caller_id_name = user.username
-        n.enable = True
-        n.phone_type = 'S'
-        n.save()
-        NumberPlan.objects.lactivate(n.uid)
-        l.debug("create endpoint: %s" % n.uid)
-        return n
+        try:
+            n.password = User.objects.make_random_password(6, "0123456789")
+            n.accountcode = user
+            # TODO: добавить значение по умолчанию
+            n.user_context = Context.objects.get(default_context=True)
+            n.sip_profile =  SipProfile.objects.get(default_profile=True)
+            n.effective_caller_id_name = user.username
+            n.enable = True
+            n.phone_type = 'S'
+            n.save()
+            NumberPlan.objects.lactivate(n.uid)
+            l.debug("create endpoint: %s" % n.uid)
+            return n
+        except:
+            return None
 
     def reg(self):
         n = self.model()

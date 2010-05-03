@@ -11,7 +11,7 @@ from django.contrib.sites.models import Site
 import config
 from livesettings import ConfigurationSettings, config_value, config_choice_values
 # Create your models here.
-VERSION_CHOICES = ( (0, '1.0.5'),)
+VERSION_CHOICES = ( (0, '1.0.5'), (1, '1.0.6'),)
 TYPE_CHOICES = ( (0, _(u'SyStem')), (1, _(u'User')),)
 
 class Server(models.Model):

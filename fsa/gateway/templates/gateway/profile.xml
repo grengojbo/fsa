@@ -1,37 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
-    <section name="directory">
-        <domain name="domain1.awesomevoipdomain.faketld">
-            <params>
-                <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
-            </params>
-            <variables>
-                <variable name="example_var" value="example_value_1"/>
-            </variables>
-            <user id="default" />
-        </domain>
-        <domain name="domain2.awesomevoipdomain.faketld">
-            <params>
-                <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
-            </params>
-            <variables>
-                <variable name="example_var" value="example_value_2"/>
-            </variables>
-            <user id="default" />
-        </domain>
-    </section>
-</document>
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="freeswitch/xml">
-    <section name="directory">
-        <domain name="{{ sofia.name }}">
-            <user id ="sipmos">
+<section name="directory">
+    {% for site in sofia.sites.all() %}<domain name="{{ site.name }}">
+        <params>
+            <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
+        </params>
+        <!--<user id="sipmos"> -->
         <gateways>
             {% for gw in sofia.gateway.lactive %}
                 {% include "gateway/gateways.xml" %}
             {% endfor %}
         </gateways>
-        </user>
-        </domain>
-    </section>
+        <!--</user> -->
+    </domain>{% endfor %}
+</section>
 </document>

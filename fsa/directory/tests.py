@@ -15,11 +15,12 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 from fsa.directory.models import Endpoint, SipRegistration
 from fsa.dialplan.models import Context
+import logging as l
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
-    fixtures = ['testsite', 'testnp', 'server', 'server_conf', 'gateway', 'sipprofile']
+    fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()
@@ -68,9 +69,11 @@ class DirectoryTestCase(test.TestCase):
         Проверка регистрация на FS sip устройства 
         """
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
-
+        response = self.client.post('/api/get/', {'key_value': 'event_socket.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        self.assertEquals(response.status_code, 200)
         response = self.client.post('/api/get/', {'profile': 'test1.example.com', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
         self.assertEquals(response.status_code, 200)
+        l.debug(response)
         
         sip_auth_nonce = 'e8c26e3e-1792-11de-ae36-af3bf0ae904b'
         sip_auth_nc = '00000001'

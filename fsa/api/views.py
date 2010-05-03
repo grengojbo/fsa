@@ -31,7 +31,7 @@ def directory(request):
                 # но тогда наверное нужно убрать из server/sip_profile.xml секцию gateways  
                 # но зачем это надо непойму и так они подгружаются через server/sip_profile
                 #return gw.profile(request)
-                return sv.get(request)
+                return d.gateways(request)
             elif request.POST.get('purpose') == 'network-list':
                 # TODO так и непонял нах оно надо в доке пишут
                 # This last post is regarding mod_sofia asking for users with cidr = attributes for adding them to the acls.
