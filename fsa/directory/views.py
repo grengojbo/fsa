@@ -71,7 +71,7 @@ def directory_view(request):
     Personal data of the user profile
     """
     pass
-    
+
 @login_required
 @ajax_request
 def new_endpoint(request):

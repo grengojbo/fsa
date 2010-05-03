@@ -34,6 +34,10 @@ class DirectoryTestCase(test.TestCase):
         #self.p = "123456"
         #self.effective_caller_id_name = self.uid
         #self.enable = True
+        self.hostname = 'test1.example.com'
+        self.hostip = '192.168.51.100'
+        self.domainname = '192.168.51.100'
+        self.xml_context = '<result status="not found" />'
 
     def testCreateEndpoint(self):
         """
@@ -64,6 +68,10 @@ class DirectoryTestCase(test.TestCase):
         Проверка регистрация на FS sip устройства 
         """
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
+
+        response = self.client.post('/api/get/', {'profile': 'test1.example.com', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        self.assertEquals(response.status_code, 200)
+        
         sip_auth_nonce = 'e8c26e3e-1792-11de-ae36-af3bf0ae904b'
         sip_auth_nc = '00000001'
         p  = {'domain': '192.168.51.100', 'sip_contact_user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_from_user': new_endpoint.uid, 'sip_auth_nc': sip_auth_nc, 'section': 'directory', 'hostname': 'test1.example.com', 'sip_auth_method': 'REGISTER', 'sip_auth_username': new_endpoint.uid, 'sip_auth_nonce': sip_auth_nonce, 'sip_to_host': '192.168.51.100', 'key_value': '192.168.51.100', 'sip_request_host': '192.168.51.100', 'key_name': 'name', 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'user': new_endpoint.uid, 'key': 'id', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_response': '353416c6e18345b621b167acfbcf2182', 'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_realm': '192.168.51.100', 'sip_to_user': new_endpoint.uid, 'sip_auth_qop': 'auth', 'tag_name': 'domain', 'sip_profile': 'test1.example.com', 'action': 'sip_auth', 'sip_contact_host': '192.168.51.251'}

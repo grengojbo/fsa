@@ -5,8 +5,8 @@
   <settings>
     <param name="url" value="{{ xc.url }}"/> 
     <param name="cred" value="{{ xc.user }}:{{ xc.passwd }}"/>
-    <!-- <param name="retries" value="{{ xc.retries }}"/> -->
-    <!-- <param name="delay" value="{{ xc.delay }}"/> -->
+    <param name="retries" value="{{ xc.retries }}"/>
+    <param name="delay" value="{{ xc.delay }}"/>
     <param name="log-dir" value="{{ xc.log_dir }}"/>
     <param name="log-b-leg" value="{{ xc.log_b_leg|lower }}"/>
     <param name="prefix-a-leg" value="{{ xc.prefix_a_leg|lower }}"/>
