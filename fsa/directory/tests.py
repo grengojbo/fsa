@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 from fsa.directory.models import Endpoint, SipRegistration
 from fsa.dialplan.models import Context
 import logging as l
+from django.contrib.sites.models import Site
+from fsa.server.models import Server, SipProfile, Conf
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
@@ -69,9 +71,17 @@ class DirectoryTestCase(test.TestCase):
         Проверка регистрация на FS sip устройства 
         """
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
-        response = self.client.post('/api/directory/', {'profile': 'test1.example.com', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
         self.assertEquals(response.status_code, 200)
-        l.debug(response)
+        site = Site.objects.get(pk=1)
+        es = Server.objects.get(name=self.hostname, enabled=True)
+        sofia = SipProfile.objects.get(server=es, enabled=True, name='internal')
+        sofia.sites.add(site)
+        sofia.save()
+        self.assertEquals(sofia.sites.all().count(), 1)
+        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        self.assertEquals(response.status_code, 200)
+        #l.debug(response)
         
         sip_auth_nonce = 'e8c26e3e-1792-11de-ae36-af3bf0ae904b'
         sip_auth_nc = '00000001'

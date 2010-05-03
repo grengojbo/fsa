@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
 <section name="directory">
-    {% for site in sofia.sites.all() %}<domain name="{{ site.name }}">
+    <domain name="{{ sofia.sip_ip }}">
+        <variables>
+            <variable name="record_stereo" value="true"/>
+          <variable name="default_gateway" value="$${default_provider}"/>
+          <variable name="default_areacode" value="$${default_areacode}"/>
+          <variable name="transfer_fallback_extension" value="operator"/>
+        </variables>
         <params>
             <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
         </params>
-        <!--<user id="sipmos"> -->
-        <gateways>
-            {% for gw in sofia.gateway.lactive %}
+        {% if sofia.gateway.lactive().count() > 0 %}<gateways>
+            {% for gw in sofia.gateway.lactive() %}
+            <!--<user id="sipmos"> -->
                 {% include "gateway/gateways.xml" %}
+            <!--</user> -->
             {% endfor %}
-        </gateways>
-        <!--</user> -->
-    </domain>{% endfor %}
+        </gateways>{% endif %}
+    </domain>
+    {% if sofia.sites.all().count() > 0 %}{% for site in sofia.sites.all() %}<domain name="{{ site.name }}">
+        <params>
+            <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
+        </params>
+        {% if sofia.gateway.lactive().count() > 0 %}<gateways>
+            {% for gw in sofia.gateway.lactive() %}
+            <!--<user id="sipmos"> -->
+                {% include "gateway/gateways.xml" %}
+            <!--</user> -->
+            {% endfor %}
+        </gateways>{% endif %}
+    </domain>{% endfor %}{% endif %}
 </section>
 </document>

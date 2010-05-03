@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from fsa.directory.models import Endpoint, FSGroup, SipRegistration
+from fsa.server.models import Server, SipProfile, Conf
 from fsa.directory.forms import EndpointForm
 from django.views.generic.list_detail import object_list
 from sugar.views.decorators import render_to, ajax_request
@@ -69,10 +70,14 @@ def gateways(request):
     p = request.POST
     key_value = name = 'result'
     xml_context = '<result status="not found" />'
+    #es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
+    #sofia = SipProfile.objects.get(server=es, enabled=True, name=request.POST.get('profile'))
+    #return request.Context({'hostname':request.POST.get('hostname'), 'server':es, 'sofia':sofia, 's': es.options['SERVER']}).render_response('gateway/profile.xml')
+    
     try:
         es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
-        sofia = SipProfile.objects.get(server=es, enabled=True, name=request.POST.get('hostname'))
-        return request.Context({'hostname':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 'sofia':sofia, 's': es.options['SERVER']}).render_response('gateway/profile.xml')
+        sofia = SipProfile.objects.get(server=es, enabled=True, name=request.POST.get('profile'))
+        return request.Context({'hostname':request.POST.get('hostname'), 'server':es, 'sofia':sofia, 's': es.options['SERVER']}).render_response('gateway/profile.xml')
     except:
         return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
     
