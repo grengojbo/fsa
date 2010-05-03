@@ -69,9 +69,7 @@ class DirectoryTestCase(test.TestCase):
         Проверка регистрация на FS sip устройства 
         """
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
-        response = self.client.post('/api/get/', {'key_value': 'event_socket.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
-        self.assertEquals(response.status_code, 200)
-        response = self.client.post('/api/get/', {'profile': 'test1.example.com', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        response = self.client.post('/api/directory/', {'profile': 'test1.example.com', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
         self.assertEquals(response.status_code, 200)
         l.debug(response)
         
