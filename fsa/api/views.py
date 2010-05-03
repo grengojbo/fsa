@@ -36,10 +36,12 @@ def directory(request):
                 # TODO так и непонял нах оно надо в доке пишут
                 # This last post is regarding mod_sofia asking for users with cidr = attributes for adding them to the acls.
                 return sv.get(request)
-            elif request.POST.get('sip_auth_nc'):
-                return d.set(request)
             else:
-                return sv.get(request)
+                return d.set(request)
+            #elif request.POST.get('sip_auth_nc'):
+            #    return d.set(request)
+            #else:
+            #    return sv.get(request)
         else:
             l.debug("IS NOT section %s " % request.POST.get('section'))
             return HttpResponseNotFound('<h1>section %s</h1>' % request.POST.get('section'))

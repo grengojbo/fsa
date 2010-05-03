@@ -50,10 +50,14 @@ def set(request):
     p = request.POST
     key_value = name = 'result'
     xml_context = '<result status="not found" />'
+    #TODO add caching
     try:
-        e = Endpoint.objects.get(uid = p.get('user'), enable=True, sip_profile__name__exact=p.get('sip_profile'))
-        if p.get('sip_auth_method') == 'REGISTER':
-            key_value = p.get('user')
+        key_value = p.get('user')
+        if p.get('action') == 'sip_auth':
+            e = Endpoint.objects.get(uid = p.get('user'), enable=True, sip_profile__name__exact=p.get('sip_profile'))
+            return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain')}).render_response('directory/sip_reg.xml')
+        elif p.get('action') == 'message-count':
+            e = Endpoint.objects.get(uid = p.get('user'), enable=True)
             return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain')}).render_response('directory/sip_reg.xml')
         else:
             return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
