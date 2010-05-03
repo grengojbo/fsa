@@ -6,6 +6,8 @@ from fsa.dialplan.models import Context, Extension
 from fsa.gateway.models import SofiaGateway
 from fsa.server.managers import ServerManager
 from fsa.acl.models import FSAcl
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
 import config
 from livesettings import ConfigurationSettings, config_value, config_choice_values
 # Create your models here.
@@ -46,7 +48,7 @@ class Server(models.Model):
     #ssh_password = models.CharField(_(u'SSH Password'), max_length=25, blank=True)
     ssh_host = models.CharField(_(u'SSH Host'), max_length=100, blank=True)
     enabled = models.BooleanField(_(u'Enable'), default=False)
-    
+    sites = models.ManyToManyField(Site, related_name='sipsites', blank=True, null=True)
     server_version = models.PositiveSmallIntegerField(_(u'Server Version'), choices=VERSION_CHOICES, default=0)
     acl = models.ManyToManyField(FSAcl, related_name='server_acl')
     objects = ServerManager()
@@ -142,7 +144,7 @@ class SipProfile(models.Model):
     rtp_ip = models.IPAddressField(_(u'RTP IP'))
     sip_ip = models.IPAddressField(_(u'SIP IP'))
     sip_port = models.PositiveIntegerField(_(u'SIP port'), default=5060)
-    
+    sites = models.ManyToManyField(Site, related_name='servsites', blank=True, null=True)
     # if set to true, lets anything register
     accept_blind_reg = models.BooleanField(_(u'Accept'), default=False, help_text=_(u'If true, anyone can register to server and will not be challenged for username/password information'))
     #context = 

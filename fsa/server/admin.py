@@ -16,7 +16,7 @@ class ServerAdmin(admin.ModelAdmin):
         (None, {'fields': ('name', 'password', ('listen_ip', 'listen_port', 'listen_acl'), 'enabled')}),
         (_(u'Server Configuration'), {
             'classes': ('collapse',),
-            'fields': ('server_version', 'acl')}),
+            'fields': ('server_version', 'acl', 'sites')}),
         (_(u'UnixODBC'), {
             'classes':['collapse-open'],
             'fields': ('sql_name', 'sql_login', 'sql_password')}),
@@ -39,7 +39,7 @@ class SipProfileAdmin(admin.ModelAdmin):
             'fields': (('sip_ip', 'rtp_ip', 'sip_port'), 'ext_sip_ip', 'ext_rtp_ip')}),
         (_(u'Other'), {
             'classes':['collapse-open'],
-            'fields': ('context', 'codec_prefs', 'outbound_codec_prefs', ('alias', 'gateway'))}),
+            'fields': ('context', 'codec_prefs', 'outbound_codec_prefs', ('alias', 'gateway', 'sites'))}),
         (_(u'XML params'), {
             'classes': ['collapse-open'],
             'fields': ('other_param', 'no_view_param')}),
