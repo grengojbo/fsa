@@ -40,6 +40,7 @@ def get(request):
 
 def set(request):
     """
+    Register Endpoint
     return
         sip - Endpoint onbject
         r - status ( 0 or 1 or 2 )
@@ -48,23 +49,25 @@ def set(request):
     """
     p = request.POST
     key_value = name = 'result'
-    xml_context = '<result status="not found" />'  
-    if is_app('fsbilling.core'):
-        fsb = True
-    else:
-        fsb = False
+    xml_context = '<result status="not found" />'
     try:
-        e = Endpoint.objects.get(uid = p.get('user'), enable=True)
-        r = SipRegistration.objects.sip_auth_nc(p,e)
-        l.debug("uid: %s register: %d" % (p.get('user'), r))
-        if r == 1:
-            #return {'sip':e, 'domain':p.get('domain'), 'fsb':fsb}
+        e = Endpoint.objects.get(uid = p.get('user'), enable=True, sip_profile__name__exact=p.get('sip_profile'))
+        if p.get('sip_auth_method') == 'REGISTER':
             key_value = p.get('user')
-            return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain'), 'fsb':fsb }).render_response('directory/sip_reg.xml')
+            return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain')}).render_response('directory/sip_reg.xml')
         else:
             return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
     except Endpoint.DoesNotExist:
         return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
+
+##        r = SipRegistration.objects.sip_auth_nc(p,e)
+##        l.debug("uid: %s register: %d" % (p.get('user'), r))
+##        if r == 1:
+##            #return {'sip':e, 'domain':p.get('domain'), 'fsb':fsb}
+##            key_value = p.get('user')
+##            return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain'), 'fsb':fsb }).render_response('directory/sip_reg.xml')
+##        else:
+##            
 
 def gateways(request):
     p = request.POST

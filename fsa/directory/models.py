@@ -133,6 +133,7 @@ class SipRegistration(models.Model):
     sip_auth_nonce = models.CharField(_('Nonce'), max_length=36, unique=True)
     # default='e8c26e3e-1792-11de-ae36-af3bf0ae904b')
     sip_auth_qop = models.CharField(_('Qop'), max_length=100, default='auth')
+    #sip_auth_realm=test.lincom3000.com.ua
     sip_auth_realm = models.CharField(_('Realm'), max_length=100)
     sip_auth_uri = models.CharField(_('uri'), max_length=100)
     #, default='sip:62.149.27.151')
@@ -146,6 +147,23 @@ class SipRegistration(models.Model):
     sip_contact_user = models.CharField(_('Contact User'), max_length=50)
     sip_contact_host = models.CharField(_('Contact Host'), max_length=100)
     sip_request_host = models.CharField(_('Request Host'), max_length=100)
+    
+    #sip_profile=internal
+    #sip_auth_nonce=426d4308-56e6-11df-8fab-cf38109feabb
+    #sip_auth_uri=sip%3Atest.lincom3000.com.ua
+    #sip_contact_user=380895900000
+    #     &sip_contact_host=193.201.83.3
+    #     &sip_to_user=380895900000
+    #     &sip_to_host=test.lincom3000.com.ua
+    #     &sip_from_user=380895900000
+    #     &sip_from_host=test.lincom3000.com.ua
+    #sip_request_host=test.lincom3000.com.ua
+    #&sip_auth_qop=auth
+    #&sip_auth_cnonce=VlLTGJWeNvIgt1QiWsQf9z-h4Sr8vCLa
+    #&sip_auth_nc=00000001
+    #&sip_auth_response=aca561ab4fc8a886fc7852165333bbfb
+    #&sip_auth_method=REGISTER
+
     #tag_name = models.CharField(_(''), max_length=100, default='domain')
     #sip_profile = models.CharField(_('Profile'), max_length=100)
     #, default='internal')

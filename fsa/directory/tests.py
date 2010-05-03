@@ -85,18 +85,25 @@ class DirectoryTestCase(test.TestCase):
         
         sip_auth_nonce = 'e8c26e3e-1792-11de-ae36-af3bf0ae904b'
         sip_auth_nc = '00000001'
-        p  = {'domain': '192.168.51.100', 'sip_contact_user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_from_user': new_endpoint.uid, 'sip_auth_nc': sip_auth_nc, 'section': 'directory', 'hostname': 'test1.example.com', 'sip_auth_method': 'REGISTER', 'sip_auth_username': new_endpoint.uid, 'sip_auth_nonce': sip_auth_nonce, 'sip_to_host': '192.168.51.100', 'key_value': '192.168.51.100', 'sip_request_host': '192.168.51.100', 'key_name': 'name', 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'user': new_endpoint.uid, 'key': 'id', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_response': '353416c6e18345b621b167acfbcf2182', 'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_realm': '192.168.51.100', 'sip_to_user': new_endpoint.uid, 'sip_auth_qop': 'auth', 'tag_name': 'domain', 'sip_profile': 'test1.example.com', 'action': 'sip_auth', 'sip_contact_host': '192.168.51.251'}
-        #[tag_name=domain&key_name=name&key_value=195.5.22.146&Core-UUID=63b5922e-56c6-11df-9dc6-59d57d83c112&action=sip_auth&sip_profile=internal&sip_user_agent=Telephone%200.14.3&sip_auth_username=1000&sip_auth_realm=195.5.22.146&sip_auth_nonce=33ceef1e-56c7-11df-9de5-59d57d83c112&sip_auth_uri=sip%3A195.5.22.146&sip_contact_user=1000&sip_contact_host=193.201.83.3&sip_to_user=1000&sip_to_host=195.5.22.146&sip_from_user=1000&sip_from_host=195.5.22.146&sip_request_host=195.5.22.146&sip_auth_qop=auth&sip_auth_cnonce=lsvj7Qz3max.XnEWvosTpp2aw6s2bkj7&sip_auth_nc=00000001&sip_auth_response=41b9c533be8b56afa42d62ebf2eed272&sip_auth_method=REGISTER&key=id&user=1000&domain=195.5.22.146&ip=193.201.83.3]
-        #[tag_name=domain&key_name=name&key_value=195.5.22.146&Core-UUID=63b5922e-56c6-11df-9dc6-59d57d83c112&action=sip_auth&sip_profile=internal&sip_user_agent=Telephone%200.14.3&sip_auth_username=1000&sip_auth_realm=195.5.22.146&sip_auth_nonce=6e8e2890-56c7-11df-9de8-59d57d83c112&sip_auth_uri=sip%3A195.5.22.146&sip_contact_user=1000&sip_contact_host=193.201.83.3&sip_to_user=1000&sip_to_host=195.5.22.146&sip_from_user=1000&sip_from_host=195.5.22.146&sip_request_host=195.5.22.146&sip_auth_qop=auth&sip_auth_cnonce=lsvj7Qz3max.XnEWvosTpp2aw6s2bkj7&sip_auth_nc=00000001&sip_auth_response=1afcab1d57962a2c06b1768346dd3c4f&sip_auth_method=REGISTER&key=id&user=1000&domain=195.5.22.146&ip=193.201.83.3]
+        response = self.client.post('/api/directory/', { 'hostname': 'test1.example.com', 'sip_profile': 'internal', 'section': 'directory', 'tag_name': 'domain', 'key_name': 'name', 
+               'key_value': '192.168.51.100', 'action': 'sip_auth',
+              'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_username': new_endpoint.uid, 'sip_auth_realm': '192.168.51.100', 'sip_auth_nonce': sip_auth_nonce, 
+              'sip_contact_user': new_endpoint.uid, 'sip_contact_host': '192.168.51.251', 'sip_to_user': new_endpoint.uid, 'sip_to_host': '192.168.51.100', 
+              'sip_from_user': new_endpoint.uid, 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'sip_request_host': '192.168.51.100',
+              'sip_auth_qop': 'auth', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_nc': sip_auth_nc,   'sip_auth_method': 'REGISTER', 
+              'domain': '192.168.51.100', 'key': 'id', 'user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_auth_response': 'aca561ab4fc8a886fc7852165333bbfb'})
+        self.assertEquals(response.status_code, 200)
+        l.debug(response)
         # Добавление
-        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
-        self.assertEquals(sr, 1)
-        # Удаление 
-        sip_auth_nc = '00000002'
-        p  = {'domain': '192.168.51.100', 'sip_contact_user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_from_user': new_endpoint.uid, 'sip_auth_nc': sip_auth_nc, 'section': 'directory', 'hostname': 'test1.example.com', 'sip_auth_method': 'REGISTER', 'sip_auth_username': new_endpoint.uid, 'sip_auth_nonce': sip_auth_nonce, 'sip_to_host': '192.168.51.100', 'key_value': '192.168.51.100', 'sip_request_host': '192.168.51.100', 'key_name': 'name', 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'user': new_endpoint.uid, 'key': 'id', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_response': '353416c6e18345b621b167acfbcf2182', 'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_realm': '192.168.51.100', 'sip_to_user': new_endpoint.uid, 'sip_auth_qop': 'auth', 'tag_name': 'domain', 'sip_profile': 'test1.example.com', 'action': 'sip_auth', 'sip_contact_host': '192.168.51.251'}
-        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
-        # TODO работает неправильно должно быть 2
-        self.assertEquals(sr, 1)
-        srf = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
-        self.assertEquals(srf, 0)
+         
+##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
+##        self.assertEquals(sr, 1)
+##        # Удаление 
+##        sip_auth_nc = '00000002'
+##        p  = {'domain': '192.168.51.100', 'sip_contact_user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_from_user': new_endpoint.uid, 'sip_auth_nc': sip_auth_nc, 'section': 'directory', 'hostname': 'test1.example.com', 'sip_auth_method': 'REGISTER', 'sip_auth_username': new_endpoint.uid, 'sip_auth_nonce': sip_auth_nonce, 'sip_to_host': '192.168.51.100', 'key_value': '192.168.51.100', 'sip_request_host': '192.168.51.100', 'key_name': 'name', 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'user': new_endpoint.uid, 'key': 'id', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_response': '353416c6e18345b621b167acfbcf2182', 'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_realm': '192.168.51.100', 'sip_to_user': new_endpoint.uid, 'sip_auth_qop': 'auth', 'tag_name': 'domain', 'sip_profile': 'test1.example.com', 'action': 'sip_auth', 'sip_contact_host': '192.168.51.251'}
+##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
+##        # TODO работает неправильно должно быть 2
+##        self.assertEquals(sr, 1)
+##        srf = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
+##        self.assertEquals(srf, 0)
 

@@ -1,4 +1,4 @@
-{% cache ("sofia", hostname), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
 <section name="directory">
   <domain name="{{ domain }}">
@@ -19,4 +19,4 @@
     </group>
   </groups>
   </domain>
-</section></document>{% endcache %}
+</section></document>
