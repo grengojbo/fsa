@@ -1,4 +1,4 @@
-{% cache ("fs", key_value), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
 <section name="{{ name }}">
 <configuration name="post_load_modules.conf" description="Modules">
@@ -8,4 +8,4 @@
   {% endfor %}</modules>
 </configuration>
 </section>
-</document>{% endcache %}
+</document>

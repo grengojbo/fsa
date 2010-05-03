@@ -1,4 +1,4 @@
-{% cache ("event_socket", es.listen_ip), 3600 %}<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="freeswitch/xml">
     <section name="configuration">
 <configuration name="event_socket.conf" description="Socket Client">
@@ -10,4 +10,4 @@
     <!--<param name="apply-inbound-acl" value="{{ es.listen_acl }}"/>-->
     </settings>
 </configuration>
-</section></document>{% endcache %}
+</section></document>
