@@ -57,7 +57,7 @@ class NumberPlanHandler(BaseHandler):
         else:
             try:
                 np = NumberPlan.objects.get(phone_number=phone_number, site__name__iexact=request.user)
-                np.nt=attrs['nt']
+                np.nt=int(attrs['nt'])
                 np.save()
                 return np
             except:
