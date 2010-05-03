@@ -88,21 +88,24 @@ config_register_list(
             'min_dtmf_duration',
             description = _('min dtmf duration'),
             help_text = _("The min-dtmf-duration specifies the minimum DTMF duration to use on outgoing events. Events shorter than this will be increased in duration to match min_dtmf_duration. You cannot configure a dtmf duration on a  profile that is less than this setting."),
-            default = 400
+            default = 400,
+            ordering=13
     ),
     PositiveIntegerValue(
         SERVER_GROUP,
             'max_dtmf_duration',
             description = _('max dtmf duration'),
             help_text = _("The max-dtmf-duration caps the playout of a DTMF event at the specified duration. Events exceeding this duration will be truncated to this duration. You cannot configure a duration on a profile that exceeds this setting."),
-            default = 192000
+            default = 192000,
+            ordering=14
     ),
     PositiveIntegerValue(
         SERVER_GROUP,
             'default_dtmf_duration',
             description = _('Default dtmf duration'),
             help_text = _("The default_dtmf_duration specifies the DTMF duration to use on originated DTMF events or on events that are received without a duration specified. This value can be increased or lowered. This value is lower-bounded by min_dtmf_duration and upper-bounded by max-dtmf-duration."),
-            default = 2000
+            default = 2000,
+            ordering=15
     ),
     PositiveIntegerValue(
         SERVER_GROUP,

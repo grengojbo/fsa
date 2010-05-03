@@ -38,6 +38,9 @@ config_register_list(
     StringValue(SERVER_GROUP, 'log_dir', default='', 
         description=_("Log DIR"), help_text=_(u"optional: if not present we do not log every record to disk either an absolute path, a relative path assuming ${prefix}/logs or a blank value will default to ${prefix}/logs/xml_cdr") 
     ),
+    BooleanValue(SERVER_GROUP, 'log_http_and_disk', default=False, 
+        description=_("Log http and disk"), help_text=_(u"optional: Log via http and on disk, default is false") 
+    ),
     BooleanValue(SERVER_GROUP, 'log_b_leg', default=False, 
         description=_("Log b leg"), help_text=_(u"optional: if not present we do log the b leg true or false if we should create a cdr for the b leg of a call") 
     ),
