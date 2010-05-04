@@ -7,7 +7,7 @@ from fsa.cdr.models import Cdr
 admin.site.disable_action('delete_selected')
 
 class CdrAdmin(admin.ModelAdmin):
-    list_display = ('accountcode', 'caller_id_number', 'destination_number', 'billsec', 'start_timestamp', 'hangup_cause',)
+    list_display = ('accountcode', 'caller_id_number', 'destination_number', 'billsec', 'start_timestamp', 'hangup_cause', 'direction', 'lcr_rate',)
     list_filter = ('start_timestamp',)
     search_fields = ('accountcode', 'caller_id_number',)
 
