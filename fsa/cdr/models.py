@@ -3,10 +3,22 @@ from django.db import models
 #from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 #from fsa.server.models import Server
+from bursar.fields import CurrencyField
+import datetime
+from decimal import Decimal
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
+from currency.fields import *
+from currency.money import Money
+from currency.models import Currency
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
 
+D_STATUS = ((0, _(u'bouth')),
+           (1,_(u'inbound')),
+           (2,_(u'outbound')),
+        )
 # Create your models here.
 class Cdr(models.Model):
     accountcode = models.CharField(_(u'Accaunt'), max_length=60)
@@ -21,6 +33,13 @@ class Cdr(models.Model):
     billsec = models.IntegerField(_(u'Duration'), help_text=_(u'Billable call duration in seconds. Billable time does not include call time spent in "early media" prior to the far end answering the call.'))
     hangup_cause = models.CharField(_(u'Hangup'), max_length=135)
     uuid = models.CharField(_(u'UUID'), max_length=108)
+    nibble_account = models.PositiveIntegerField(_(u'Billing ID account'), default=0)
+    sip_received_ip = models.IPAddressField(_(u'Received IP'), default='127.0.0.1')
+    number_alias = models.CharField(_(u'Phone alias'), max_length=12, blank=True, null=True)
+    #lcr_rate = CurrencyField(_("Lcr Rate"), max_digits=18, decimal_places=2, default=Decimal("0.0"), display_decimal=4)
+    lcr_rate = models.DecimalField(_("Lcr Rate"), max_digits=18, decimal_places=4, default=Decimal("0.0"))
+    lcr_carrier = models.CharField(_(u'Gateway'), max_length=50, default='local')
+    direction = models.PositiveSmallIntegerField(_(u'Direction'), max_length=1, choices=D_STATUS, default=0, blank=False)
     #bleg_uuid = models.CharField(max_length=108)
     #bridge_channel = models.CharField(max_length=108, blank=True)
     read_codec =  models.CharField(_(u'Read codec'), max_length=10)

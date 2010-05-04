@@ -8,7 +8,15 @@ from fsa.server.models import Server
 #from django.shortcuts import get_object_or_404
 #from lib.helpers import reverse
 from BeautifulSoup import BeautifulStoneSoup as Soup
-import time, datetime
+import datetime
+from decimal import Decimal
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
+from currency.fields import *
+from currency.money import Money
+from currency.models import Currency
+from bursar.numbers import trunc_decimal
+import time
 import urllib
 import logging
 
@@ -41,6 +49,28 @@ def set_cdr(request):
     if xml_cdr.cdr.variables.accountcode.string is not None:
         l.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode.string)
         new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
+    if xml_cdr.cdr.variables.nibble_account.string is not None:
+        l.debug("nibble_account %s" % xml_cdr.cdr.variables.nibble_account.string)
+        new_cdr.nibble_account = xml_cdr.cdr.variables.nibble_account.string
+        
+    if xml_cdr.cdr.variables.sip_received_ip.string is not None:
+        l.debug("sip_received_ip %s" % xml_cdr.cdr.variables.sip_received_ip.string)
+        new_cdr.sip_received_ip = xml_cdr.cdr.variables.sip_received_ip.string
+    if xml_cdr.cdr.variables.number_alias.string is not None:
+        l.debug("number_alias %s" % xml_cdr.cdr.variables.number_alias.string)
+        new_cdr.number_alias = xml_cdr.cdr.variables.number_alias.string
+    if xml_cdr.cdr.variables.lcr_rate.string is not None:
+        l.debug("lcr_rate %s" % xml_cdr.cdr.variables.lcr_rate.string)
+        new_cdr.lcr_rate = trunc_decimal(xml_cdr.cdr.variables.lcr_rate.string, 2)
+    if xml_cdr.cdr.variables.lcr_carrier.string is not None:
+        l.debug("lcr_carrier %s" % xml_cdr.cdr.variables.lcr_carrier.string)
+        new_cdr.lcr_carrier = xml_cdr.cdr.variables.lcr_carrier.string
+    if xml_cdr.cdr.channel_data.direction.string is not None:
+        l.debug("direction %s" % xml_cdr.cdr.variables.direction.string)
+        if xml_cdr.cdr.channel_data.direction.string == 'inbound':
+            new_cdr.direction = 1
+        elif xml_cdr.cdr.channel_data.direction.string == 'outbound':
+            new_cdr.direction = 2
     new_cdr.destination_number = xml_cdr.cdr.callflow.caller_profile.destination_number.string
     new_cdr.context = xml_cdr.cdr.callflow.caller_profile.context.string
     new_cdr.start_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.start_stamp.string), time_format)))
