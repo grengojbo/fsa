@@ -126,6 +126,13 @@ class CdrHandler(BaseHandler):
         if new_cdr.lcr_rate > Decimal("0") and new_cdr.nibble_rate > Decimal("0") and new_cdr.billsec > 0:
             new_cdr.cash = new_cdr.nibble_rate/60*new_cdr.billsec
             new_cdr.marja = new_cdr.cahs-(new_cdr.lcr_rate/60*new_cdr.billsec)
+            try:
+                from fsb.billing.models import Balance
+                bal = Balance.objects.get(accountcode__username__exact=new_cdr.accountcode)
+                bal.cash -= new_cdr.cash
+                bal.save()
+            except:
+                pass
         #<endpoint_disposition>ANSWER</endpoint_disposition>
         #<proto_specific_hangup_cause>sip%3A200</proto_specific_hangup_cause>
         #<sip_hangup_phrase>OK</sip_hangup_phrase>
