@@ -14,6 +14,8 @@ from xmlrpclib import ServerProxy
 from livesettings import ConfigurationSettings, config_value
 from BeautifulSoup import BeautifulStoneSoup as Soup
 from fsa.server.models import Server
+from decimal import Decimal
+from bursar.numbers import trunc_decimal
 import time, datetime
 import urllib
 
@@ -27,7 +29,7 @@ class CdrHandler(BaseHandler):
     allowed_methods = ('GET', 'POST')
     model = Cdr
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('accountcode', 'caller_id_name', 'caller_id_number', 'destination_number', 'context', 'start_timestamp', 'answer_timestamp', 'end_timestamp', 'duration', 'billsec', 'hangup_cause', 'uuid')
+    fields = ('accountcode', 'caller_id_number', 'destination_number', 'billsec', 'cash', 'start_timestamp', 'hangup_cause', 'direction', 'lcr_rate', 'nibble_rate',)
 
     #@staticmethod
     #def resource_uri():
@@ -76,6 +78,27 @@ class CdrHandler(BaseHandler):
         if xml_cdr.cdr.variables.accountcode is not None:
             log.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode)
             new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
+        if xml_cdr.cdr.variables.sip_received_ip is not None:
+            log.debug("sip_received_ip %s" % xml_cdr.cdr.variables.sip_received_ip.string)
+            new_cdr.sip_received_ip = xml_cdr.cdr.variables.sip_received_ip.string
+        if xml_cdr.cdr.variables.number_alias is not None:
+            log.debug("number_alias %s" % xml_cdr.cdr.variables.number_alias.string)
+            new_cdr.number_alias = xml_cdr.cdr.variables.number_alias.string
+        if xml_cdr.cdr.variables.lcr_rate is not None:
+            log.debug("lcr_rate %s" % xml_cdr.cdr.variables.lcr_rate.string)
+            new_cdr.lcr_rate = trunc_decimal(xml_cdr.cdr.variables.lcr_rate.string, 2)
+        if xml_cdr.cdr.variables.nibble_rate is not None:
+            log.debug("nibble_rate %s" % xml_cdr.cdr.variables.nibble_rate.string)
+            new_cdr.nibble_rate = trunc_decimal(xml_cdr.cdr.variables.nibble_rate.string, 2)
+        if xml_cdr.cdr.variables.lcr_carrier is not None:
+            log.debug("lcr_carrier %s" % xml_cdr.cdr.variables.lcr_carrier.string)
+            new_cdr.lcr_carrier = xml_cdr.cdr.variables.lcr_carrier.string
+        if xml_cdr.cdr.channel_data.direction is not None:
+            log.debug("direction %s" % xml_cdr.cdr.channel_data.direction.string)
+            if xml_cdr.cdr.channel_data.direction.string == 'inbound':
+                new_cdr.direction = 1
+            elif xml_cdr.cdr.channel_data.direction.string == 'outbound':
+                new_cdr.direction = 2
         new_cdr.destination_number = xml_cdr.cdr.callflow.caller_profile.destination_number.string
         log.debug("destination_number %s" % xml_cdr.cdr.callflow.caller_profile.destination_number.string)
         new_cdr.context = xml_cdr.cdr.callflow.caller_profile.context.string
@@ -100,6 +123,9 @@ class CdrHandler(BaseHandler):
         new_cdr.write_codec = xml_cdr.cdr.variables.write_codec.string
         log.debug("write_codec %s" % new_cdr.write_codec)
         #sip_user_agent
+        if new_cdr.lcr_rate > Decimal("0") and new_cdr.nibble_rate > Decimal("0") and new_cdr.billsec > 0:
+            new_cdr.cahs = trunc_decimal(new_cdr.nibble_rate/60*new_cdr.billsec, 2)
+            new_cdr.marja = new_cdr.cahs-(new_cdr.lcr_rate/60*new_cdr.billsec)
         #<endpoint_disposition>ANSWER</endpoint_disposition>
         #<proto_specific_hangup_cause>sip%3A200</proto_specific_hangup_cause>
         #<sip_hangup_phrase>OK</sip_hangup_phrase>
@@ -119,32 +145,3 @@ class CdrHandler(BaseHandler):
         resp = rc.ALL_OK
         #resp.write(endpoint)
         return resp
-##        attrs = self.flatten_dict(request.POST)
-##        u = User.objects.get(username=attrs.get('account'))
-##        s = Site.objects.get(name=request.user)
-##        try:
-##            if attrs.get('phone'):
-##                np = NumberPlan.objects.get(phone_number=attrs.get('phone'), site__name__iexact=request.user, enables=False, status=0)
-##                if np.phone_number == attrs.get('phone'):
-##                    endpoint = Endpoint.objects.create_endpoint(u, attrs.get('phone'))
-##                else:
-##                    return rc.NOT_HERE
-##            else:
-##                np = NumberPlan.objects.lphonenumber(s)
-##                endpoint = Endpoint.objects.create_endpoint(u, attrs.get('phone'))
-##            if attrs.get('effective_caller_id_name'):
-##                endpoint.effective_caller_id_name = attrs.get('effective_caller_id_name')
-##            if attrs.get("enabled") == "false":
-##                endpoint.enable = False
-##            if attrs.get('password'):
-##                endpoint.password = attrs.get('password')
-##            if attrs.get('description'):
-##                endpoint.description = attrs.get('description')
-##            endpoint.site = s
-##            endpoint.save()
-##            resp = rc.CREATED
-##            #resp.write(endpoint)
-##            return resp
-##        except:
-##            resp = rc.DUPLICATE_ENTRY
-##            return resp
