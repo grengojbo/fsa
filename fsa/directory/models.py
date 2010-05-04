@@ -51,6 +51,9 @@ class Endpoint(models.Model):
     #contact_addr = models.CharField(maxlength=100, blank=True)
     site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
     description = models.CharField(_(u'Description'), max_length=255, blank=True, default='sip number')
+    other_param = models.XMLField(_(u'Other Params'), blank=True, null=True, default='<!-- other param -->')
+    other_variable = models.XMLField(_(u'Other Variables'), blank=True, null=True, default='<!-- other variable -->')
+
     objects = EndpointManager()
 
     #def get_extensions(self):

@@ -17,6 +17,7 @@
       <!--<param name="a1-hash" value="c6440e5de50b403206989679159de89a"/>-->
       <!-- What this user is allowed to acces --> 
       <!--<param name="http-allowed-api" value="jsapi,voicemail,status"/> -->
+      {{ sip.other_param|safe }}
   </params>
   <variables>
     <!--all variables here will be set on all inbound calls that originate from this user -->
@@ -51,7 +52,7 @@
 
   <!--     !!!!! -->
   <!-- <variable name="toll_allow" value="domestic,international,local"/> -->
-
+{{ sip.other_variable|safe }}
 </variables>
 
   <vcard>

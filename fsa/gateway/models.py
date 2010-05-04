@@ -32,6 +32,7 @@ class SofiaGateway(models.Model):
     username = models.CharField(_(u'Username'), max_length=25, default='pass', help_text=_(' username for gateway login/authentication'))
     # password for gateway login/authentication
     password = models.CharField(_(u'Password'), max_length=25, default='pass', help_text=_('password for gateway login/authentication (pass - account password required by freeswitch but ignored)'))
+    #password = models.CharField(_(u'Password'), max_length=25, blank=True, help_text=_('password for gateway login/authentication (pass - account password required by freeswitch but ignored)'))
     # auth realm: *optional* same as gateway name, if blank
     realm = models.CharField(_(u'Realm'), max_length=50, blank=True, help_text=_('auth realm: *optional* same as gateway name, if blank'))
     from_user = models.CharField(_(u'From User'), max_length=50, blank=True, help_text=_(u'username to use in from: *optional* same as  username, if blank'))
