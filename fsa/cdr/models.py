@@ -38,7 +38,7 @@ class Cdr(models.Model):
     number_alias = models.CharField(_(u'Phone alias'), max_length=12, blank=True, null=True)
     #lcr_rate = CurrencyField(_("Lcr Rate"), max_digits=18, decimal_places=2, default=Decimal("0.0"), display_decimal=4)
     lcr_rate = models.DecimalField(_("Lcr Rate"), max_digits=18, decimal_places=4, default=Decimal("0.0"))
-    nibble_rate = models.DecimalField(_("Lcr Rate"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
+    nibble_rate = models.DecimalField(_("Rate"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
     cash = models.DecimalField(_("Cash"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
     marja = models.DecimalField(_("Marja"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
     lcr_carrier = models.CharField(_(u'Gateway'), max_length=50, default='local')
