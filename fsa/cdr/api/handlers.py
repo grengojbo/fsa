@@ -125,7 +125,7 @@ class CdrHandler(BaseHandler):
         #sip_user_agent
         if new_cdr.lcr_rate > Decimal("0") and new_cdr.nibble_rate > Decimal("0") and new_cdr.billsec > 0:
             new_cdr.cash = new_cdr.nibble_rate/60*new_cdr.billsec
-            new_cdr.marja = new_cdr.cahs-(new_cdr.lcr_rate/60*new_cdr.billsec)
+            new_cdr.marja = new_cdr.cash-(new_cdr.lcr_rate/60*new_cdr.billsec)
             try:
                 from fsb.billing.models import Balance
                 bal = Balance.objects.get(accountcode__username__exact=new_cdr.accountcode)
