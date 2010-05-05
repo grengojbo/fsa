@@ -118,7 +118,8 @@ class EndpointHandler(BaseHandler):
                 endpoint.description = attrs.get('description')
             endpoint.site = s
             endpoint.save()
-            resp = rc.CREATED
+            resp = rc.ALL_OK
+            #resp = rc.CREATED
             #resp.write(endpoint)
             return resp
         except:
