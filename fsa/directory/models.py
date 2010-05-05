@@ -94,6 +94,22 @@ class Endpoint(models.Model):
 
     def __unicode__(self):
         return str(self.uid)
+    
+    @property
+    def username(self):
+        return self.accountcode.username
+    
+    @property
+    def enabled(self):
+        return self.enable
+    
+    @property
+    def sip_server(self):
+        return "195.5.22.146"
+
+    @property
+    def reg_server(self):
+        return "195.5.22.146"
 
 #class ExternalPhone(PhoneNumber):
 #    def __unicode__(self):

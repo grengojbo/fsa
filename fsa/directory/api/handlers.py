@@ -18,7 +18,7 @@ class EndpointHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Endpoint
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('uid', 'password', 'accountcode', 'effective_caller_id_name','enable', 'is_registered', 'last_registered', 'description')
+    fields = ('uid', 'password', 'username', 'effective_caller_id_name','enabled', 'is_registered', 'last_registered', 'description', 'sip_server', 'reg_server')
     
     #@staticmethod
     #def resource_uri():
@@ -42,14 +42,14 @@ class EndpointHandler(BaseHandler):
             limit += int(start)
         try:
             if phone is not None:
-                return {"count": 1, "phone": base.get(uid=phone, site__name__iexact=request.user)}
+                return {"count": 1, "phone": base.get(uid__exact=phone, site__name__exact=request.user)}
             elif account is not None:
-                resp = base.filter(accountcode__username__iexact=account, site__name__iexact=request.user)[start:limit]
-                count = base.filter(accountcode__username__iexact=account, site__name__iexact=request.user).count()
+                resp = base.filter(accountcode__username__exact=account, site__name__exact=request.user)[start:limit]
+                count = base.filter(accountcode__username__exact=account, site__name__exact=request.user).count()
                 return {"count": count, "phone": resp}
             else:
-                resp = base.filter(site__name__iexact=request.user)[start:limit]
-                count = base.filter(site__name__iexact=request.user).count()
+                resp = base.filter(site__name__exact=request.user)[start:limit]
+                count = base.filter(site__name__exact=request.user).count()
                 return {"count": count, "phone": resp}
         except:
             return rc.NOT_HERE
@@ -64,8 +64,7 @@ class EndpointHandler(BaseHandler):
             if self.exists(**attrs):
                 return rc.DUPLICATE_ENTRY
             else:
-                np = NumberPlan.objects.get(phone_number=attrs.get('phone'), site__name__iexact=request.user)
-                endpoint = Endpoint.objects.create_endpoint(u, attrs.get('phone'), site__name__iexact=request.user)
+                endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
                 if attrs.get('effective_caller_id_name'):
                     endpoint.effective_caller_id_name = attrs.get('effective_caller_id_name')
                 if attrs.get('password'):
@@ -83,8 +82,8 @@ class EndpointHandler(BaseHandler):
         """
         attrs = self.flatten_dict(request.POST)
         try:
-            endpoint = Endpoint.objects.get(uid=phone, site__name__iexact=request.user)
-            np = NumberPlan.objects.get(phone_number=phone, site__name__iexact=request.user)
+            endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
+            np = NumberPlan.objects.get(phone_number=phone, site__name__exact=request.user)
             endpoint.enable=False
             np.status=2
             endpoint.save()
@@ -97,11 +96,11 @@ class EndpointHandler(BaseHandler):
     @transaction.commit_on_success
     def create(self, request):
         attrs = self.flatten_dict(request.POST)
-        u = User.objects.get(username=attrs.get('account'))
+        u = User.objects.get(username=attrs.get('username'))
         s = Site.objects.get(name=request.user)
         try:
             if attrs.get('phone'):
-                np = NumberPlan.objects.get(phone_number=attrs.get('phone'), site__name__iexact=request.user, enables=False, status=0)
+                np = NumberPlan.objects.get(phone_number=attrs.get('phone'), site__name__exact=request.user, enables=False, status=0)
                 if np.phone_number == attrs.get('phone'):
                     endpoint = Endpoint.objects.create_endpoint(u, attrs.get('phone'))
                 else:
