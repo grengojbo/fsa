@@ -15,6 +15,21 @@ l = logging.getLogger('fsa.core.utils')
 __author__ = '$Author$'
 __revision__ = '$Revision$'
 
+def pars_phone(phone):
+    """
+    from fsa.core.utils import pars_phone
+    pars_phone("366667777")
+    return: '366667777, 36666777, 3666677, 366667, 36666, 3666, 366, 36, 3'
+    """
+    res = None
+    cn = len(phone)
+    for r in range(0,cn):
+        if res is None:
+            res = phone[0:cn]
+        else:
+            res = "%s, %s" % (res, phone[0:cn-r])
+    return res
+
 class CsvData(object):
     """docstring for CsvFormat
     cf = "delimiter=';'time_format='%d.%m.%Y 00:00'digits|rate|date_start|zeros|date_end|other"
