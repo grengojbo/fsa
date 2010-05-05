@@ -45,6 +45,10 @@ class NumberPlan(models.Model):
 
     def __unicode__(self):
         return self.phone_number
+    
+    @property
+    def phone(self):
+        return self.phone_number
 
 import listeners
 listeners.start_listening()

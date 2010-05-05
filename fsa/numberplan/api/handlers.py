@@ -14,7 +14,7 @@ class NumberPlanHandler(BaseHandler):
     allowed_methods = ('GET', 'PUT', 'DELETE')
     model = NumberPlan
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('phone_number', 'nt', 'enables', 'status', 'date_active')
+    fields = ('phone', 'nt', 'enables', 'status', 'date_active')
 
     #@staticmethod
     #def resource_uri():
@@ -38,10 +38,10 @@ class NumberPlanHandler(BaseHandler):
         log.info(limit)
         try:
             if phone_number:
-                return {"count": 1, "phonenumber": base.get(phone_number=phone_number, site__name__iexact=request.user)}
+                return {"count": 1, "phonenumber": base.get(phone_number__exact=phone_number, site__name__exact=request.user)}
             else:
-                resp = base.filter(site__name__iexact=request.user)[start:limit]
-                count = base.filter(site__name__iexact=request.user).count()
+                resp = base.filter(site__name__exact=request.user)[start:limit]
+                count = base.filter(site__name__exact=request.user).count()
                 return {"count": count, "phonenumber": resp}
         except:
             return rc.NOT_HERE
@@ -51,12 +51,12 @@ class NumberPlanHandler(BaseHandler):
         Update number plan type.
         """
         attrs = self.flatten_dict(request.POST)
-
+        log.debug("update phone number %s" % phone_number)
         if self.exists(**attrs):
             return rc.DUPLICATE_ENTRY
         else:
             try:
-                np = NumberPlan.objects.get(phone_number=phone_number, site__name__iexact=request.user)
+                np = NumberPlan.objects.get(phone_number__exact=phone_number, site__name__exact=request.user)
                 np.nt=int(attrs['nt'])
                 np.save()
                 return np
@@ -69,7 +69,7 @@ class NumberPlanHandler(BaseHandler):
         """
         attrs = self.flatten_dict(request.POST)
         try:
-            np = NumberPlan.objects.get(phone_number=phone_number, site__name__iexact=request.use)
+            np = NumberPlan.objects.get(phone_number__exact=phone_number, site__name__exact=request.use)
             np.enables=False
             np.save()
             return rc.DELETED
