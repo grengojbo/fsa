@@ -53,6 +53,10 @@ class Endpoint(models.Model):
     description = models.CharField(_(u'Description'), max_length=255, blank=True, default='sip number')
     other_param = models.XMLField(_(u'Other Params'), blank=True, null=True, default='<!-- other param -->')
     other_variable = models.XMLField(_(u'Other Variables'), blank=True, null=True, default='<!-- other variable -->')
+    cidr_ip = models.IPAddressField(_(u'User IP Acl'), default='0.0.0.0')
+    cidr_mask = models.SmallIntegerField(_(u'User Network Mask'), default=32)
+    mac_adress = models.CharField(_(u'Mac Adress'), max_length=255, blank=True, null=True)
+    max_calls = models.SmallIntegerField(_(u'Max Calls'), default=2, help_text='limit the max number of outgoing calls for this user')
 
     objects = EndpointManager()
 
