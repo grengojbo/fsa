@@ -22,6 +22,7 @@
   <variables>
     <!--all variables here will be set on all inbound calls that originate from this user -->
     <variable name="nibble_account" value="{{ sip.accountcode.id }}"/>
+    {% if tariff %}<variable name="nibble_tariff" value="{{ sip.accountcode.balance.tariff.id }}"/>{% endif %}
     <variable name="accountcode" value="{{ sip.accountcode.username }}"/>
     <variable name="user_context" value="{{ sip.user_context.name }}"/>
     <variable name="effective_caller_id_name" value="{{ sip.effective_caller_id_name }}"/>

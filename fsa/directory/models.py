@@ -105,11 +105,12 @@ class Endpoint(models.Model):
     
     @property
     def sip_server(self):
-        return "195.5.22.146"
+        return config_value('directory', 'sip_server')
 
     @property
     def reg_server(self):
-        return "195.5.22.146"
+        return config_value('directory', 'reg_server')
+
 
 #class ExternalPhone(PhoneNumber):
 #    def __unicode__(self):

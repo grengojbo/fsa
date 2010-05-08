@@ -18,11 +18,16 @@ from fsa.dialplan.models import Context
 import logging as l
 from django.contrib.sites.models import Site
 from fsa.server.models import Server, SipProfile, Conf
+from fsa.core import is_app
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
-    fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    if is_app('fsb.tariff'):
+        fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile', 'tariffplan']
+    else:
+        fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
         #cont1.save()
