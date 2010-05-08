@@ -57,6 +57,8 @@ class Endpoint(models.Model):
     cidr_mask = models.SmallIntegerField(_(u'User Network Mask'), default=32)
     mac_adress = models.CharField(_(u'Mac Adress'), max_length=255, blank=True, null=True)
     max_calls = models.SmallIntegerField(_(u'Max Calls'), default=2, help_text='limit the max number of outgoing calls for this user')
+    zrtp = models.BooleanField(_(u'ZRTP Support'), default=False)
+    srtp = models.BooleanField(_(u'ZRTP Support'), default=False)
 
     objects = EndpointManager()
 

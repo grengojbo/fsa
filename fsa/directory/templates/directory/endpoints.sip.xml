@@ -1,7 +1,7 @@
 <!--
   ipauth if you have an cidr= in the user attributes ie cidr="1.2.3.4/32"  
   see <node type="allow" domain="$${domain}"/> in default acl.conf.xml 
-<user id="brian" mailbox="9999" cidr="192.0.2.0/24">
+<user id="{{ sip.uid }}" mailbox="{{ sip.uid }}" cidr="{{ sip.cidr_ip }}/{{ sip.cidr_mask }}">
 -->
 <user id="{{ sip.uid }}" mailbox="{{ sip.uid }}">
   <params>
@@ -32,7 +32,7 @@
     <!-- sip_secure_media will offer mandatory SRTP on invite AES_CM_128_HMAC_SHA1_32, AES_CM_128_HMAC_SHA1_80 or true-->
     <variable name="sip_secure_media" value="true"/>
     <!-- limit the max number of outgoing calls for this user -->
-      <!--<variable name="max_calls" value="2"/>-->
+      <!--<variable name="max_calls" value="{{ sip.max_calls }}"/>-->
 
   <!-- send presence information if FS is configured to do so -->
   <!--<variable name="presence_id" value="1000@$${domain}"/>-->
