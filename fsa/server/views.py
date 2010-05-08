@@ -36,7 +36,7 @@ def get_limit(request):
     Файл конфигурации limit.conf
     подробнее смотреть http://wiki.freeswitch.org/wiki/Mod_limit
     """
-    es = get_object_or_404(Server, name=request.POST.get('hostname'), enabled=True)
+    es = get_object_or_404(Server, name__exact=request.POST.get('hostname'), enabled=True)
     #l.debug("es.odbc_dsn %s" % (es.odbc_dsn))
     return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn}).render_response('server/limit.conf.xml')
     
@@ -63,8 +63,12 @@ def get(request):
 
 def post_switch(request):
     """переменные софт свича"""
-    es = get_object_or_404(Server, name=request.POST.get('hostname'), enabled=True)
+    es = get_object_or_404(Server, name__exact=request.POST.get('hostname'), enabled=True)
     return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER']}).render_response('server/switch.conf.xml')
+    
+def odbc_query(request):
+    es = get_object_or_404(Server, name__exact=request.POST.get('hostname'), enabled=True)
+    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER']}).render_response('server/odbc_query.conf.xml')
     
 def post_modules(request):
     """

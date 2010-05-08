@@ -137,7 +137,7 @@ for module in _default_modules:
         log.debug('Could not load default module configuration: %s', module)
 
 # --- Load any extra payment modules. ---
-extra_modules = ('event_socket','limit', 'sofia', 'lcr')
+extra_modules = ('event_socket','limit', 'sofia', 'lcr', 'odbc_query')
 
 for extra in extra_modules:
     try:

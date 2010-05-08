@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+    <section name="configuration">
+<configuration name="odbc_query.conf" description="ODBC Query Module">
+  <settings>
+    <param name="odbc-dsn" value="{{ odbc_dsn }}"/>
+  </settings>
+
+  <queries>
+    <!-- the ${foo} variable will be expanded from channel variables at query time -->
+    <query name="map-did-users" value="
+      SELECT
+        dir_users.username AS dest_user,
+        dir_domains.name AS dest_domain
+      FROM
+        map_did_users, dir_domains, dir_users
+      WHERE
+        map_did_users.did='${destination_number}' AND
+        dir_users.id = map_did_users.user_id AND
+        dir_domains.id = dir_users.dir_domain_id;"/>
+  </queries>
+</configuration>
+</section></document>

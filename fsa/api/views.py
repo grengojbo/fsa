@@ -51,6 +51,7 @@ def directory(request):
     
 def get(request):
     try:
+        l.debug("post: %s" % request.POST)
         if request.POST['section'] == "configuration":
             try:
                 # TODO добавить загрузку конфигурации lcr.conf
@@ -68,6 +69,9 @@ def get(request):
                 elif (request.POST['key_value'] == "post_load_modules.conf"):
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return sv.post_modules(request)
+                elif (request.POST['key_value'] == "odbc_query.conf"):
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
+                    return sv.odbc_query(request)
                 elif (request.POST['key_value'] == "post_load_switch.conf"):
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return sv.post_switch(request) 

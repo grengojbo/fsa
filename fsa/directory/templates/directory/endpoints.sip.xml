@@ -35,7 +35,7 @@
       <!--<variable name="max_calls" value="{{ sip.max_calls }}"/>-->
 
   <!-- send presence information if FS is configured to do so -->
-  <!--<variable name="presence_id" value="1000@$${domain}"/>-->
+  <!--<variable name="presence_id" value="{{ sip.uid }}@$${domain}"/>-->
 
   <!-- set these to take advantage of a dialplan localized to this user -->
   <!--<variable name="numbering_plan" value="US"/>-->
