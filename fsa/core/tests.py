@@ -75,11 +75,13 @@ class CoreTestCase(test.TestCase):
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
         
-        response = self.client.post('/api/get/',{'key_value': 'odbc_query.conf', 'key_name': 'name', u'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        response = self.client.post('/api/get/', {'key_value': 'odbc_query.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
         
-        #{u'key_value': [u'nibblebill.conf'], u'key_name': [u'name'], u'section': [u'configuration'], u'hostname': [u'sip'], u'tag_name': [u'configuration']}>
+        response = self.client.post('/api/get/', {'key_value': 'nibblebill.conf', 'key_name': 'name', 'section': 'configuration', 'hostname': self.hostname, 'tag_name': 'configuration'})
+        self.assertEquals(response.status_code, 200)
+        l.debug(response)
         #self.assertEquals(response.context['xml_context'], self.xml_context)
         
     def testDirectory(self):
