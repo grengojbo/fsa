@@ -5,7 +5,7 @@
     <settings>
         <param name="max-sessions" value="{{ s.max_sessions }}"/>
         <param name="sessions-per-second" value="{{ s.sessions_per_second }}"/>
-        <param name="loglevel" value="{{ s.loglevel }}"/>
+        <param name="loglevel" value="{{ l.loglevel }}"/>
         <!--Try to catch any crashes that can be recoverable (in the context of a call)-->
         <!--<param name="crash-protection" value="false"/>-->
         <!-- The min-dtmf-duration specifies the minimum DTMF duration to use on 

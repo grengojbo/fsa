@@ -18,27 +18,9 @@ _ = ugettext_lazy
 log = logging.getLogger('fsa.server.config')
 
 SERVER_GROUP = ConfigurationGroup('SERVER', _('Server Settings'))
+LOG_GROUP = ConfigurationGroup('LOGDEBUG', _('Debug and Log Server Settings'))
 
-config_register_list(
-    StringValue(SERVER_GROUP,
-        'loglevel',
-        description = _("Default Global Log Level"),
-        help_text = _("Default Global Log Level - value is one of debug,info,notice,warning,err,crit,alert"),
-        default='err',
-        ordering=10,
-        choices = (
-            ('debug', _('Debug')),
-            ('info', _('Info')),
-            ('notice', _('Notice')),
-            ('warning', _('Warning')),
-            ('err', _('Error')),
-            ('crit', _('Crit')),
-            ('alert', _('Alert'))
-        )),
-    PositiveIntegerValue(SERVER_GROUP, 'log_level', default = 0,
-        description = _('Log level')
-    ),
-    StringValue(SERVER_GROUP,
+config_register_list(StringValue(SERVER_GROUP,
             'rcphost',
             description= _("RCP host"),
             help_text=_("Host to connect rcp"),
@@ -62,10 +44,6 @@ config_register_list(
             help_text=_("Password to connect rcp"),
             default = 'works',
             ordering=8),
-    PositiveIntegerValue(SERVER_GROUP, 'debug_presence', default = 0,
-       description = _('Debug presence'),
-               
-    ),
     MultipleStringValue(SERVER_GROUP,
         'MODULES',
         description=_("Enable FreeSWITH modules"),
@@ -127,6 +105,32 @@ config_register_list(
         #help_text = _("Require a state during registration/checkout for countries that have states?"),
         default = True)
 )
+
+config_register_list(PositiveIntegerValue(LOG_GROUP, 'debug_presence', default = 0,
+        description = _('Debug presence'),
+        ordering=2
+    ),
+    StringValue(LOG_GROUP,
+        'loglevel',
+        description = _("Default Global Log Level"),
+        help_text = _("Default Global Log Level - value is one of debug,info,notice,warning,err,crit,alert"),
+        default='err',
+        ordering=1,
+        choices = (
+            ('debug', _('Debug')),
+            ('info', _('Info')),
+            ('notice', _('Notice')),
+            ('warning', _('Warning')),
+            ('err', _('Error')),
+            ('crit', _('Crit')),
+            ('alert', _('Alert'))
+        )),
+    PositiveIntegerValue(LOG_GROUP, 'log_level', default = 0,
+        ordering=3,
+        description = _('Log level')
+    )
+)
+
 #_default_modules = ('acl','event_socket')
 _default_modules = ('acl','cdr')
 for module in _default_modules:

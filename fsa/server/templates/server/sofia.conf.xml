@@ -3,9 +3,9 @@
 <section name="configuration">
 <configuration name="sofia.conf" description="sofia Endpoint">
 <global_settings>
-    <param name="log-level" value="{{ s.log_level }}"/>
+    <param name="log-level" value="{{ l.log_level }}"/>
     <!-- <param name="auto-restart" value="false"/> -->
-    <param name="debug-presence" value="{{ s.debug_presence }}"/>
+    <param name="debug-presence" value="{{ l.debug_presence }}"/>
 </global_settings>
 <profiles>{% for sofia in ss %}
 <profile name="{{ sofia.name }}">
@@ -19,7 +19,7 @@
     <domain name="all" alias="true" parse="false"/> 
 </domains>
 <settings>
-    <param name="debug" value="{{ s.log_level }}"/>
+    <param name="debug" value="{{ l.log_level }}"/>
     <param name="sip-trace" value="no"/>
         <param name="context" value="{{ sofia.context.name }}"/>
     <param name="sip-port" value="{{ sofia.sip_port }}"/>

@@ -29,7 +29,7 @@ def get_sofia(request):
     """
     es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
     ss = SipProfile.objects.filter(server=es, enabled=True)
-    return request.Context({'hostname':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 'ss':ss, 's': es.options['SERVER']}).render_response('server/sofia.conf.xml')
+    return request.Context({'hostname':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 'ss':ss, 's': es.options['SERVER'], 'l': es.options['LOGDEBUG']}).render_response('server/sofia.conf.xml')
     
 def get_limit(request):
     """
@@ -64,11 +64,11 @@ def get(request):
 def post_switch(request):
     """переменные софт свича"""
     es = get_object_or_404(Server, name__exact=request.POST.get('hostname'), enabled=True)
-    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER']}).render_response('server/switch.conf.xml')
+    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER'], 'l': es.options['LOGDEBUG']}).render_response('server/switch.conf.xml')
     
 def odbc_query(request):
     es = get_object_or_404(Server, name__exact=request.POST.get('hostname'), enabled=True)
-    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER']}).render_response('server/odbc_query.conf.xml')
+    return request.Context({'name':request.POST.get('hostname'), 'odbc_dsn':es.odbc_dsn, 's': es.options['SERVER'], 'l': es.options['LOGDEBUG']}).render_response('server/odbc_query.conf.xml')
     
 def post_modules(request):
     """
