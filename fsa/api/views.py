@@ -78,6 +78,10 @@ def get(request):
                 elif (request.POST['key_value'] == "sofia.conf"):
                     l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
                     return sv.get_sofia(request)
+                elif (request.POST['key_value'] == "nibblebill.conf"):
+                    l.debug("key_ value %s hostname: %s" % (request.POST.get('key_value'), request.POST.get('hostname')))
+                    from fsb.billing import views as bill
+                    return bill.get_conf(request)
                 elif (request.POST['key_value'] == "xml_cdr.conf"):
                     from fsa.cdr import views as cv
                     l.debug("key_ value xml_cdr.conf hostname: %s" % request.POST.get('hostname'))
