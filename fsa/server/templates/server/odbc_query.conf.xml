@@ -9,12 +9,12 @@
   <queries>
     <!-- the ${foo} variable will be expanded from channel variables at query time -->
     
-    <query name="map-did-users" value="
+    <query name="fsb-nibble-rate" value="
       SELECT rate AS nibble_rate
       FROM
         tariff where
       WHERE
-        tariff_plan_id=${nibble_tariff} AND digits IN (${lcr_query_expanded_digits}) ORDER BY digits DESC, rand();3"/>
+        tariff_plan_id=${nibble_tariff} AND digits IN (${lcr_query_expanded_digits}) ORDER BY digits DESC, rand();"/>
         
     <query name="map-did-users" value="
       SELECT
