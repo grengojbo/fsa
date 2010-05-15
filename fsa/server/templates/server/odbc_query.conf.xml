@@ -10,7 +10,7 @@
     <!-- the ${foo} variable will be expanded from channel variables at query time -->
     
     <query name="fsb-nibble-rate" value="
-      SELECT rate AS nibble_rate
+      SELECT rate 
       FROM
         tariff
       WHERE
