@@ -12,7 +12,7 @@
     <query name="fsb-nibble-rate" value="
       SELECT rate AS nibble_rate
       FROM
-        tariff where
+        tariff
       WHERE
         tariff_plan_id=${nibble_tariff} AND digits IN (${lcr_query_expanded_digits}) ORDER BY digits DESC, rand();"/>
         
