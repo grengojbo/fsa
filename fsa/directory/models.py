@@ -11,7 +11,7 @@ from django.contrib.sites.models import Site
 from fsa.directory.managers import EndpointManager, SipRegistrationManager
 import config
 from livesettings import ConfigurationSettings, config_value, config_choice_values
-#from .managers import 
+#from .managers import
 import logging
 import datetime
 import signals
@@ -37,7 +37,7 @@ class Endpoint(models.Model):
     #uid = models.CharField(max_length=100)
     uid = models.CharField(_(u'Phone Number'), max_length=12, unique=True, blank=True)
     phone_type = models.CharField(_(u'Type'), max_length=1, choices=PHONE_TYPES, default='S')
-    password = models.CharField(_(u'Password'), max_length=6, blank=True)
+    password = models.CharField(_(u'Password'), max_length=32, blank=True, null=True)
     accountcode = models.ForeignKey(User)
     user_context = models.ForeignKey(Context)
     sip_profile = models.ForeignKey(SipProfile)
@@ -70,9 +70,9 @@ class Endpoint(models.Model):
         log.debug('delete endpoint: %s' % self.uid)
         #signals.endpoint_delete('EndpointDelete', endpoint=self.uid)
         super(Endpoint, self).delete()
-    
+
     def save(self, *args, **kwargs):
-            
+
         if not self.uid:
             try:
                 from fsa.numberplan.models import NumberPlan
@@ -92,7 +92,7 @@ class Endpoint(models.Model):
             signals.endpoint_change.send(self, endpoint=self, old_endpoint=old_endpoint)
         log.debug('save endpoint: %s' % self.uid)
         super(Endpoint, self).save(*args, **kwargs)
-        
+
     class Meta:
         db_table = 'endpoints'
         verbose_name = _(u'Endpoint')
@@ -100,15 +100,15 @@ class Endpoint(models.Model):
 
     def __unicode__(self):
         return str(self.uid)
-    
+
     @property
     def username(self):
         return self.accountcode.username
-    
+
     @property
     def enabled(self):
         return self.enable
-    
+
     @property
     def sip_server(self):
         return config_value('directory', 'sip_server')
@@ -173,7 +173,7 @@ class SipRegistration(models.Model):
     sip_contact_user = models.CharField(_('Contact User'), max_length=50)
     sip_contact_host = models.CharField(_('Contact Host'), max_length=100)
     sip_request_host = models.CharField(_('Request Host'), max_length=100)
-    
+
     #sip_profile=internal
     #sip_auth_nonce=426d4308-56e6-11df-8fab-cf38109feabb
     #sip_auth_uri=sip%3Atest.lincom3000.com.ua
@@ -198,7 +198,7 @@ class SipRegistration(models.Model):
     #key_name = 'name'
     #key = models.CharField(_(''), max_length=100, default='id'
     objects = SipRegistrationManager()
-    
+
     class Meta:
         db_table = 'sip_reg'
         verbose_name = _(u'Registration Endpoint')
@@ -213,7 +213,7 @@ class FSGroup(models.Model):
     """
     name = models.CharField(_('Name'), max_length=50, unique=True)
     users = models.ManyToManyField(Endpoint, blank=True, db_table='endpoint_to_groups')
-    
+
     class Meta:
         db_table = 'endpoints_group'
         verbose_name = _(u'Group')

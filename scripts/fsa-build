@@ -1,8 +1,7 @@
 #!/bin/bash
-
-# wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/build_fsa
+# wget http://github.com/grengojbo/fsa/raw/master/scripts/fsa-build
 #chmod 744 build_fsa
-# ./build_fsa dev fs_test
+# ./fsa-build dev fs_test
 # sudo apt-get install python-setuptools
 
 #virtualenv .env --no-site-packages
@@ -67,11 +66,11 @@ if [ $1 ]; then
 fi
 }
 build_dev() {
-    pip install -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements-dev.txt   
+    pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt 
 }
 build_stable() {
-    pip install -r http://bitbucket.org/jbo/fsa/raw/tip/scripts/requirements.txt
-    pip install -e hg+http://bitbucket.org/jbo/fsa/#egg=fsa
+    pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements.txt 
+    pip install -e http://github.com/grengojbo/fsa.git#egg=fsa
 }
 #build_project () {
 #    if [ ! -d ]

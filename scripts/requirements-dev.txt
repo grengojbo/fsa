@@ -20,6 +20,7 @@ pytils
 -e git+git://github.com/grengojbo/django-bursar.git#egg=django-bursar
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
 -e svn+http://django-rosetta.googlecode.com/svn/trunk/#egg=rosetta
+-e git+git://github.com/grengojbo/restfull.git#egg=restfull
 django-debug-toolbar==0.8
 werkzeug
 ipython

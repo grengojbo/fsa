@@ -19,4 +19,5 @@ http://bitbucket.org/bkroeze/django-signals-ahoy/get/tip.tar.gz
 -e hg+http://bitbucket.org/zacharyvoase/djanjinja/#egg=djanjinja
 -e git+git://github.com/grengojbo/django-bursar.git#egg=django-bursar
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
+-e git+git://github.com/grengojbo/restfull.git#egg=restfull
 fabric
