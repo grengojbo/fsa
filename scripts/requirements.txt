@@ -9,7 +9,7 @@ http://bitbucket.org/jbo/django-keyedcache/get/0.1.5.tar.gz
 -e hg+http://bitbucket.org/jbo/django-sugar/#egg=django-sugar
 -e git+git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 http://bitbucket.org/bkroeze/django-signals-ahoy/get/tip.tar.gz
--e hg+http://bitbucket.org/jespern/django-piston/#egg=django-piston
+-e git+http://github.com/grengojbo/django-piston.git#egg=django-pisto
 -e hg+http://bitbucket.org/daevaorn/django-shoes/#egg=django-shoes
 -e hg+http://bitbucket.org/daevaorn/django-composition/#egg=django-composition
 -e hg+http://bitbucket.org/jbo/django-grappelli/#egg=django-grappelli
