@@ -1,12 +1,13 @@
 # -*- mode: python; coding: utf-8; -*-
 from piston.handler import BaseHandler, AnonymousBaseHandler
+from piston.handlers import PaginatedCollectionBase
 from piston.utils import rc, require_mime, require_extended
 #from piston.doc import generate_doc
 import logging
 log = logging.getLogger('fsa.numberplan.api.handlers')
 from fsa.numberplan.models import NumberPlan
 
-class NumberPlanHandler(BaseHandler):
+class NumberPlanHandler(PaginatedCollectionBaseHandler):
     """
     Authenticated entrypoint for blogposts.
     """
@@ -30,19 +31,15 @@ class NumberPlanHandler(BaseHandler):
         """
         log.debug("read phone number %s" % phone_number)
         base = NumberPlan.objects
-        if request.GET.get("start"):
-            start = request.GET.get("start")
-        if request.GET.get("limit"):
-            limit = int(request.GET.get("limit"))
-            limit += int(start)
-        log.info(limit)
         try:
             if phone_number:
-                return {"count": 1, "phonenumber": base.get(phone_number__exact=phone_number, site__name__exact=request.user)}
+                #return {"count": 1, "phonenumber": base.get(phone_number__exact=phone_number, site__name__exact=request.user)}
+                resp = base.get(phone_number__exact=phone_number, site__name__exact=request.user)
             else:
-                resp = base.filter(site__name__exact=request.user)[start:limit]
-                count = base.filter(site__name__exact=request.user).count()
-                return {"count": count, "phonenumber": resp}
+                resp = base.filter(site__name__exact=request.user)
+                #count = base.filter(site__name__exact=request.user).count()
+                #return {"count": count, "phonenumber": resp}
+            return resp
         except:
             return rc.NOT_HERE
 

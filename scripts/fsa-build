@@ -25,7 +25,8 @@ if [ ! $PYTHONPATH ]; then
  source ~/.bashrc
 fi
 build_global() {
-    sudo easy_install -U mercurial
+    sudo aptitude install curl wget python-setuptools
+    #sudo easy_install -U mercurial
     sudo easy_install -U pip
     sudo easy_install -U ipython
     sudo easy_install -U virtualenv
