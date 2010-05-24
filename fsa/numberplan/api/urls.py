@@ -11,10 +11,8 @@ auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 numberplan = Resource(handler=NumberPlanHandler, authentication=auth)
 ##
 urlpatterns = patterns('',
-    url(r'^$', numberplan),
-    url(r'^doc/$', documentation_view),
-    #url(r'^(?P<start>.+)/(?P<limit>.+)/$', numberplan),
-    url(r'^(?P<phone_number>.+)/$', numberplan),
+    url(r'^$', numberplan, name='numberplan'),
+    url(r'^(?P<phone>.+)/$', numberplan),
     #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
 
     # automated documentation

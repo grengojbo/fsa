@@ -5,14 +5,9 @@ FreeSWITCH Admin -это веб интерфейс для администрир
 
 ## Установка FreeSWITCH Admin v0.4.1
 
-### Первоначальная настройка
-В вашей системе уже должен быть установлен пакет **python-setuptools**  
-если нет то установите его для Ubuntu  
-**sudo apt-get install python-setuptools**  
-
 ### Установка  
 
-1. Скачать установочный файл **wget http://bitbucket.org/jbo/fsa/raw/tip/scripts/fsa-build**
+1. Скачать установочный файл **wget http://github.com/grengojbo/fsa/raw/master/scripts/fsa-build**
 2. Сделать его исполняемым **chmod 744 fsa-build**
 3. Установите общие библиотеки **./fsa-build global** *(этот шаг можно делать один раз)*
 4. Установка virtualenv и FreeSWITCH Admin (fsa) **./fsa-build stable fs_stable**
@@ -27,10 +22,11 @@ FreeSWITCH Admin -это веб интерфейс для администрир
 1.4 Настраиваем сервер *Начало › Server › Freeswitch Servers* подробнее в разделе Настраиваем сервер  
 1.5 Добавляем Номерной план ./manage.py build_endpoint --number_start=1000 --number_end=1020 --site=1
     где number_start - с какого номера   
-        number_end - по какой номер генерируется номерной план   
+        number_end - по какой номер генерируется номерной план
+        site - id сайта для которого будет использоватся номерной план
     далее переходим в раздел Управлени Номерным планом   
 1.6 Настройка абонентов
-Если Вы хотите что бы при активации новой учетной запмси создавался SIP ID 
+Если Вы хотите что бы при активации новой учетной записи создавался SIP ID 
 то перейдите в раздел Site Setting и активируйте  *Endpoint Module Settings > Auto create endpoint*
 
 #### 2. Настраиваем сервер  

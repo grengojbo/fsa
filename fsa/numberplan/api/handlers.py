@@ -8,6 +8,7 @@ log = logging.getLogger('fsa.numberplan.api.handlers')
 from fsa.numberplan.models import NumberPlan
 
 class NumberPlanHandler(PaginatedCollectionBaseHandler):
+    #class NumberPlanHandler(BaseHandler):
     """
     Authenticated entrypoint for blogposts.
     """
@@ -16,32 +17,23 @@ class NumberPlanHandler(PaginatedCollectionBaseHandler):
     model = NumberPlan
     #anonymous = 'AnonymousBlogpostHandler'
     fields = ('phone', 'nt', 'enables', 'status', 'date_active')
-
+    #resources = NumberPlan.objects.filter(site__name__exact=request.user)
+    
     #@staticmethod
-    #def resource_uri():
-    #    return ('api_numberplan_handler', ['phone_number'])
-    #@require_mime('json', 'yaml')
-    def read(self, request, start=0, limit=50, phone_number=None):
-        """
-        Returns a blogpost, if `title` is given,
-        otherwise all the posts.
+    #def resource_uri(cls, numberplan):
+        #return ('numberplan', [ 'json', ])
+    
+    def read(self, request, phone=None):
+        self.resource_name = 'numberplan'
+        #return {"count": 0, "numberplan": NumberPlan.objects.filter(site__name__exact=request.user)}
+        if phone is not None:
+            log.debug("phone: %s" % phone)
+            return {"count": 1, 'numberplan': NumberPlan.objects.get(phone_number__exact=phone)}
+            #self.resources = NumberPlan.objects.filter(site__name__exact=request.user)
+        else:
+            self.resources = NumberPlan.objects.filter(site__name__exact=request.user)
+            return super(NumberPlanHandler, self).read(request)
 
-        Parameters:
-         - `phone_number`: The title of the post to retrieve.
-        """
-        log.debug("read phone number %s" % phone_number)
-        base = NumberPlan.objects
-        try:
-            if phone_number:
-                #return {"count": 1, "phonenumber": base.get(phone_number__exact=phone_number, site__name__exact=request.user)}
-                resp = base.get(phone_number__exact=phone_number, site__name__exact=request.user)
-            else:
-                resp = base.filter(site__name__exact=request.user)
-                #count = base.filter(site__name__exact=request.user).count()
-                #return {"count": count, "phonenumber": resp}
-            return resp
-        except:
-            return rc.NOT_HERE
 
     def update(self, request, phone_number):
         """
