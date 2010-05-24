@@ -10,20 +10,21 @@
 #wget http://files.freeswitch.org/npa-nxx-companytype-ocn.csv
 # TODO: work mkvirtualenv $1 and python version
 
-source ~/.bashrc
-if [ ! $PYTHONPATH ]; then
- if [ ! -d $HOME/lib/python2.5/site-packages ]; then
-  if [ ! -d $HOME/lib ]; then
-   mkdir $HOME/lib
-  fi
-  if [ ! -d $HOME/lib/python2.5 ]; then
-   mkdir $HOME/lib/python2.5
-  fi
-  mkdir $HOME/lib/python2.5/site-packages
- fi
- echo "PYTHONPATH=$HOME/lib/python2.5/site-packages" >> $HOME/.bashrc
- source ~/.bashrc
-fi
+#source ~/.bashrc
+#if [ ! $PYTHONPATH ]; then
+# if [ ! -d $HOME/lib/python2.5/site-packages ]; then
+#  if [ ! -d $HOME/lib ]; then
+#   mkdir $HOME/lib
+#  fi
+#  if [ ! -d $HOME/lib/python2.5 ]; then
+#   mkdir $HOME/lib/python2.5
+#  fi
+#  mkdir $HOME/lib/python2.5/site-packages
+# fi
+# echo "PYTHONPATH=$HOME/lib/python2.5/site-packages" >> $HOME/.bashrc
+# source ~/.bashrc
+#fi
+
 build_global() {
     sudo aptitude install curl wget python-setuptools
     #sudo easy_install -U mercurial
@@ -37,6 +38,7 @@ build_global() {
     sudo easy_install -U setuptools_git
     sudo easy_install -U Fabric   
 }
+
 build_env() {
 if [ ! -d $HOME/.virtualenvs ]; then
  mkdir $HOME/.virtualenvs

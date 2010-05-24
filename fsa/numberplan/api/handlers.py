@@ -1,6 +1,6 @@
 # -*- mode: python; coding: utf-8; -*-
 from piston.handler import BaseHandler, AnonymousBaseHandler
-from piston.handlers import PaginatedCollectionBase
+from piston.handler import PaginatedCollectionBaseHandler
 from piston.utils import rc, require_mime, require_extended
 #from piston.doc import generate_doc
 import logging
