@@ -3,11 +3,4 @@
 #workon <sitename>
 #cd <sitename>
 #pip install -U -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements.txt
-pip install -U -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
-pip install -U -e git+http://github.com/grengojbo/fsa.git#egg=fsa
-#hg pull
-#hg merge
-#hg ci -m"merge"
-#cd www/
-./manage.py syncdb
-./manage.py migrate
+pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
