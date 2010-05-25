@@ -34,7 +34,7 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
          - `phone_number`: The title of the post to retrieve.
         """
         log.debug("read endpoint %s" % account)
-        base = Endpoint.objects
+        #base = Endpoint.objects
         self.resource_name = 'phone'
         try:
             if phone is not None:
