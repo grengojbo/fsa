@@ -38,7 +38,7 @@ class EndpointManager(models.Manager):
     def new_endpoint():
         pass
     
-    def create_endpoint(self, user, phone_number=None):
+    def create_endpoint(self, user, phone_number=None, site=None):
         """
         Added new endpoint
         
@@ -51,24 +51,37 @@ class EndpointManager(models.Manager):
         
         n = self.model()
         if phone_number is None:
-            n.uid = NumberPlan.objects.lphonenumber()
+            n.uid = NumberPlan.objects.lphonenumber(site)
         else:
             n.uid = phone_number
-        try:
-            n.password = User.objects.make_random_password(6, "0123456789")
-            n.accountcode = user
-            # TODO: добавить значение по умолчанию
-            n.user_context = Context.objects.get(default_context=True)
-            n.sip_profile =  SipProfile.objects.get(default_profile=True)
-            n.effective_caller_id_name = user.username
-            n.enable = True
-            n.phone_type = 'S'
-            n.save()
-            NumberPlan.objects.lactivate(n.uid)
-            l.debug("create endpoint: %s" % n.uid)
-            return n
-        except:
-            return None
+        n.password = User.objects.make_random_password(6, "0123456789")
+        n.accountcode = user
+        # TODO: добавить значение по умолчанию
+        n.user_context = Context.objects.get(default_context=True)
+        n.sip_profile =  SipProfile.objects.get(default_profile=True)
+        n.effective_caller_id_name = user.username
+        n.enable = True
+        n.phone_type = 'S'
+        n.save()
+        NumberPlan.objects.lactivate(n.uid)
+        l.debug("create endpoint: %s" % n.uid)
+        return n
+        #try:
+            #n.password = User.objects.make_random_password(6, "0123456789")
+            #n.accountcode = user
+            ## TODO: добавить значение по умолчанию
+            #n.user_context = Context.objects.get(default_context=True)
+            #n.sip_profile =  SipProfile.objects.get(default_profile=True)
+            #n.effective_caller_id_name = user.username
+            #n.enable = True
+            #n.phone_type = 'S'
+            #n.save()
+            #NumberPlan.objects.lactivate(n.uid)
+            #l.debug("create endpoint: %s" % n.uid)
+            #return n
+        #except DoesNotExist:
+            #raise 
+            #return None
 
     def reg(self):
         n = self.model()

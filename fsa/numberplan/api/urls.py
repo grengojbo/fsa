@@ -5,15 +5,12 @@ from piston.authentication import HttpBasicAuthentication
 from piston.doc import documentation_view
 
 from fsa.numberplan.api.handlers import NumberPlanHandler
-##
+
 auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 
 numberplan = Resource(handler=NumberPlanHandler, authentication=auth)
-##
+
 urlpatterns = patterns('',
     url(r'^$', numberplan, name='numberplan'),
     url(r'^(?P<phone>.+)/$', numberplan),
-    #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
-
-    # automated documentation
 )

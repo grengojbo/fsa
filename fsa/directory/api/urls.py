@@ -11,12 +11,7 @@ auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 endpoint = Resource(handler=EndpointHandler, authentication=auth)
 ##
 urlpatterns = patterns('',
-    url(r'^$', endpoint),
-    url(r'^doc/$', documentation_view),
-    #url(r'^(?P<start>.+)/(?P<limit>.+)/$', endpoint),
-    url(r'^username/(?P<account>.+)/$', endpoint),
+    url(r'^$', endpoint, name='endpoint'),
+    url(r'^account/(?P<account>.+)/$', endpoint),
     url(r'^phone/(?P<phone>.+)/$', endpoint),
-    #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
-
-    # automated documentation
 )

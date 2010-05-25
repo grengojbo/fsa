@@ -28,37 +28,37 @@ class NumberPlanHandler(PaginatedCollectionBaseHandler):
         #return {"count": 0, "numberplan": NumberPlan.objects.filter(site__name__exact=request.user)}
         if phone is not None:
             log.debug("phone: %s" % phone)
-            return {"count": 1, 'numberplan': NumberPlan.objects.get(phone_number__exact=phone)}
+            return {"count": 1, 'numberplan': NumberPlan.objects.get(phone_number__exact=phone, site__name__exact=request.user)}
             #self.resources = NumberPlan.objects.filter(site__name__exact=request.user)
         else:
             self.resources = NumberPlan.objects.filter(site__name__exact=request.user)
             return super(NumberPlanHandler, self).read(request)
 
 
-    def update(self, request, phone_number):
+    def update(self, request, phone):
         """
         Update number plan type.
         """
         attrs = self.flatten_dict(request.POST)
-        log.debug("update phone number %s" % phone_number)
+        log.debug("update phone number %s" % phone)
         if self.exists(**attrs):
             return rc.DUPLICATE_ENTRY
         else:
             try:
-                np = NumberPlan.objects.get(phone_number__exact=phone_number, site__name__exact=request.user)
+                np = NumberPlan.objects.get(phone_number__exact=phone, site__name__exact=request.user)
                 np.nt=int(attrs['nt'])
                 np.save()
                 return np
             except:
                 return rc.BAD_REQUEST
 
-    def delete(self, request, phone_number):
+    def delete(self, request, phone):
         """
         Update number plan type.
         """
         attrs = self.flatten_dict(request.POST)
         try:
-            np = NumberPlan.objects.get(phone_number__exact=phone_number, site__name__exact=request.use)
+            np = NumberPlan.objects.get(phone_number__exact=phone, site__name__exact=request.use)
             np.enables=False
             np.save()
             return rc.DELETED
