@@ -11,11 +11,7 @@ auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 cdr = Resource(handler=CdrHandler, authentication=auth)
 ##
 urlpatterns = patterns('',
-    url(r'^$', cdr),
-    url(r'^doc/$', documentation_view),
-    #url(r'^(?P<start>.+)/(?P<limit>.+)/$', endpoint),
+    url(r'^$', cdr, name='cdr'),
+    url(r'^query/(?P<start_date>.+)/(?P<end_date>.+)/$', cdr),
     url(r'^(?P<phone>.+)/$', cdr),
-    #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
-
-    # automated documentation
 )

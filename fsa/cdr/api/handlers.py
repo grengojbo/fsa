@@ -1,5 +1,6 @@
 # -*- mode: python; coding: utf-8; -*- 
 from piston.handler import BaseHandler, AnonymousBaseHandler
+from piston.handler import PaginatedCollectionBaseHandler
 from piston.utils import rc, require_mime, require_extended
 #from piston.doc import generate_doc
 import logging
@@ -35,7 +36,7 @@ class CdrHandler(BaseHandler):
     #def resource_uri():
     #    return ('api_numberplan_handler', ['phone_number'])
     #@require_mime('json', 'yaml')
-    def read(self, request, start=0, limit=50, phone=None):
+    def read(self, request, phone=None, start_date=None, end_date=None):
         """
         Returns a blogpost, if `title` is given,
         otherwise all the posts.
@@ -45,11 +46,6 @@ class CdrHandler(BaseHandler):
         """
         #log.debug("read endpoint % s" % account)
         base = Cdr.objects
-        if request.GET.get("start"):
-            start = request.GET.get("start")
-        if request.GET.get("limit"):
-            limit = int(request.GET.get("limit"))
-            limit += int(start)
         try:
             if phone is not None:
                 server = ServerProxy("http://%s:%s@%s:%s" % (config_value('SERVER', 'rcpuser'), config_value('SERVER', 'rcppasswd'), config_value('SERVER', 'rcphost'), config_value('SERVER', 'rcpport')))
