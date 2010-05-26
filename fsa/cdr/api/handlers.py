@@ -24,7 +24,7 @@ import urllib
 
 log = logging.getLogger('fsa.cdr.api.handlers')
 
-class CdrHandler(BaseHandler):
+class CdrHandler(PaginatedCollectionBaseHandler):
 
     """
     Authenticated entrypoint for blogposts.
@@ -52,19 +52,21 @@ class CdrHandler(BaseHandler):
                 fend_date = "{0} 23:59:59".format(end_date)
                 fstart_date = "{0} 00:00:00".format(start_date)
                 endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
-                self.resources = Cdr.objects.get(caller_id_name__exact=endpoint.uid, time_stamp__range=(fstart_date, fend_date))
+                self.resources = Cdr.objects.filter(caller_id_number__exact=endpoint.uid, time_stamp__range=(fstart_date, fend_date))
+                return super(CdrHandler, self).read(request)
             elif account is not None and start_date is not None and end_date is not None:
                 fend_date = "{0} 23:59:59".format(end_date)
                 fstart_date = "{0} 00:00:00".format(start_date)
                 accountcode = Balance.objects.get(accountcode__username__exact=account, site__name__exact=request.user)
-                self.resources = Cdr.objects.get(accountcode__exact=accountcode.accountcode.username, time_stamp__range=(fstart_date, fend_date))
+                self.resources = Cdr.objects.filter(accountcode__exact=accountcode.accountcode.username, time_stamp__range=(fstart_date, fend_date))
+                return super(CdrHandler, self).read(request)
             elif phone is not None:
                 endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
-                self.resources = Cdr.objects.get(caller_id_name__exact=endpoint.uid)
+                self.resources = Cdr.objects.filter(caller_id_number__exact=endpoint.uid)
                 return super(CdrHandler, self).read(request)
             elif account is not None:
                 accountcode = Balance.objects.get(accountcode__username__exact=account, site__name__exact=request.user)
-                self.resources = Cdr.objects.get(accountcode__exact=accountcode.accountcode.username)
+                self.resources = Cdr.objects.filter(accountcode__exact=accountcode.accountcode.username)
                 return super(CdrHandler, self).read(request)
             else:
                 return rc.NOT_HERE

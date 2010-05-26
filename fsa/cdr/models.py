@@ -53,6 +53,9 @@ class Cdr(models.Model):
         db_table = u'cdr'
         verbose_name = _(u'CDR')
         verbose_name_plural = _(u'CDRs')
+        
+    def __unicode__(self):
+        return "{0} - {1}".format(self.caller_id_number, self.destination_number)
 
 # class Conf(models.Model):
 #     name = models.CharField(_(u'Name'), max_length=25)
