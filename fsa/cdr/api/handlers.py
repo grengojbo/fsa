@@ -1,4 +1,4 @@
-# -*- mode: python; coding: utf-8; -*- 
+# -*- mode: python; coding: utf-8; -*-
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.handler import PaginatedCollectionBaseHandler
 from piston.utils import rc, require_mime, require_extended
@@ -15,6 +15,8 @@ from xmlrpclib import ServerProxy
 from livesettings import ConfigurationSettings, config_value
 from BeautifulSoup import BeautifulStoneSoup as Soup
 from fsa.server.models import Server
+from fsa.directory.models import Endpoint
+from fsb.billing.models import Balance
 from decimal import Decimal
 from bursar.numbers import trunc_decimal
 import time, datetime
@@ -30,13 +32,13 @@ class CdrHandler(BaseHandler):
     allowed_methods = ('GET', 'POST')
     model = Cdr
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('accountcode', 'caller_id_number', 'destination_number', 'billsec', 'cash', 'start_timestamp', 'hangup_cause', 'direction', 'lcr_rate', 'nibble_rate',)
+    fields = ('accountcode', 'caller_id_number', 'destination_number', 'billsec', 'cash', 'start_timestamp', 'hangup_cause', 'direction', 'lcr_rate', 'nibble_rate', 'answer_timestamp', 'end_timestamp',)
 
     #@staticmethod
     #def resource_uri():
     #    return ('api_numberplan_handler', ['phone_number'])
     #@require_mime('json', 'yaml')
-    def read(self, request, phone=None, start_date=None, end_date=None):
+    def read(self, request, phone=None, account=None, start_date=None, end_date=None):
         """
         Returns a blogpost, if `title` is given,
         otherwise all the posts.
@@ -44,20 +46,28 @@ class CdrHandler(BaseHandler):
         Parameters:
          - `phone_number`: The title of the post to retrieve.
         """
-        #log.debug("read endpoint % s" % account)
-        base = Cdr.objects
+        self.resource_name = 'cdr'
         try:
-            if phone is not None:
-                server = ServerProxy("http://%s:%s@%s:%s" % (config_value('SERVER', 'rcpuser'), config_value('SERVER', 'rcppasswd'), config_value('SERVER', 'rcphost'), config_value('SERVER', 'rcpport')))
-                log.debug('connect to server: %s' % config_value('SERVER', 'rcpuser'))
-                qphone = "%s default as xml" % phone
-                resp = server.freeswitch.api("lcr", qphone)
-                xml_resp = Soup(resp)
-                return {"count": 1, "rate": xml_resp.row.rate.string}
+            if phone is not None and start_date is not None and end_date is not None:
+                fend_date = "{0} 23:59:59".format(end_date)
+                fstart_date = "{0} 00:00:00".format(start_date)
+                endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
+                self.resources = Cdr.objects.get(caller_id_name__exact=endpoint.uid, time_stamp__range=(fstart_date, fend_date))
+            elif account is not None and start_date is not None and end_date is not None:
+                fend_date = "{0} 23:59:59".format(end_date)
+                fstart_date = "{0} 00:00:00".format(start_date)
+                accountcode = Balance.objects.get(accountcode__username__exact=account, site__name__exact=request.user)
+                self.resources = Cdr.objects.get(accountcode__exact=accountcode.accountcode.username, time_stamp__range=(fstart_date, fend_date))
+            elif phone is not None:
+                endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
+                self.resources = Cdr.objects.get(caller_id_name__exact=endpoint.uid)
+                return super(CdrHandler, self).read(request)
+            elif account is not None:
+                accountcode = Balance.objects.get(accountcode__username__exact=account, site__name__exact=request.user)
+                self.resources = Cdr.objects.get(accountcode__exact=accountcode.accountcode.username)
+                return super(CdrHandler, self).read(request)
             else:
-                resp = base.filter(site__name__iexact=request.user)[start:limit]
-                count = base.filter(site__name__iexact=request.user).count()
-                return {"count": count, "lcr": resp}
+                return rc.NOT_HERE
         except:
             return rc.NOT_HERE
 
@@ -69,7 +79,7 @@ class CdrHandler(BaseHandler):
         #xml_cdr = Soup(request.raw_post_data)
         xml_cdr = Soup(attrs.get('cdr'))
         #l.debug("billsec: %i %i" % xml_cdr.cdr.variables.billsec, xml_cdr.cdr.variables.billmsec)
-        
+
         new_cdr = Cdr(caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string, caller_id_number = xml_cdr.cdr.callflow.caller_profile.caller_id_number.string)
         if xml_cdr.cdr.variables.accountcode is not None:
             log.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode)
@@ -101,7 +111,7 @@ class CdrHandler(BaseHandler):
         log.debug("context %s" % xml_cdr.cdr.callflow.caller_profile.context.string)
         new_cdr.start_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.start_stamp.string), time_format)))
         log.debug("start_stamp: %s" % new_cdr.start_timestamp)
-        
+
         new_cdr.answer_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.answer_stamp.string), time_format)))
         #log.debug("answer_stamp: %s" % xml_cdr.cdr.variables.answer_stamp.string)
         new_cdr.end_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.end_stamp.string), time_format)))
@@ -140,7 +150,7 @@ class CdrHandler(BaseHandler):
 ##        <write_codec>GSM</write_codec>
 ##        <write_rate>8000</write_rate>
         new_cdr.save()
-        
+
         log.debug("caller_id_name %s" % new_cdr.caller_id_name)
         log.debug("caller_id_number %s" % new_cdr.caller_id_number)
         #log.debug("bridge_channel %s" % new_cdr.bridge_channel)
