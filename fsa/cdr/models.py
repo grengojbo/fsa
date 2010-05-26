@@ -56,6 +56,10 @@ class Cdr(models.Model):
         
     def __unicode__(self):
         return "{0} - {1}".format(self.caller_id_number, self.destination_number)
+    
+    @property
+    def username(self):
+        return self.accountcode
 
 # class Conf(models.Model):
 #     name = models.CharField(_(u'Name'), max_length=25)
