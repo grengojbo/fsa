@@ -32,7 +32,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
     allowed_methods = ('GET', 'POST')
     model = Cdr
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('username', 'caller_id_number', 'destination_number', 'billsec', 'cash', 'start_timestamp', 'hangup_cause', 'direction', 'lcr_rate', 'nibble_rate', 'answer_timestamp', 'end_timestamp',)
+    fields = ('username', 'phone', 'destination_number', 'billsec', 'cash', 'start_timestamp', 'hangup_cause', 'direction', 'lcr_rate', 'nibble_rate', 'answer_timestamp', 'end_timestamp', 'ipaddr',)
 
     #@staticmethod
     #def resource_uri():

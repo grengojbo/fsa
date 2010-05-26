@@ -60,6 +60,14 @@ class Cdr(models.Model):
     @property
     def username(self):
         return self.accountcode
+    
+    @property
+    def phone(self):
+        return self.caller_id_number
+    
+    @property
+    def ipaddr(self):
+        return self.sip_received_ip
 
 # class Conf(models.Model):
 #     name = models.CharField(_(u'Name'), max_length=25)
