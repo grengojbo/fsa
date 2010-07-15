@@ -11,7 +11,8 @@ http://bitbucket.org/jbo/django-keyedcache/get/0.1.5.tar.gz
 http://bitbucket.org/bkroeze/django-signals-ahoy/get/tip.tar.gz
 -e git+http://github.com/grengojbo/django-piston.git#egg=django-pisto
 -e git+http://github.com/daevaorn/django-composition.git#egg=django-composition
--e hg+http://bitbucket.org/jbo/django-grappelli/#egg=django-grappelli
+-e git+http://github.com/bryanveloso/django-grappelli.git#egg=django-grappelli
+-e hg+http://bitbucket.org/fetzig/grappelli-admin-tools/#egg=grappelli-admin-tools
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
 -e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
 -e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform

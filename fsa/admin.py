@@ -6,7 +6,7 @@ Created by jbo on 2009-12-13.
 Copyright (c) 2009 __MyCompanyName__. All rights reserved.
 """
 from django.contrib import admin
-from grappelli.sites import GrappelliSite
+#from grappelli.sites import GrappelliSite
 from django.utils.translation import ugettext_lazy as _
 # 
 # from django.contrib.auth.models import User, Group
@@ -16,15 +16,15 @@ from django.utils.translation import ugettext_lazy as _
 # from l10n.models import Country
 # from l10n.admin import CountryOptions
 # 
-user_site = GrappelliSite()
+#user_site = GrappelliSite()
 # #user_site.register(UserExtendedProfile, UserExtendedProfileOptions)
 # #user_site.register(UserProfile, UserProfileOptions)
 # user_site.register(Group, GroupAdmin)
 # user_site.register(User, UserAdmin)
 # user_site.register(Site, SiteAdmin)
 # user_site.register(Country, CountryOptions)
-
-admin.site = GrappelliSite()
+#from grappelli.admin import GrappelliModelAdmin, GrappelliStackedInline, GrappelliTabularInline
+#admin.site = GrappelliSite()
 admin.autodiscover()
 
 admin.site.groups = {
@@ -70,24 +70,24 @@ admin.site.groups = {
     }
 }
 
-user_site.groups = {
-    0: {
-        'title': _(u'User Management Administration'), # optional
-        'name': 'User Management',
-        'apps': ['auth'],
-        #'template': 'custom/index_group_usermanagement.html', # optional
-        'classes': ['collapse-open'], # optional
-        'show_apps': True, # optional
-    },
-    1: {
-        'name': _(u'Configuration'),
-        'apps': ['site', 'l10n']
-    }
-}
+#user_site.groups = {
+    #0: {
+        #'title': _(u'User Management Administration'), # optional
+        #'name': 'User Management',
+        #'apps': ['auth'],
+        ##'template': 'custom/index_group_usermanagement.html', # optional
+        #'classes': ['collapse-open'], # optional
+        #'show_apps': True, # optional
+    #},
+    #1: {
+        #'name': _(u'Configuration'),
+        #'apps': ['site', 'l10n']
+    #}
+#}
 
-user_site.collections = {
-    0: {
-        'title': 'User Admin',
-        'groups': [0,1]
-    },
-}
+#user_site.collections = {
+    #0: {
+        #'title': 'User Admin',
+        #'groups': [0,1]
+    #},
+#}
