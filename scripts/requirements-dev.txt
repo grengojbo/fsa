@@ -10,8 +10,7 @@ pytils
 -e git+git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 -e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
 -e git+http://github.com/grengojbo/django-piston.git#egg=django-piston
--e hg+http://bitbucket.org/daevaorn/django-shoes/#egg=django-shoes
--e hg+http://bitbucket.org/daevaorn/django-composition/#egg=django-composition
+-e git+http://github.com/daevaorn/django-composition.git#egg=django-composition
 -e hg+http://bitbucket.org/jbo/django-grappelli/#egg=django-grappelli
 -e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
 -e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform

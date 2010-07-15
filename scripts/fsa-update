@@ -4,3 +4,6 @@
 #cd <sitename>
 #pip install -U -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements.txt
 pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
+pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
+pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
+pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc

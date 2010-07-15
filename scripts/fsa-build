@@ -73,7 +73,7 @@ build_dev() {
 }
 build_stable() {
     pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements.txt 
-    pip install -e http://github.com/grengojbo/fsa.git#egg=fsa
+    pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
 }
 #build_project () {
 #    if [ ! -d ]

@@ -14,7 +14,7 @@
   <param name="caller-id-in-from" value="{{ gw.caller_id_in_from|lower }}"/>
   <!--<param name="contact-params" value="tport=tcp"/>-->
   <!-- <param name="extension-in-contact" value="{{ gw.extension_in_contact|lower }}"/> -->
-  {% if gw.ping %}<param name="ping" value="{{ gw.ping }}"/>{% endif %}
+  {% if gw.ping != 0 %}<param name="ping" value="{{ gw.ping }}"/>{% endif %}
   {% if gw.exten %}<param name="extension" value="{{ gw.exten }}"/>{% endif %}
   <!-- <param name="context" value="public"/> -->
   <param name="context" value="{{ gw.context.name }}"/>
