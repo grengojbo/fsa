@@ -7,7 +7,6 @@ INSTALLED_APPS += (
     'fsa.api',
     'lib',
     'bursar',
-    'currency', # lev 2
     'fsa.acl',
     'fsa.numberplan',
     'fsa.gateway',

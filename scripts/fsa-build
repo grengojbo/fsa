@@ -69,7 +69,13 @@ if [ $1 ]; then
 fi
 }
 build_dev() {
-    pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt 
+    pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
+    python manage.py syncdb
+    python manage.py customdashboard
+    python manage.py loaddata l10n_data
+    
+    python manage.py loaddata currency_data
+    python manage.py loaddata  currency_default
 }
 build_stable() {
     pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements.txt 
