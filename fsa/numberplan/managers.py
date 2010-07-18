@@ -82,16 +82,19 @@ class NumberPlanManager(models.Manager):
         n.save()
         return n.phone_number
 
-    def gen_num_plan(self, number_start, number_end, si=1):
+    def gen_num_plan(self, number_start, number_end, si=1, nt=1):
         """
         Генерация номерного плана
         number_start 
         number_end
+        si id сайта
+        nt тип номера голд и т.д.
         """
         site = Site.objects.get(pk=si)
         for n in range(number_start, number_end+1):
             np = self.model()
             np.phone_number = str(n)
             np.site = site
+            np.nt = nt
             l.debug("number: %i" % n)
             np.save()

@@ -24,8 +24,8 @@ class Command(BaseCommand):
         help='Start Number'),
         make_option('--number_end', default='2999999', dest='ne',
         help='End Number'),
-        make_option('--site', default=1, dest='si',
-        help='site'),
+        make_option('--site', default=1, dest='si', help='site'),
+        make_option('--nt', default=1, dest='nt', help='Type Number'),
     )
     help = 'Generate Number Plan ./manage.py build_endpoint --number_start=2000000 --number_end=2999999 --site=1'
     args = '[fixture ...]'
@@ -40,6 +40,7 @@ class Command(BaseCommand):
         ns = options.get('ns','')
         ne = options.get('ne','')
         si = options.get('si',1)
+        nt = options.get('nt',1)
 
         self.style = no_style()
 
@@ -71,7 +72,7 @@ class Command(BaseCommand):
             transaction.managed(True)
 
         # TODO генерируем номерной план
-        objects_in_fixture = NumberPlan.objects.gen_num_plan(int(ns), int(ne), int(si))
+        objects_in_fixture = NumberPlan.objects.gen_num_plan(int(ns), int(ne), int(si), int(nt))
         label_found = True
         # If we found even one object in a fixture, we need to reset the
         # database sequences.
