@@ -15,8 +15,8 @@ def make_enable(modeladmin, request, queryset):
     make_enable.short_description = "Mark selected stories as enable"
 
 class NumberPlanAdmin(admin.ModelAdmin):
-    list_display = ('phone_number', 'nt', 'enables', 'status', 'date_active', 'site')
-    list_filter = ('nt', 'enables')
+    list_display = ('phone_number', 'nt', 'enables', 'status', 'date_active', 'site',)
+    list_filter = ('nt', 'enables', 'status', 'site',)
     search_fields = ('phone_number',)
     actions = ['delete_selected', make_enable, 'make_disable', 'make_default', 'make_silver', 'make_gold']
     

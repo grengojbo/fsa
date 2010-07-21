@@ -109,12 +109,15 @@ class Command(BaseCommand):
             for row in reader:
                 try:
                     country_list, country_code, n = cd.parse(row)
+                    log.debug("country_code %s (%s)" % (country_code, country_list))
                     for country in country_list:
                         n['country_code'] = country_code
-                        digits = n['digits']
+                        #digits = n['digits']
+                        digits = country
                         price = Money(n['price'], n['currency'])
                         #price = Money(n['price'], 'USD')
                         #price = n['price']
+                        log.debug("digits %s" % country)
                         objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
                         object_count += objects_in_fixture
                 except Exception, e:

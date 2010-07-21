@@ -36,10 +36,10 @@ class LcrLoadForm(forms.ModelForm):
 class LcrAdmin(admin.ModelAdmin):
     #date_hierarchy = ''
     list_display = ('digits', 'enabled', 'name', 'carrier_id', 'rate', 'quality', 'reliability', 'date_start', 'site')
-    list_filter = ('carrier_id', 'enabled', 'date_start',)
+    list_filter = ('carrier_id', 'enabled', 'date_start', 'site',)
     #list_editable = ('rate', 'quality', 'reliability')
-    list_editable = ('quality', 'reliability')
-    search_fields = ['digits']
+    list_editable = ('quality', 'reliability',)
+    search_fields = ('digits','name',)
     actions = ['delete_selected', 'make_enable', 'make_disable']
 
     # fieldsets = ((None, {
