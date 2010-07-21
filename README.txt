@@ -41,3 +41,33 @@ FreeSWITCH Admin -это веб интерфейс для администрир
 2. Silver и Gold - эти номера клиентам может присвоить только администратор   
 Для груповой обработки номерного плана воспользуйтесь *Mark selected type as Silver* и т.д.   
 Выбрать можно только номера с статусом Free и Disable.
+
+#### 3. Маршруты LCR
+Подготовка CSV файла
+Для добавления маршрута необходимо в начале добавить формат загружаемого файла в таблицу
+*Начало › Server › Format loads csv files* напрмер в таком формате
+delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|price|rate|currency|weeks|time_start|time_end
+где 
+country_code - код страны например 380 для Украины
+name - название (Ukraine-Mobile KYIV STAR)
+rate - цена (0.01) переведенная в валюту системы
+price - цена в валюте оригинала
+currency - тип валюты (USD)
+other - любая колонка которую необходимо пропустить
+date_start - дата начала
+date_end - дата окончания
+weeks - день недели начало с воскресенья (2,4 - поонедельник среда)
+time_start time_end - период времент (с 00:00	до 23:59)
+digits - код страны + код оператора (38044 - Украина Киев)
+pref_digits - обрабатывает шаблоны
+7 (495, 499) => 7495, 7499
+61 (15-17, 4) = > 6115, 6116, 6117, 614 
+98170-98172;9213; 9219; => 98170, 98171, 98172, 9213, 9219
+Обязательно должны быть поля digits или pref_digits
+Если в CSV файле используется кирилица конвертируйте ее в utf8 *iconv -f CP1251 -t UTF-8 works/lcr_ukr.csv > works/lcr_ukr_utf8.csv*
+
+Добавляем маршрут
+./manage.py load_lcr --gw=3 --site=1 --format_csv=1 /fsa/lcr/fixtures/test-lcr.csv
+gw - ID смотреть в таблице Начало › Gateway › Gateways 
+site - ID сайта смотреть в Начало › Sites › Сайты 
+format_csv - смотреть в Начало › Server › Format loads csv files 
