@@ -20,14 +20,12 @@ from optparse import make_option
 
 class Command(BaseCommand):
     option_list = BaseCommand.option_list + (
-        make_option('--number_start', default='2000000', dest='ns',
-        help='Start Number'),
-        make_option('--number_end', default='2999999', dest='ne',
-        help='End Number'),
+        make_option('--number_start', default='2000000', dest='ns', help='Start Number'),
+        make_option('--number_end', default='2999999', dest='ne', help='End Number'),
         make_option('--site', default=1, dest='si', help='site'),
         make_option('--nt', default=1, dest='nt', help='Type Number'),
     )
-    help = 'Generate Number Plan ./manage.py build_endpoint --number_start=2000000 --number_end=2999999 --site=1'
+    help = 'Generate Number Plan ./manage.py build_endpoint --number_start=2000000 --number_end=2999999 --site=1 --nt=1'
     args = '[fixture ...]'
 
     def handle(self, **options):
