@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from fsa.gateway.managers import GatewayManager
 from fsa.dialplan.models import Context, Extension
 from fsa.acl.models import FSAcl
+from decimal import Decimal
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'
@@ -66,6 +67,8 @@ class SofiaGateway(models.Model):
     in_progress_calls = models.PositiveIntegerField(_(u'calls in progress'), default=0, help_text=_(u'The number of calls in progress (0 - is not limit)'))
     direction = models.PositiveSmallIntegerField(_(u'Direction'), choices=DIRECTION_CHOICES, default=2)
     acl = models.ManyToManyField(FSAcl, related_name='gateway_acl', blank=True, null=True)
+    price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
+    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
     objects = GatewayManager()
     
     class Meta:

@@ -38,8 +38,8 @@ class LcrManager(models.Manager):
         if n['time_end']:
             lc.time_end = n['time_end']
         lc.lead_strip = 0
-        if n['weeks']:
-            lc.weeks = n['weeks']
+        if n['week']:
+            lc.weeks = n['week']
         lc.trail_strip = 0
         lc.quality = 0
         lc.reliability = 0

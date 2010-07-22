@@ -118,8 +118,16 @@ class Command(BaseCommand):
                         #price = Money(n['price'], 'USD')
                         #price = n['price']
                         log.debug("digits %s" % country)
-                        objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
-                        object_count += objects_in_fixture
+                        if n['weeks'] is not None:
+                            if n['weeks'] == "all":
+                                n['week'] = 0;
+                                objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
+                                object_count += objects_in_fixture
+                            else:
+                                for i in eval(n['weeks']):
+                                    n['week'] = int(i);
+                                    objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
+                                    object_count += objects_in_fixture
                 except Exception, e:
                     log.error("line: %i => %s" % (cd.line_num, e))
                     pass
