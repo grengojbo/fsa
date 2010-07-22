@@ -7,13 +7,16 @@ from fsa.gateway.models import SofiaGateway
 # TODO сделать нормальное отображение шлюзов с просмотром активных шлюзов
 class SofiaGatewayAdmin(admin.ModelAdmin):
     #date_hierarchy = ''
-    list_display = ('id', 'name', 'username', 'vdescriptions', 'status', 'enabled',)
+    list_display = ('id', 'name', 'username', 'price', 'price_currency', 'vdescriptions', 'status', 'enabled',)
     #list_filter = ()
     #search_fields = []
 
     fieldsets = (
                 (None, {
                     'fields': ('name', 'descriptions', 'prov_url', ('username', 'password',), ('register','enabled',),'realm',)
+                }),
+                (_(u'Стоимость входящих звонков'), {
+                    'fields': (('price', 'price_currency',),)
                 }),
                 (_(u'Other Registration'), {
                     'classes': ['collapse-open'],
