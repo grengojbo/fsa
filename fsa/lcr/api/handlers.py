@@ -54,8 +54,8 @@ class LcrHandler(BaseHandler):
             log.debug(query)
             resp = base.raw(query)[0]
             log.debug(resp)
-            return {"rate": resp.rate, "suffix": resp.suffix, "digits": resp.digits, "gw": resp.gw, "price": resp.price, "currency": resp.currency, "name": resp.name }
-            #return {"rate": resp.rate}
+            #return {"rate": resp.rate, "suffix": resp.suffix, "digits": resp.digits, "gw": resp.gw, "price": resp.price, "currency": resp.currency, "name": resp.name }
+            return {"rate": resp.rate}
         
         
         #try:
