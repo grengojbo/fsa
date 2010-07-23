@@ -116,7 +116,7 @@ class Command(BaseCommand):
                         digits = country
                         #price = Money(n['price'], n['currency'])
                         #price = Money(n['price'], 'USD')
-                        #price = n['price']
+                        price = n['price']
                         log.debug("digits %s" % country)
                         if n['weeks'] is not None:
                             if n['weeks'] == "all":
