@@ -22,9 +22,10 @@ import datetime
 from decimal import Decimal
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
-from currency.fields import *
-from currency.money import Money
-from currency.models import Currency
+#from currency.fields import *
+#from currency.money import Money
+#from currency.models import Currency
+from decimal import Decimal
 #from .managers import
 
 __author__ = '$Author:$'
@@ -59,7 +60,9 @@ class Lcr(models.Model):
     rate = CurrencyField(_("Subtotal"), max_digits=18, decimal_places=4, default=Decimal("0.0"), display_decimal=4)
     intrastate_rate = CurrencyField(_("rate for intrastate calls"), max_digits=18, decimal_places=4, default=Decimal("0.0"), display_decimal=4)
     intralata_rate = CurrencyField(_("rate for intralata calls"), max_digits=18, decimal_places=4, default=Decimal("0.0"), display_decimal=4)
-    price = MoneyField(max_digits=18, decimal_places=4, default=Money(0, Currency.objects.get_default()))
+    #price = MoneyField(max_digits=18, decimal_places=4, default=Money(0, Currency.objects.get_default()))
+    price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
+    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
     carrier_id = models.ForeignKey(SofiaGateway, help_text=_(u'which carrier for this entry'))
     lead_strip = models.IntegerField(_(u'Strip front'), default=0, help_text=_(u'how many digits to strip off front of passed in number'))
     trail_strip = models.IntegerField(_(u'Strip end'), default=0, help_text=_(u'how many digits to strip of end of passed in number'))

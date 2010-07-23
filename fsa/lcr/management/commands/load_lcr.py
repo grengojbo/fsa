@@ -114,7 +114,7 @@ class Command(BaseCommand):
                         n['country_code'] = country_code
                         #digits = n['digits']
                         digits = country
-                        price = Money(n['price'], n['currency'])
+                        #price = Money(n['price'], n['currency'])
                         #price = Money(n['price'], 'USD')
                         #price = n['price']
                         log.debug("digits %s" % country)

@@ -46,7 +46,8 @@ class LcrManager(models.Manager):
         lc.enabled = True
         lc.carrier_id = gw
         lc.digits = digits
-        lc.price = price
+        lc.price = n['price']
+        lc.price_currency = n['currency']
         lc.site = site
         lc.save()
         return 1
