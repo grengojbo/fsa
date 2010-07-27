@@ -50,7 +50,7 @@ class LcrHandler(BaseHandler):
             #, rand();
             #select DAYOFWEEK(NOW()) IN (weeks);
             # AND CURRENT_TIMESTAMP BETWEEN l.date_start AND l.date_end
-            query = "SELECT l.id AS id, l.digits AS digits, cg.name AS gw, l.rate AS rate, cg.prefix AS gw_prefix, cg.suffix AS suffix, l.price AS price, l.price_currency AS currency, l.name AS name FROM lcr l LEFT JOIN carrier_gateway cg ON l.carrier_id_id=cg.id LEFT JOIN django_site s ON l.site_id=s.id WHERE cg.enabled = '1' AND l.enabled = '1' AND l.digits IN (%s) AND CURTIME() BETWEEN l.time_start AND l.time_end AND (DAYOFWEEK(NOW()) = l.weeks OR l.weeks = 0) AND s.name='%s' ORDER BY  digits DESC, reliability DESC, quality DESC;" % (pars_phone(phone), si)
+            query = "SELECT l.id AS id, l.digits AS digits, cg.name AS gw, l.rate AS rate, cg.prefix AS gw_prefix, cg.suffix AS suffix, l.price AS price, l.price_currency AS currency, l.name AS name FROM lcr l LEFT JOIN carrier_gateway cg ON l.carrier_id_id=cg.id LEFT JOIN django_site s ON l.site_id=s.id WHERE cg.enabled = '1' AND l.enabled = '1' AND l.digits IN ({0}) AND CURTIME() BETWEEN l.time_start AND l.time_end AND (DAYOFWEEK(NOW()) = l.weeks OR l.weeks = 0) AND s.name='{1}' ORDER BY  digits DESC, reliability DESC, quality DESC;".format(pars_phone(phone), si)
             #log.debug(query)
             resp = base.raw(query)[0]
             return {"rate": resp.rate, "suffix": resp.suffix, "digits": resp.digits, "gw": resp.gw, "price": resp.price, "currency": resp.currency, "name": resp.name }

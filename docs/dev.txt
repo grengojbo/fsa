@@ -15,7 +15,8 @@
 ./manage.py startmigration appname --initial # новая
 
 ./manage.py convert_to_south appname # конвертируем
-./manage.py startmigration appname new_tables --auto
+datamigration
+./manage.py schemamigration appname new_tables --auto
 ./manage.py migrate appname 0001 --fake # говорит о том, что миграция выполнена и последующие миграции её трогать не будут.
 ./manage.py migrate --db-dry-run # для проверки
 ./manage.py migrate --list # список миграций 

@@ -8,9 +8,10 @@ import datetime
 from decimal import Decimal
 from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
-from currency.fields import *
-from currency.money import Money
-from currency.models import Currency
+#from currency.fields import *
+#from currency.money import Money
+#from currency.models import Currency
+from decimal import Decimal
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
@@ -18,6 +19,10 @@ __revision__ = '$Revision:$'
 D_STATUS = ((0, _(u'bouth')),
            (1,_(u'inbound')),
            (2,_(u'outbound')),
+        )
+P_STATUS = ((0, _(u'необработан')),
+           (1,_(u'обработан')),
+           (2,_(u'обрабатывается')),
         )
 # Create your models here.
 class Cdr(models.Model):
@@ -47,6 +52,12 @@ class Cdr(models.Model):
     #bridge_channel = models.CharField(max_length=108, blank=True)
     read_codec =  models.CharField(_(u'Read codec'), max_length=10)
     write_codec = models.CharField(_(u'Write codec'), max_length=10)
+    
+    lprice =  models.DecimalField('LCR Price', default=Decimal("0"), max_digits=18, decimal_places=4)
+    lprice_currency = models.CharField(_(u'LCR Currency name'), max_length=3, default="USD")
+    lcr_name = models.CharField(_(u'Country'), max_length=200, default="local")
+    lcr_digits = models.PositiveIntegerField(_(u'Digits'), default=0)
+    procesed = models.PositiveSmallIntegerField(_(u'Procesed'), max_length=1, choices=P_STATUS, default=0, blank=False)
     #sip_user_agent call_clientcode
     #sip_rtp_rxstat sip_rtp_txstat sofia_record_file
     class Meta:
