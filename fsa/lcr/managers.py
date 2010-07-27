@@ -15,13 +15,18 @@ from django.db.models import F, Q
 from django.db.models import Max, Min, Avg, Sum, Count, StdDev, Variance
 from currency.money import Money
 from currency.models import Currency
+from fsa.core.utils import pars_phone
 l = logging.getLogger('fsa.lcr.managers')
 
 class LcrManager(models.Manager):
     """
     """
     def phone_lcr(self, phone, site):
-        return self.filter(digits=phone, site__name__iexact=site)[0]
+        lc = self.model()
+        #return self.filter(digits=phone, site__name__iexact=site)[0]
+        query = "SELECT l.id AS id, l.digits AS digits, cg.name AS gw, l.rate AS rate, cg.prefix AS gw_prefix, cg.suffix AS suffix, l.price AS price, l.price_currency AS currency, l.name AS name FROM lcr l LEFT JOIN carrier_gateway cg ON l.carrier_id_id=cg.id LEFT JOIN django_site s ON l.site_id=s.id WHERE cg.enabled = '1' AND l.enabled = '1' AND l.digits IN ({0}) AND CURTIME() BETWEEN l.time_start AND l.time_end AND (DAYOFWEEK(NOW()) = l.weeks OR l.weeks = 0) AND s.name='{1}' ORDER BY  digits DESC, reliability DESC, quality DESC;".format(pars_phone(phone), site)
+        #log.debug(query)
+        return lc.raw(query)[0]
 
     def add_lcr(self, gw, n, digits, price, site):
         lc = self.model()
