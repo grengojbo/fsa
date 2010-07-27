@@ -122,6 +122,8 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         if xml_cdr.cdr.variables.accountcode is not None:
             log.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode)
             new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
+        else:
+            new_cdr.accountcode = "none"
         if xml_cdr.cdr.variables.sip_received_ip is not None:
             log.debug("sip_received_ip %s" % xml_cdr.cdr.variables.sip_received_ip.string)
             new_cdr.sip_received_ip = xml_cdr.cdr.variables.sip_received_ip.string
