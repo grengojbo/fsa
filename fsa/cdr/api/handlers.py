@@ -105,12 +105,16 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         if xml_cdr.cdr.variables.lcr_direction is not None and xml_cdr.cdr.variables.lcr_direction.string == 'in':
             new_cdr.direction = 1
             new_cdr.nibble_rate = trunc_decimal("0.0", 2)
-        else:
-            #elif xml_cdr.cdr.variables.lcr_direction.string == 'out':
+        elif xml_cdr.cdr.variables.lcr_direction is not None and xml_cdr.cdr.variables.lcr_direction.string == 'out':
             new_cdr.direction = 2
             if xml_cdr.cdr.variables.nibble_rate is not None:
                 log.debug("nibble_rate %s" % xml_cdr.cdr.variables.nibble_rate.string)
                 new_cdr.nibble_rate = trunc_decimal(xml_cdr.cdr.variables.nibble_rate.string, 2)
+            else:
+                new_cdr.nibble_rate = trunc_decimal("0.0", 2)
+        else:
+            new_cdr.direction = 0
+            new_cdr.nibble_rate = trunc_decimal("0.0", 2)
         #elif xml_cdr.cdr.channel_data.direction is not None:
             #log.debug("direction %s" % xml_cdr.cdr.channel_data.direction.string)
             #if xml_cdr.cdr.channel_data.direction.string == 'inbound':
