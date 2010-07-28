@@ -4,7 +4,7 @@ from piston.handler import PaginatedCollectionBaseHandler
 from piston.utils import rc, require_mime, require_extended
 #from piston.doc import generate_doc
 import logging
-log = logging.getLogger('fsb.directory.api.handlers')
+log = logging.getLogger('fsa.directory.api.handlers')
 from fsa.directory.models import Endpoint
 from fsa.numberplan.models import NumberPlan
 from django.contrib.auth.models import User
@@ -121,14 +121,34 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
         #s = Site.objects.get(name__exact=request.user)
         #log.debug(u)
         #if attrs.get('phone'):
-            #np = NumberPlan.objects.get(phone_number__exact=attrs.get('phone'), site__name__exact=request.user, status=0)
-            #if np.phone_number == attrs.get('phone'):
-                #endpoint = Endpoint.objects.create_endpoint(user=u, phone_number=attrs.get('phone'), site=s)
-            #else:
-                #return rc.NOT_HERE
+        #    np = NumberPlan.objects.get(phone_number__exact=attrs.get('phone'), site__name__exact=request.user, status=0)
+        #    log.debug(np.phone_number)
+        #    if np.phone_number == attrs.get('phone'):
+        #        endpoint = Endpoint.objects.create_endpoint(user=u, phone_number=attrs.get('phone'), site=s)
+        #        log.debug("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+        #    else:
+        #        return rc.NOT_HERE
         #else:
-            #endpoint = Endpoint.objects.create_endpoint(user=u, site=s)
+        #    endpoint = Endpoint.objects.create_endpoint(user=u, site=s)
+        #if attrs.get('effective_caller_id_name'):
+        #    endpoint.effective_caller_id_name = attrs.get('effective_caller_id_name')
+        #else:
+        #    endpoint.effective_caller_id_name = "%s %s" % (u.first_name, u.last_name)
+        #if attrs.get("enabled") == "false":
+        #    endpoint.enable = False
+        #elif attrs.get("enabled") == "true":
+        #    endpoint.enable = True
+        #if attrs.get("enable") == "false":
+        #    endpoint.enable = False
+        #elif attrs.get("enable") == "true":
+        #    endpoint.enable = True
+        #if attrs.get('password'):
+        #    endpoint.password = attrs.get('password')
+        #if attrs.get('description'):
+        #    endpoint.description = attrs.get('description')
         #log.debug(endpoint)
+        #endpoint.site = s
+        #endpoint.save()
         #return endpoint
         try:
             attrs = self.flatten_dict(request.POST)
