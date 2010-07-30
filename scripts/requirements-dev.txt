@@ -3,20 +3,20 @@ BeautifulSoup
 pytils
 -e hg+http://dev.pocoo.org/hg/jinja2-main#egg=jinja2
 -e hg+http://bitbucket.org/andrewgodwin/south/#egg=south
--e hg+http://bitbucket.org/jbo/django-keyedcache/#egg=django-keyedcache
--e hg+http://bitbucket.org/jbo/satchmo-livesettings/#egg=satchmo-livesettings
 -e hg+http://bitbucket.org/jbo/satchmo-l10n/#egg=satchmo-l10n
 -e hg+http://bitbucket.org/jbo/django-sugar/#egg=django-sugar
 -e git+git://github.com/django-extensions/django-extensions.git#egg=django_extensions
--e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
 -e git+http://github.com/grengojbo/django-piston.git#egg=django-piston
 -e git+http://github.com/daevaorn/django-composition.git#egg=django-composition
 -e git+http://github.com/bryanveloso/django-grappelli.git#egg=django-grappelli
 -e hg+http://bitbucket.org/fetzig/grappelli-admin-tools/#egg=grappelli-admin-tools
 -e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
--e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
+-e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
+-e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 -e hg+http://bitbucket.org/zacharyvoase/djanjinja/#egg=djanjinja
+-e git+git://github.com/grengojbo/django-keyedcache.git#egg=django-keyedcache
+-e git+git://github.com/grengojbo/django-livesettings.git#egg=satchmo-livesettings
 -e git+git://github.com/grengojbo/django-bursar.git#egg=django-bursar
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
 -e svn+http://django-rosetta.googlecode.com/svn/trunk/#egg=rosetta
