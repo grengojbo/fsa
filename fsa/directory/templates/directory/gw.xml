@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="freeswitch/xml">
+  <section name="directory">
+  {% if sc > 0 %}{% for site in sites %}
+    <domain name="{{ site.name }}">
+      <params>
+        <param name="dial-string" value="{presence_id=${dialed_user}@${dialed_domain}}${sofia_contact(${dialed_user}@${dialed_domain})}"/>
+      </params>
+      <variables>
+        <variable name="record_stereo" value="true"/>
+      </variables>
+      <user id="default" />
+    </domain>
+  {% endfor %}{% endif %}
+  </section>
+</document>
