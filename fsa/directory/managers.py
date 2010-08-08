@@ -19,6 +19,12 @@ class EndpointManager(models.Manager):
     # TODO: add endpoint is not number plan
     # DoesNotExist
     # Exception Value: NumberPlan matching query does not exist.
+    def lactive(self):
+        """
+        return -- только активные шлюзы
+        """
+        return self.filter(enable=True)
+    
     def get_next_number(self):
         """
         return - Next free Endpoints Number

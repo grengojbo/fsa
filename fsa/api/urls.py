@@ -7,13 +7,18 @@ import views
 from fsa.api.handlers import FreeSwitchAdminHandler
 #from fsb.billing.api.handlers import
 from fsa.cdr.views import set_cdr
+
+from fsa.directory.api.handlers import DirectorytHandler
+
 auth = HttpBasicAuthentication(realm='FreeSWITCH Admin  API')
 
 fsa_api = Resource(handler=FreeSwitchAdminHandler, authentication=auth)
+directory = Resource(handler=DirectorytHandler, authentication=auth)
 
 urlpatterns = patterns('',
     url(r'^get/$', views.get),
-    url(r'^directory/$', views.directory),
+    #url(r'^directory/$', views.directory),
+    url(r'^directory/$', directory, {'emitter_format': 'jinja'}),
     #url(r'^cdr/$', set_cdr),
     url(r'^cdr/', include('fsa.cdr.api.urls')),
     url(r'^numberplan/', include('fsa.numberplan.api.urls')),

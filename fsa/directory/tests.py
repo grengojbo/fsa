@@ -19,6 +19,7 @@ import logging as l
 from django.contrib.sites.models import Site
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.core import is_app
+import urllib, base64
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
@@ -36,6 +37,12 @@ class DirectoryTestCase(test.TestCase):
         #cont3 = Context(name="private", default_context=False)
         #cont3.save()
         self.user = User.objects.create_user('test', 'test@test.com', 'test')
+        #self.user = User.objects.create_user('admin', 'admin@world.com', 'admin')
+        self.user.is_staff = True
+        self.user.is_superuser = True
+        self.user.is_active = True
+        self.user.save()
+        self.auth_string = 'Basic %s' % base64.encodestring('test:test').rstrip()
         # Every test needs a client.
         self.client = Client()
         #self.uid = 3000
@@ -69,36 +76,54 @@ class DirectoryTestCase(test.TestCase):
     def testEndpoints(self):
         """sip id для конкретного домена"""
         #endpoint = Endpoint.objects.filter(enable=True,sip_profile__server__name=request.POST.get('domain'))
+        
+        #'action': 'message-count',
+        #{'key': 'id', 'FreeSWITCH-IPv4': '95.67.67.187', 'key_value': '089.com.ua', 'FreeSWITCH-IPv6': '::1',
+        #'Event-Date-Local': '2010-08-06 00:56:12', 'Event-Calling-Line-Number': '1242', 'key_name': 'name', 
+        #'section': 'directory', 'hostname': 'gw', 'Event-Date-GMT': 'Thu, 05 Aug 2010 21:56:12 GMT', 'domain': '089.com.ua',
+        #'Event-Name': 'GENERAL', 'tag_name': 'domain', 'FreeSWITCH-Hostname': 'gw', 'Event-Date-Timestamp': '1281045372124452',
+        #'user': '380895001000', 'Event-Calling-Function': 'resolve_id', 'action': 'message-count',
+        #'Event-Calling-File': 'mod_voicemail.c', 'Core-UUID': '49ce5823-63b8-469f-9720-d9a7850c39bb'}
         pass
         
     def testSipRegistration(self):
         """
         Проверка регистрация на FS sip устройства 
         """
+        # directory gateway
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
-        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
+        #l.debug(response)
         site = Site.objects.get(pk=1)
-        es = Server.objects.get(name=self.hostname, enabled=True)
-        sofia = SipProfile.objects.get(server=es, enabled=True, name='internal')
+        #es = Server.objects.get(name=self.hostname, enabled=True)
+        sofia = SipProfile.objects.get(enabled=True, name__exact='internal')
         sofia.sites.add(site)
         sofia.save()
         self.assertEquals(sofia.sites.all().count(), 1)
-        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'})
+        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
+        self.assertEquals(response.status_code, 200)
+        #l.debug(response)
+        response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
+        self.assertEquals(response.status_code, 200)
+        l.debug(response)
+        
+        #directory network-list
+        response = self.client.post('/api/directory/', {'key_value': '089.com.ua', 'key_name': 'name', 'section': 'directory', 'hostname': self.hostname, 'domain': '089.com.ua', 'tag_name': 'domain', 'purpose': 'network-list'}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
         
-        sip_auth_nonce = 'e8c26e3e-1792-11de-ae36-af3bf0ae904b'
-        sip_auth_nc = '00000001'
-        response = self.client.post('/api/directory/', { 'hostname': 'test1.example.com', 'sip_profile': 'internal', 'section': 'directory', 'tag_name': 'domain', 'key_name': 'name', 
-               'key_value': '192.168.51.100', 'action': 'sip_auth',
-              'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_username': new_endpoint.uid, 'sip_auth_realm': '192.168.51.100', 'sip_auth_nonce': sip_auth_nonce, 
-              'sip_contact_user': new_endpoint.uid, 'sip_contact_host': '192.168.51.251', 'sip_to_user': new_endpoint.uid, 'sip_to_host': '192.168.51.100', 
-              'sip_from_user': new_endpoint.uid, 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'sip_request_host': '192.168.51.100',
-              'sip_auth_qop': 'auth', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_nc': sip_auth_nc,   'sip_auth_method': 'REGISTER', 
-              'domain': '192.168.51.100', 'key': 'id', 'user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_auth_response': 'aca561ab4fc8a886fc7852165333bbfb'})
-        self.assertEquals(response.status_code, 200)
-        l.debug(response)
+        #sip_auth_nonce = 'e8c26e3e-1792-11de-ae36-af3bf0ae904b'
+        #sip_auth_nc = '00000001'
+        #response = self.client.post('/api/directory/', { 'hostname': 'test1.example.com', 'sip_profile': 'internal', 'section': 'directory', 'tag_name': 'domain', 'key_name': 'name', 
+               #'key_value': '192.168.51.100', 'action': 'sip_auth',
+              #'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_username': new_endpoint.uid, 'sip_auth_realm': '192.168.51.100', 'sip_auth_nonce': sip_auth_nonce, 
+              #'sip_contact_user': new_endpoint.uid, 'sip_contact_host': '192.168.51.251', 'sip_to_user': new_endpoint.uid, 'sip_to_host': '192.168.51.100', 
+              #'sip_from_user': new_endpoint.uid, 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'sip_request_host': '192.168.51.100',
+              #'sip_auth_qop': 'auth', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_nc': sip_auth_nc,   'sip_auth_method': 'REGISTER', 
+              #'domain': '192.168.51.100', 'key': 'id', 'user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_auth_response': 'aca561ab4fc8a886fc7852165333bbfb'})
+        #self.assertEquals(response.status_code, 200)
+        #l.debug(response)
         # Добавление
          
 ##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)

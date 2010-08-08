@@ -31,7 +31,12 @@ PHONE_TYPES = (('S', _(u'SIP Soft Phone')),
                ('P', _(u'SIP Phone')),
                ('F', _(u'Fax')),
                ('H', _(u'H.323 Phone')),
+               ('I', _(u'IVR')),
+               ('G', _(u'Gateway')),
+               ('A', _(u'Alias')),
             )
+
+REDIRECT_CHOICES = ( (0, _(u'voice mail')), (1, _(u'other')),)
 
 class Endpoint(models.Model):
     #uid = models.CharField(max_length=100)
@@ -59,6 +64,8 @@ class Endpoint(models.Model):
     max_calls = models.SmallIntegerField(_(u'Max Calls'), default=2, help_text='limit the max number of outgoing calls for this user')
     zrtp = models.BooleanField(_(u'ZRTP Support'), default=False)
     srtp = models.BooleanField(_(u'ZRTP Support'), default=False)
+    phone_alias = models.CharField(_(u'Alias or IVR'), max_length=12, blank=True, null=True)
+    phone_redirect = models.PositiveSmallIntegerField(_(u'Redirect'), choices=REDIRECT_CHOICES, default=0)
 
     objects = EndpointManager()
 

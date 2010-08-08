@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from fsa.directory.models import Endpoint, FSGroup, SipRegistration
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.directory.forms import EndpointForm
+import keyedcache
 from django.views.generic.list_detail import object_list
 from sugar.views.decorators import render_to, ajax_request
 from django.contrib.auth.decorators import login_required
@@ -83,6 +84,24 @@ def set(request):
 ##        else:
 ##            
 
+def gw(request):
+    p = request.POST
+    key_value = name = 'result'
+    xml_context = '<result status="not found" />'
+    key_caches = "directory:gw:{0}".format(p.get('profile'))
+    try:
+        sofia = keyedcache.cache_get(key_caches)
+        return request.Context({'hostname':request.POST.get('hostname'), 'sofia':sofia}).render_response('directory/gw.xml')
+    except keyedcache.NotCachedError, nce:
+        try:
+            sofia = SipProfile.objects.get(enabled=True, name__exact=p.get('profile'))
+            keyedcache.cache_set(key_caches, value=sofia)
+            return request.Context({'hostname':request.POST.get('hostname'), 'sofia':sofia}).render_response('directory/gw.xml')
+        except:
+            #SipProfile.DoesNotExist:
+            return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
+        return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
+
 def gateways(request):
     p = request.POST
     key_value = name = 'result'
@@ -90,14 +109,14 @@ def gateways(request):
     #es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
     #sofia = SipProfile.objects.get(server=es, enabled=True, name=request.POST.get('profile'))
     #return request.Context({'hostname':request.POST.get('hostname'), 'server':es, 'sofia':sofia, 's': es.options['SERVER']}).render_response('gateway/profile.xml')
-    
+
     try:
         es = Server.objects.get(name=request.POST.get('hostname'), enabled=True)
         sofia = SipProfile.objects.get(server=es, enabled=True, name=request.POST.get('profile'))
         return request.Context({'hostname':request.POST.get('hostname'), 'server':es, 'sofia':sofia, 's': es.options['SERVER']}).render_response('gateway/profile.xml')
     except:
         return request.Context({'name':name, 'key_value':key_value, 'xml_context':xml_context}).render_response('server/fs.xml')
-    
+
 @login_required
 def directory_view(request):
     """

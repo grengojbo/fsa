@@ -6,6 +6,8 @@ from piston.utils import rc, require_mime, require_extended
 import logging
 log = logging.getLogger('fsa.directory.api.handlers')
 from fsa.directory.models import Endpoint
+from fsa.server.models import SipProfile
+import keyedcache
 from fsa.numberplan.models import NumberPlan
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite
@@ -190,3 +192,42 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
             resp = rc.DUPLICATE_ENTRY
             return resp
 
+class DirectorytHandler(BaseHandler):
+    """
+    Authenticated entrypoint for blogposts.
+    """
+    allowed_methods = ('GET', 'POST',)
+    
+    def read(self, request, phone=None, account=None):
+        return {"count": 2}
+    
+    #require_mime('xml')
+    def create(self, request):
+        attrs = self.flatten_dict(request.POST)
+        key_value = name = 'result'
+        xml_context = '<result status="not found" />'
+        
+        if attrs.get('section') == "directory":
+            if attrs.get('profile') and attrs.get('purpose') == 'gateways':
+                key_caches = "directory:::gw:::sites:::{0}".format(attrs.get('profile'))
+                try:
+                    sites = keyedcache.cache_get(key_caches)
+                    return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}
+                except keyedcache.NotCachedError, nce:
+                    try:
+                        sofia = SipProfile.objects.get(enabled=True, name__exact=attrs.get('profile'))
+                        sites = sofia.sites.all().values()
+                        keyedcache.cache_set(key_caches, value=sites)
+                        return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}
+                    except:
+                        #keyedcache.cache_set(key_caches, value=None)
+                        keyedcache.cache_delete(key_caches)
+                        return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+            elif request.POST.get('purpose') == 'network-list':
+                key_caches = "directory:::network-list:::{0}".format(attrs.get('hostname'))
+                return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+            else:
+                return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+        else:
+            return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+            

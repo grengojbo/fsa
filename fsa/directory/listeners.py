@@ -11,14 +11,18 @@ from django.contrib.auth.models import User
 from fsa.directory.signals import endpoint_create
 from livesettings import config_value, config_value_safe
 import config
+import keyedcache
 from django.db import models
 #from fsa.directory.signals import *
 
 from fsa.directory.models import Endpoint
+from fsa.server.models import SipProfile
+from django.db.models.signals import pre_save
 #from urls import custompatterns
 #import localsite
 import logging
 import time
+
 
 log = logging.getLogger('fsa.directory.listeners')
 
@@ -39,6 +43,12 @@ log = logging.getLogger('fsa.directory.listeners')
 #     signals.collect_urls.connect(add_custom_urls, sender=localsite)
 #     async_note.connect(delayedNote.listen, sender=None)
 
+def clean_cache_siprofile_handler(sender, **kwargs):
+    ipn_obj = kwargs['instance']
+    key_caches = "directory:::gw:::sites:::{0}".format(ipn_obj.name)
+    log.debug('clean chace sip profie key: {0}'.format(key_caches))
+    
+    keyedcache.cache_delete(key_caches)
 ##def handler_create_endpoint(sender, **kwargs):
 ##    log.debug("Signal post save User")
 ##    if sender.is_active() and config_value('directory', 'AUTO_CREATE'):
@@ -53,4 +63,5 @@ log = logging.getLogger('fsa.directory.listeners')
 def start_listening():
     #models.signals.post_save.connect(handler_create_endpoint, sender=User)
     log.debug('Added directory listeners')
+    pre_save.connect(clean_cache_siprofile_handler, sender=SipProfile)
     
