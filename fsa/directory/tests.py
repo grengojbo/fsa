@@ -20,6 +20,9 @@ from django.contrib.sites.models import Site
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.core import is_app
 import urllib, base64
+import simplejson
+import keyedcache
+from decimal import Decimal
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
@@ -54,6 +57,7 @@ class DirectoryTestCase(test.TestCase):
         self.hostip = '192.168.51.100'
         self.domainname = '192.168.51.100'
         self.xml_context = '<result status="not found" />'
+        self.site = Site.objects.get(pk=1)
 
     def test01CreateEndpoint(self):
         """
@@ -90,10 +94,9 @@ class DirectoryTestCase(test.TestCase):
         response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
-        site = Site.objects.get(pk=1)
         #es = Server.objects.get(name=self.hostname, enabled=True)
         sofia = SipProfile.objects.get(enabled=True, name__exact='internal')
-        sofia.sites.add(site)
+        sofia.sites.add(self.site)
         sofia.save()
         self.assertEquals(sofia.sites.all().count(), 1)
         response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
@@ -133,6 +136,8 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(new_endpoint.uid, phone)
         self.assertEquals(new_endpoint.phone_type, 'S')
         new_endpoint.phone_type = 'I'
+        new_endpoint.site = self.site
+        new_endpoint.phone_alias = 'demo-ivr'
         new_endpoint.save()
         self.assertEquals(new_endpoint.phone_type, 'I')
         endpoint = Endpoint.objects.get(uid__exact=phone, enable=True)
@@ -140,8 +145,23 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(response.status_code, 401)
         response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone), HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
-        l.debug(response.content)
+        res = simplejson.loads(response.content.encode('UTF-8'))
+        self.assertEquals(Decimal(res.get('lcr_price')), Decimal("0.18"))
         
+        gw = 'testgw'
+        response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone), HTTP_AUTHORIZATION=self.auth_string)
+        self.assertEquals(response.status_code, 200)
+        res = simplejson.loads(response.content.encode('UTF-8'))
+        self.assertEquals(Decimal(res.get('lcr_price')), Decimal("0.21"))
+        self.assertEquals(res.get('endpoint').get('phone_type'), 'I')
+        self.assertEquals(res.get('endpoint').get('phone_alias'), 'demo-ivr')
+        self.assertEquals(res.get('endpoint').get('accountcode').get('username'), 'test')
+        self.assertEquals(res.get('endpoint').get('site').get('name'), 'test1.example.com')
+        self.assertEquals(res.get('endpoint').get('zrtp'), False)
+        
+        #l.debug(res)
+        
+
 ##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
 ##        self.assertEquals(sr, 1)
 ##        # Удаление 

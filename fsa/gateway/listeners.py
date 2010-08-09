@@ -23,7 +23,9 @@ log = logging.getLogger('fsa.gateway.listeners')
 def clean_cache_gw_handler(sender, **kwargs):
     ipn_obj = kwargs['instance']
     key_caches_gw = "gatewayw::{0}".format(ipn_obj.name)
+    dialplan_caches_gw = "dialplan::gatewayw::{0}".format(ipn_obj.name)
     keyedcache.cache_delete(key_caches_gw)
+    keyedcache.cache_delete(dialplan_caches_gw)
 
 def start_listening():
     log.debug('Added Gateway listeners')

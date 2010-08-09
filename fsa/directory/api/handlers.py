@@ -209,7 +209,7 @@ class DirectorytHandler(BaseHandler):
         
         if attrs.get('section') == "directory":
             if attrs.get('profile') and attrs.get('purpose') == 'gateways':
-                key_caches = "directory:::gw:::sites:::{0}".format(attrs.get('profile'))
+                key_caches = "directory::gw::sites::{0}".format(attrs.get('profile'))
                 try:
                     sites = keyedcache.cache_get(key_caches)
                     return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}

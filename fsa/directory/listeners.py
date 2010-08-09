@@ -45,10 +45,9 @@ log = logging.getLogger('fsa.directory.listeners')
 
 def clean_cache_siprofile_handler(sender, **kwargs):
     ipn_obj = kwargs['instance']
-    key_caches = "directory:::gw:::sites:::{0}".format(ipn_obj.name)
-    log.debug('clean cache sip profie key: {0}'.format(key_caches))
-    
+    key_caches = "directory::gw::sites::{0}".format(ipn_obj.name)
     keyedcache.cache_delete(key_caches)
+    
 ##def handler_create_endpoint(sender, **kwargs):
 ##    log.debug("Signal post save User")
 ##    if sender.is_active() and config_value('directory', 'AUTO_CREATE'):
