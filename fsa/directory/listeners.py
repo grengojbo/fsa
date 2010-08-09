@@ -41,22 +41,25 @@ log = logging.getLogger('fsa.directory.listeners')
 # def start_listening():
 #     signals.collect_urls.connect(add_custom_urls, sender=localsite)
 #     async_note.connect(delayedNote.listen, sender=None)
-
-
     
-##def handler_create_endpoint(sender, **kwargs):
-##    log.debug("Signal post save User")
-##    if sender.is_active() and config_value('directory', 'AUTO_CREATE'):
-##        new_endpoint = Endpoint.objects.create_endpoint(sender)
-##        endpoint_create.send(sender=Endpoint, endpoint=new_endpoint)
-##        log.debug('Send signal endpoint_create')
-##    else:
-##        log.debug('User no active or config value AUTO_CREATE=False')
-##     
+#def handler_create_endpoint(sender, **kwargs):
+#    log.debug("Signal post save User")
+#    if sender.is_active() and config_value('directory', 'AUTO_CREATE'):
+#        new_endpoint = Endpoint.objects.create_endpoint(sender)
+#        endpoint_create.send(sender=Endpoint, endpoint=new_endpoint)
+#        log.debug('Send signal endpoint_create')
+#    else:
+#        log.debug('User no active or config value AUTO_CREATE=False')
+#     
 # signals.profile_registration.connect(handler_create_endpoint)
+
+def clean_cache_endpointe_handler(sender, **kwargs):
+    ipn_obj = kwargs['instance']
+    key_caches_endpoint = "endpoint::{0}".format(ipn_obj.uid)
+    keyedcache.cache_delete(key_caches_endpoint)
 
 def start_listening():
     #models.signals.post_save.connect(handler_create_endpoint, sender=User)
     log.debug('Added directory listeners')
-    
+    pre_save.connect(clean_cache_endpointe_handler, sender=Endpoint)
     

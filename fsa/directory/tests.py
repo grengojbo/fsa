@@ -124,7 +124,26 @@ class DirectoryTestCase(test.TestCase):
         #l.debug(response)
         # Добавление
          
-    def test03ApiBilling(self):
+    def test03EndpointCache(self):
+        phone = '1003'
+        key_caches_endpoint = "endpoint::{0}".format(phone)
+        new_endpoint = Endpoint.objects.create_endpoint(self.user)
+        
+        endpoint = Endpoint.objects.get(uid__exact=phone, enable=True)
+        keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+        ep = keyedcache.cache_get(key_caches_endpoint)
+        self.assertEquals(ep.cidr_ip, '0.0.0.0')
+        endpoint.cidr_ip = '127.0.0.1'
+        endpoint.save()
+        try:
+            ep = keyedcache.cache_get(key_caches_endpoint)
+        except:
+            endpoint = Endpoint.objects.get(uid__exact=phone, enable=True)
+            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+        ep = keyedcache.cache_get(key_caches_endpoint)
+        self.assertEquals(ep.cidr_ip, '127.0.0.1')
+    
+    def test04ApiBilling(self):
         """
         Проверка регистрация на FS sip устройства 
         """
@@ -158,9 +177,13 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(res.get('endpoint').get('accountcode').get('username'), 'test')
         self.assertEquals(res.get('endpoint').get('site').get('name'), 'test1.example.com')
         self.assertEquals(res.get('endpoint').get('zrtp'), False)
-        
         #l.debug(res)
         
+        phone = '5431'
+        response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone), HTTP_AUTHORIZATION=self.auth_string)
+        self.assertEquals(response.status_code, 200)
+        res = simplejson.loads(response.content.encode('UTF-8'))
+        self.assertEquals(res.get('endpoint'), None)
 
 ##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
 ##        self.assertEquals(sr, 1)
