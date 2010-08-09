@@ -88,11 +88,12 @@ class CdrHandler(PaginatedCollectionBaseHandler):
             new_cdr.lcr_rate = trunc_decimal(xml_cdr.cdr.variables.lcr_rate.string, 4)
         if xml_cdr.cdr.variables.lcr_currency is not None:
             new_cdr.lprice_currency = xml_cdr.cdr.variables.lcr_currency.string
+        else:
+            new_cdr.lprice_currency = "UAH"
         if xml_cdr.cdr.variables.lcr_price is not None:
             new_cdr.lprice = trunc_decimal(xml_cdr.cdr.variables.lcr_price.string, 4)
         else:
             new_cdr.lprice = trunc_decimal("0.18", 4)
-            new_cdr.lprice_currency = "UAH"
         
         if xml_cdr.cdr.variables.lcr_name is not None:
             new_cdr.lcr_name = xml_cdr.cdr.variables.lcr_name.string

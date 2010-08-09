@@ -25,9 +25,9 @@ class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
     if is_app('fsb.tariff'):
-        fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile', 'tariffplan']
+        fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'test_gateaay', 'sipprofile', 'tariffplan']
     else:
-        fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+        fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'test_gateaay', 'sipprofile']
     
     def setUp(self):
         #cont1 = Context(name="default", default_context=True)
@@ -41,6 +41,7 @@ class DirectoryTestCase(test.TestCase):
         self.user.is_staff = True
         self.user.is_superuser = True
         self.user.is_active = True
+        #self.user.user_permissions.add(permission)
         self.user.save()
         self.auth_string = 'Basic %s' % base64.encodestring('test:test').rstrip()
         # Every test needs a client.
@@ -54,7 +55,7 @@ class DirectoryTestCase(test.TestCase):
         self.domainname = '192.168.51.100'
         self.xml_context = '<result status="not found" />'
 
-    def testCreateEndpoint(self):
+    def test01CreateEndpoint(self):
         """
         Добавляем sip id для пользователя
         """
@@ -67,14 +68,9 @@ class DirectoryTestCase(test.TestCase):
         new_endpoint = Endpoint.objects.create_endpoint(self.user, '4433')
         self.assertEquals(new_endpoint.uid, '4433')
         
-    def testNewEndpoint(self):
-        """docstring for testNewEndpoint"""
         #from userprofile import signals
         #signals.profile_registration.send(sender="ProfileRegistration", request=request, user=newuser)
-        pass
-        
-    def testEndpoints(self):
-        """sip id для конкретного домена"""
+
         #endpoint = Endpoint.objects.filter(enable=True,sip_profile__server__name=request.POST.get('domain'))
         
         #'action': 'message-count',
@@ -84,9 +80,8 @@ class DirectoryTestCase(test.TestCase):
         #'Event-Name': 'GENERAL', 'tag_name': 'domain', 'FreeSWITCH-Hostname': 'gw', 'Event-Date-Timestamp': '1281045372124452',
         #'user': '380895001000', 'Event-Calling-Function': 'resolve_id', 'action': 'message-count',
         #'Event-Calling-File': 'mod_voicemail.c', 'Core-UUID': '49ce5823-63b8-469f-9720-d9a7850c39bb'}
-        pass
         
-    def testSipRegistration(self):
+    def test02SipRegistration(self):
         """
         Проверка регистрация на FS sip устройства 
         """
@@ -106,7 +101,7 @@ class DirectoryTestCase(test.TestCase):
         #l.debug(response)
         response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
-        l.debug(response)
+        #l.debug(response)
         
         #directory network-list
         response = self.client.post('/api/directory/', {'key_value': '089.com.ua', 'key_name': 'name', 'section': 'directory', 'hostname': self.hostname, 'domain': '089.com.ua', 'tag_name': 'domain', 'purpose': 'network-list'}, HTTP_AUTHORIZATION=self.auth_string)
@@ -126,6 +121,27 @@ class DirectoryTestCase(test.TestCase):
         #l.debug(response)
         # Добавление
          
+    def test03ApiBilling(self):
+        """
+        Проверка регистрация на FS sip устройства 
+        """
+        # directory gateway
+        phone = '1003'
+        gw = 'ukrtelecomin'
+        
+        new_endpoint = Endpoint.objects.create_endpoint(self.user)
+        self.assertEquals(new_endpoint.uid, phone)
+        self.assertEquals(new_endpoint.phone_type, 'S')
+        new_endpoint.phone_type = 'I'
+        new_endpoint.save()
+        self.assertEquals(new_endpoint.phone_type, 'I')
+        endpoint = Endpoint.objects.get(uid__exact=phone, enable=True)
+        response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone))
+        self.assertEquals(response.status_code, 401)
+        response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone), HTTP_AUTHORIZATION=self.auth_string)
+        self.assertEquals(response.status_code, 200)
+        l.debug(response.content)
+        
 ##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
 ##        self.assertEquals(sr, 1)
 ##        # Удаление 

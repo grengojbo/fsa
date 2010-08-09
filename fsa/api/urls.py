@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     url(r'^tariff/', include('fsb.tariff.api.urls')),
     url(r'^payment/', include('fsb.payments.api.urls')),
     url(r'^lcr/', include('fsa.lcr.api.urls')),
+    url(r'^billing/', include('fsb.api.urls')),
     #url(r'^posts/(?P<emitter_format>.+)/$', blogposts),
     #url(r'^posts\.(?P<emitter_format>.+)', blogposts, name='blogposts'),
 
