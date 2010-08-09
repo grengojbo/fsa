@@ -115,4 +115,6 @@ class SofiaGateway(models.Model):
             return self.name
         else:
             return "%s (%s)" % (self.name, _(u'disable'))
-    
+
+import listeners
+listeners.start_listening()

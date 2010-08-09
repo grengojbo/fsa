@@ -46,7 +46,7 @@ log = logging.getLogger('fsa.directory.listeners')
 def clean_cache_siprofile_handler(sender, **kwargs):
     ipn_obj = kwargs['instance']
     key_caches = "directory:::gw:::sites:::{0}".format(ipn_obj.name)
-    log.debug('clean chace sip profie key: {0}'.format(key_caches))
+    log.debug('clean cache sip profie key: {0}'.format(key_caches))
     
     keyedcache.cache_delete(key_caches)
 ##def handler_create_endpoint(sender, **kwargs):
