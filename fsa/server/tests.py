@@ -19,10 +19,12 @@ from fsa.dialplan.models import Context
 from fsa.server import views as sv
 from fsa.acl.models import FSAcl
 from django.shortcuts import get_object_or_404
+import keyedcache
+from django.contrib.sites.models import Site
 
 class ServerTestCase(test.TestCase):
     # TODO проблемы при загрузке таблицы alias почемуто несоздается колонка alias_type
-    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
+    fixtures = ['testsite', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'test_gateway', 'sipprofile']
     #fixtures = ['testsite', 'acl', 'alias', 'context', 'server', 'server.conf', 'gateway', 'sipprofile', 'fsgroup', 'testendpoint', 'testcdr']
     
     def setUp(self):
@@ -40,6 +42,7 @@ class ServerTestCase(test.TestCase):
         #self.effective_caller_id_name = self.uid
         #self.enable = True
         self.serv_name = 'test1.example.com'
+        self.site = Site.objects.get(pk=1)
 
     def testAcl(self):
         nls = FSAcl.objects.filter(server_acl__name__exact=self.serv_name,enabled=True)
@@ -93,14 +96,25 @@ class ServerTestCase(test.TestCase):
         #self.assertEquals(s1, True)
         #self.failUnlessEqual(response.status_code, 200)Server.objects.get(name='linktel.com.ua')
 
-    def testWebGetServer(self):
-        """
-        Добавляем sip для пользователя
-        """
-        #new_endpoint = Endpoint.objects.create_endpoint(self.user)
-        #self.assertEquals(new_endpoint.accountcode.pk, 1)
-        #self.assertEquals(self.user.username, 'test')
-        #self.assertEquals(self.user.is_active, True)
-        pass
+    def testSipProfileCache(self):
+        profile = 'internal'
+        key_caches = "directory::gw::sites::{0}".format(profile)
+        
+        sofia = SipProfile.objects.get(enabled=True, name__exact=profile)
+        sites = sofia.sites.all().values()
+        keyedcache.cache_set(key_caches, value=sites)
+        si = keyedcache.cache_get(key_caches)
+        self.assertEquals(si.count(), 0)
+        
+        sofia.sites.add(self.site)
+        sofia.save()
+        try:
+            si = keyedcache.cache_get(key_caches)
+        except:
+            sites = sofia.sites.all().values()
+            keyedcache.cache_set(key_caches, value=sites)
+        si = keyedcache.cache_get(key_caches)
+        self.assertEquals(si.count(), 1)
+        
 
 

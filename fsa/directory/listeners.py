@@ -16,7 +16,6 @@ from django.db import models
 #from fsa.directory.signals import *
 
 from fsa.directory.models import Endpoint
-from fsa.server.models import SipProfile
 from django.db.models.signals import pre_save
 #from urls import custompatterns
 #import localsite
@@ -43,10 +42,7 @@ log = logging.getLogger('fsa.directory.listeners')
 #     signals.collect_urls.connect(add_custom_urls, sender=localsite)
 #     async_note.connect(delayedNote.listen, sender=None)
 
-def clean_cache_siprofile_handler(sender, **kwargs):
-    ipn_obj = kwargs['instance']
-    key_caches = "directory::gw::sites::{0}".format(ipn_obj.name)
-    keyedcache.cache_delete(key_caches)
+
     
 ##def handler_create_endpoint(sender, **kwargs):
 ##    log.debug("Signal post save User")
@@ -62,5 +58,5 @@ def clean_cache_siprofile_handler(sender, **kwargs):
 def start_listening():
     #models.signals.post_save.connect(handler_create_endpoint, sender=User)
     log.debug('Added directory listeners')
-    pre_save.connect(clean_cache_siprofile_handler, sender=SipProfile)
+    
     
