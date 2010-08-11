@@ -15,7 +15,7 @@ from livesettings import ConfigurationSettings, config_value, config_choice_valu
 import logging
 import datetime
 import signals
-
+import hashlib
 
 log = logging.getLogger('fsa.directory.models')
 
@@ -123,6 +123,13 @@ class Endpoint(models.Model):
     @property
     def reg_server(self):
         return config_value('directory', 'reg_server')
+    
+    @property
+    def a1_hash(self):
+        mcode = hashlib.md5()
+        # username:domain:password
+        mcode.update(self.password)
+        return mcode.hexdigest()
 
 
 #class ExternalPhone(PhoneNumber):
@@ -152,67 +159,67 @@ class Endpoint(models.Model):
 #    def __unicode__(self):
 #        return self.variable.name+' = '+self.value
 
-class SipRegistration(models.Model):
-    domain = models.CharField(_('Domain'), max_length=100)
-    user = models.ForeignKey(Endpoint)
-    ip = models.IPAddressField(_('IP Adress'))
-    #section = 'directory'
-    #hostname = 'grengo.colocall.net'
-    sip_auth_username = models.CharField(_('User'), max_length=50)
-    #sip_auth_nc = models.CharField(_('NC'), max_length=8)
-    # default='00000001')
-    sip_auth_method = models.CharField(_('Method'), max_length=30)
-    # default='REGISTER')
-    sip_auth_nonce = models.CharField(_('Nonce'), max_length=36, unique=True)
-    # default='e8c26e3e-1792-11de-ae36-af3bf0ae904b')
-    sip_auth_qop = models.CharField(_('Qop'), max_length=100, default='auth')
-    #sip_auth_realm=test.lincom3000.com.ua
-    sip_auth_realm = models.CharField(_('Realm'), max_length=100)
-    sip_auth_uri = models.CharField(_('uri'), max_length=100)
-    #, default='sip:62.149.27.151')
-    sip_auth_cnonce = models.CharField(_('Cnonce'), max_length=32)
-    sip_auth_response = models.CharField(_('Response'), max_length=32)
-    sip_user_agent = models.CharField(_('Agent'), max_length=250)
-    sip_from_user = models.CharField(_('From User'), max_length=50)
-    sip_from_host = models.CharField(_('From Host'), max_length=100)
-    sip_to_user = models.CharField(_('To User'), max_length=50)
-    sip_to_host = models.CharField(_('To Host'), max_length=100)
-    sip_contact_user = models.CharField(_('Contact User'), max_length=50)
-    sip_contact_host = models.CharField(_('Contact Host'), max_length=100)
-    sip_request_host = models.CharField(_('Request Host'), max_length=100)
+#class SipRegistration(models.Model):
+    #domain = models.CharField(_('Domain'), max_length=100)
+    #user = models.ForeignKey(Endpoint)
+    #ip = models.IPAddressField(_('IP Adress'))
+    ##section = 'directory'
+    ##hostname = 'grengo.colocall.net'
+    #sip_auth_username = models.CharField(_('User'), max_length=50)
+    ##sip_auth_nc = models.CharField(_('NC'), max_length=8)
+    ## default='00000001')
+    #sip_auth_method = models.CharField(_('Method'), max_length=30)
+    ## default='REGISTER')
+    #sip_auth_nonce = models.CharField(_('Nonce'), max_length=36, unique=True)
+    ## default='e8c26e3e-1792-11de-ae36-af3bf0ae904b')
+    #sip_auth_qop = models.CharField(_('Qop'), max_length=100, default='auth')
+    ##sip_auth_realm=test.lincom3000.com.ua
+    #sip_auth_realm = models.CharField(_('Realm'), max_length=100)
+    #sip_auth_uri = models.CharField(_('uri'), max_length=100)
+    ##, default='sip:62.149.27.151')
+    #sip_auth_cnonce = models.CharField(_('Cnonce'), max_length=32)
+    #sip_auth_response = models.CharField(_('Response'), max_length=32)
+    #sip_user_agent = models.CharField(_('Agent'), max_length=250)
+    #sip_from_user = models.CharField(_('From User'), max_length=50)
+    #sip_from_host = models.CharField(_('From Host'), max_length=100)
+    #sip_to_user = models.CharField(_('To User'), max_length=50)
+    #sip_to_host = models.CharField(_('To Host'), max_length=100)
+    #sip_contact_user = models.CharField(_('Contact User'), max_length=50)
+    #sip_contact_host = models.CharField(_('Contact Host'), max_length=100)
+    #sip_request_host = models.CharField(_('Request Host'), max_length=100)
 
-    #sip_profile=internal
-    #sip_auth_nonce=426d4308-56e6-11df-8fab-cf38109feabb
-    #sip_auth_uri=sip%3Atest.lincom3000.com.ua
-    #sip_contact_user=380895900000
-    #     &sip_contact_host=193.201.83.3
-    #     &sip_to_user=380895900000
-    #     &sip_to_host=test.lincom3000.com.ua
-    #     &sip_from_user=380895900000
-    #     &sip_from_host=test.lincom3000.com.ua
-    #sip_request_host=test.lincom3000.com.ua
-    #&sip_auth_qop=auth
-    #&sip_auth_cnonce=VlLTGJWeNvIgt1QiWsQf9z-h4Sr8vCLa
-    #&sip_auth_nc=00000001
-    #&sip_auth_response=aca561ab4fc8a886fc7852165333bbfb
-    #&sip_auth_method=REGISTER
+    ##sip_profile=internal
+    ##sip_auth_nonce=426d4308-56e6-11df-8fab-cf38109feabb
+    ##sip_auth_uri=sip%3Atest.lincom3000.com.ua
+    ##sip_contact_user=380895900000
+    ##     &sip_contact_host=193.201.83.3
+    ##     &sip_to_user=380895900000
+    ##     &sip_to_host=test.lincom3000.com.ua
+    ##     &sip_from_user=380895900000
+    ##     &sip_from_host=test.lincom3000.com.ua
+    ##sip_request_host=test.lincom3000.com.ua
+    ##&sip_auth_qop=auth
+    ##&sip_auth_cnonce=VlLTGJWeNvIgt1QiWsQf9z-h4Sr8vCLa
+    ##&sip_auth_nc=00000001
+    ##&sip_auth_response=aca561ab4fc8a886fc7852165333bbfb
+    ##&sip_auth_method=REGISTER
 
-    #tag_name = models.CharField(_(''), max_length=100, default='domain')
-    #sip_profile = models.CharField(_('Profile'), max_length=100)
-    #, default='internal')
-    #action = models.CharField(_(''), max_length=100, default='sip_auth')
-    #key_value = '62.149.27.151',
-    #key_name = 'name'
-    #key = models.CharField(_(''), max_length=100, default='id'
-    objects = SipRegistrationManager()
+    ##tag_name = models.CharField(_(''), max_length=100, default='domain')
+    ##sip_profile = models.CharField(_('Profile'), max_length=100)
+    ##, default='internal')
+    ##action = models.CharField(_(''), max_length=100, default='sip_auth')
+    ##key_value = '62.149.27.151',
+    ##key_name = 'name'
+    ##key = models.CharField(_(''), max_length=100, default='id'
+    #objects = SipRegistrationManager()
 
-    class Meta:
-        db_table = 'sip_reg'
-        verbose_name = _(u'Registration Endpoint')
-        verbose_name_plural = _(u'Registration Endpoints')
+    #class Meta:
+        #db_table = 'sip_reg'
+        #verbose_name = _(u'Registration Endpoint')
+        #verbose_name_plural = _(u'Registration Endpoints')
 
-    #def __unicode__(self):
-    #    return self.name
+    ##def __unicode__(self):
+    ##    return self.name
 
 class FSGroup(models.Model):
     """
