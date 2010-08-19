@@ -58,6 +58,9 @@ class Cdr(models.Model):
     lcr_name = models.CharField(_(u'Country'), max_length=200, default="local")
     lcr_digits = models.PositiveIntegerField(_(u'Digits'), default=0)
     procesed = models.PositiveSmallIntegerField(_(u'Procesed'), max_length=1, choices=P_STATUS, default=0, blank=False)
+    site_id = models.PositiveIntegerField(_(u'Site'), default=1)
+    gw_id = models.PositiveIntegerField(_(u'Gateway ID'), default=0)
+    gw = models.CharField(_(u'Gateway'), max_length=50, default="local")
     #sip_user_agent call_clientcode
     #sip_rtp_rxstat sip_rtp_txstat sofia_record_file
     class Meta:
