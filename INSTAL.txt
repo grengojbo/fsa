@@ -1,37 +1,41 @@
-Добавте Синонимы для SIP профайлов если вы загрузили данные то уже есть некоторые синонимы по умолчанию
-Добавить шлюзы
-Насройте приложение Сервер
-Настройте конфигурацию для CDR приложения
-В плане набора добавте контексты
+Установка необходимых библиотек
+
+Сперва устанавливаем необходимые библиотеки для всей системы
+sudo su -
+aptitude install curl wget python-setuptools python-dev libevent-dev
+easy_install -U mercurial
+easy_install -U pip
+easy_install -U ipython
+easy_install -U virtualenv
+easy_install -U virtualenvwrapper
+
+easy_install -U hg-git
+easy_install -U setuptools_hg
+easy_install -U setuptools_git
+easy_install -U Fabric 
+easy_install pyrex
+easy_install concurrence
+easy_install greenlet
+easy_install pstats
+
+Затем устанавливам виртуальное окружения для нашей программы
+mkvirtualenv <name>
+cd <name>
+workon <name>
+
+pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
+python manage.py syncdb
+python manage.py customdashboard
+python manage.py loaddata l10n_data
+python manage.py loaddata  currency_default
+pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
+python manage.py syncdb
+python manage.py migrate
+pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
+pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc
+pip install -e git+http://github.com/grengojbo/django-registration.git#egg=django-registration
+python manage.py syncdb
+python manage.py migrate
+python manage.py loaddata tariffplan --settings=settings
 
 
-настройка 
-что бы сделать русский по умолчанию в vars.xml добавить строку 
-<X-PRE-PROCESS cmd="set" data="default_language=ru"/>
-
-Для Ubuntu
-В файле  /etc/default/freeswitch меняем false на true
-FREESWITCH_ENABLED="true"
-
-
- sudo apt-get install unixodbc-dev libmyodbc
-yum install unixODBC-devel mysql-connector-odbc
-
-/usr/lib/odbc/libmyodbc.so
-
-<param name="odbc-dsn" value="fsmysql:freeswitch:freeswitch"/>
-
-acl.conf
-cdr_csv.conf.xml
-event_socket.conf.xml
-sofia.conf.xml
-xml_cdr.conf.xml
-
-./manage.py dumpdata --format=xml --indent=1 web2sms > web2sms.xml
-./manage.py dumpdata --format=xml --indent=1 core dialplan gateway server acl numberplan directory lcr > backup.xml
-./manage.py loaddata ./backup.xml
- 
-http://127.0.0.1:8000/accounts/email/validation/ScLusfnGqzTGs8YWWMFhJaVKQPMqPegpQtMwrCaDBVbubJ6sbPKQb76QbvEkYwxXnFKscx/
-
-setuptools-hg
-http://code.google.com/p/django-renderform/  django-renderform

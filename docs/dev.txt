@@ -33,6 +33,45 @@ datamigration
 ./manage.py dumpdata --format=xml --indent=1 numberplan > ../../fsa/fsa/numberplan/fixtures/testnp.xml
 ./manage.py dumpdata --format=json --indent=1 grappelli > ../../fsa/fsa/core/fixtures/fsa_grappelli.json
 
+
+Добавте Синонимы для SIP профайлов если вы загрузили данные то уже есть некоторые синонимы по умолчанию
+Добавить шлюзы
+Насройте приложение Сервер
+Настройте конфигурацию для CDR приложения
+В плане набора добавте контексты
+
+
+настройка 
+что бы сделать русский по умолчанию в vars.xml добавить строку 
+<X-PRE-PROCESS cmd="set" data="default_language=ru"/>
+
+Для Ubuntu
+В файле  /etc/default/freeswitch меняем false на true
+FREESWITCH_ENABLED="true"
+
+
+ sudo apt-get install unixodbc-dev libmyodbc
+yum install unixODBC-devel mysql-connector-odbc
+
+/usr/lib/odbc/libmyodbc.so
+
+<param name="odbc-dsn" value="fsmysql:freeswitch:freeswitch"/>
+
+acl.conf
+cdr_csv.conf.xml
+event_socket.conf.xml
+sofia.conf.xml
+xml_cdr.conf.xml
+
+./manage.py dumpdata --format=xml --indent=1 web2sms > web2sms.xml
+./manage.py dumpdata --format=xml --indent=1 core dialplan gateway server acl numberplan directory lcr > backup.xml
+./manage.py loaddata ./backup.xml
+ 
+http://127.0.0.1:8000/accounts/email/validation/ScLusfnGqzTGs8YWWMFhJaVKQPMqPegpQtMwrCaDBVbubJ6sbPKQb76QbvEkYwxXnFKscx/
+
+setuptools-hg
+http://code.google.com/p/django-renderform/  django-renderform
+
 Удаляем следующие файлы
 /conf/autoload_configs/acl.conf.xml
 /conf/autoload_configs/event_socket.conf.xml
@@ -51,3 +90,8 @@ perl.conf.xml
 sofia.conf.xml
 xml_cdr.conf.xml
 post_load_modules.conf.xml
+
+Профилирование 
+
+wget http://launchpadlibrarian.net/41426942/python-profiler_2.6.5-0ubuntu1_all.deb
+dpkg -i ./python-profiler_2.6.5-0ubuntu1_all.deb

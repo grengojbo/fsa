@@ -13,8 +13,8 @@ from django.contrib.auth.models import User
 from django.utils.encoding import force_unicode
 from django.db.models import F, Q
 from django.db.models import Max, Min, Avg, Sum, Count, StdDev, Variance
-from currency.money import Money
-from currency.models import Currency
+#from currency.money import Money
+#from currency.models import Currency
 from fsa.core.utils import pars_phone
 l = logging.getLogger('fsa.lcr.managers')
 
