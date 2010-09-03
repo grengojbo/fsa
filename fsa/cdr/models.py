@@ -52,7 +52,7 @@ class Cdr(models.Model):
     #bridge_channel = models.CharField(max_length=108, blank=True)
     read_codec =  models.CharField(_(u'Read codec'), max_length=10)
     write_codec = models.CharField(_(u'Write codec'), max_length=10)
-    
+
     lprice =  models.DecimalField('LCR Price', default=Decimal("0"), max_digits=18, decimal_places=4)
     lprice_currency = models.CharField(_(u'LCR Currency name'), max_length=3, default="USD")
     lcr_name = models.CharField(_(u'Country'), max_length=200, default="local")
@@ -67,18 +67,18 @@ class Cdr(models.Model):
         db_table = u'cdr'
         verbose_name = _(u'CDR')
         verbose_name_plural = _(u'CDRs')
-        
+
     def __unicode__(self):
         return "{0} - {1}".format(self.caller_id_number, self.destination_number)
-    
+
     @property
     def username(self):
         return self.accountcode
-    
+
     @property
     def phone(self):
         return self.caller_id_number
-    
+
     @property
     def ipaddr(self):
         return self.sip_received_ip
@@ -99,9 +99,9 @@ class Cdr(models.Model):
 #     err_log =  models.CharField(_(u'Error Log DIR'), max_length=240, blank=True, default="log/xml_cdr", help_text=_(u'optional: full path to the error log dir for failed web posts if not specified its the same as log-dir, either an absolute path, a relative path assuming ${prefix}/logs or a blank or omitted value will default to ${prefix}/logs/xml_cdr'))
 #     cdr_ca =  models.BooleanField(_(u'Disable CA'), default=True, help_text=_(u'optional: if enabled this will disable CA root certificate checks by libcurl note: default value is disabled. only enable if you want this!'))
 #     enabled = models.BooleanField(_(u'Enable'), default=False)
-# 
+#
 #     def __unicode__(self):
 #         return self.name
-# 
+#
 #     class Meta:
 #         db_table = u'cdr_conf'

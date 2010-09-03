@@ -79,6 +79,9 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         attrs = self.flatten_dict(request.POST)
         log.debug(attrs.get('cdr'))
         #xml_cdr = Soup(request.raw_post_data)
+        #parser = etree.XMLParser(remove_blank_text=True)
+        #root = "<root><tag>text</tag><aa><bb>bbb</bb><cc>ccc</cc></aa></root>"
+        #tree = etree.fromstring(root, parser)
         xml_cdr = Soup(attrs.get('cdr'))
         
         new_cdr = Cdr(caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string, caller_id_number = xml_cdr.cdr.callflow.caller_profile.caller_id_number.string)

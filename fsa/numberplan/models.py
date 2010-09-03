@@ -28,6 +28,7 @@ N_TYPES = ((0, _(u'Partner')),
 
 class NumberPlan(models.Model):
     """
+    База номерного ресурса
     """
     phone_number = models.CharField(_(u'Phone Number'), max_length=12, unique=True)
     #models.PositiveIntegerField(_(u'Phone Number'), unique=True)
@@ -45,7 +46,7 @@ class NumberPlan(models.Model):
 
     def __unicode__(self):
         return self.phone_number
-    
+
     @property
     def phone(self):
         return self.phone_number
