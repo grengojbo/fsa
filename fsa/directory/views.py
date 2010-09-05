@@ -9,7 +9,7 @@ from django.views.generic.list_detail import object_list
 from sugar.views.decorators import render_to, ajax_request
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from fsa.core import is_app 
+from fsa.core import is_app
 import logging
 
 l = logging.getLogger('fsa.directory.views')
@@ -22,8 +22,8 @@ xml_context = '<result status="not found" />'
 
 #@render_to('directory/sip.xml')
 def profile(request):
-    """ 
-    reguest -- 
+    """
+    reguest --
     """
     endpoint = Endpoint.objects.filter(enable=True,sip_profile__server__name=request.POST.get('domain'))
     # TODO доделать группы только этого пользователя
@@ -33,7 +33,7 @@ def profile(request):
 #@render_to('server/fs.xml')
 def get(request):
     """
-    xml по умолчанию 
+    xml по умолчанию
     нет такой страницы и сервер берет конфиг из папки conf/autoload_config
     """
     name = 'result'
@@ -45,7 +45,7 @@ def set(request):
     return
         sip - Endpoint onbject
         r - status ( 0 or 1 or 2 )
-        domain - Domain Name 
+        domain - Domain Name
         xml_context - Not Found
     """
     p = request.POST
@@ -82,7 +82,7 @@ def set(request):
 ##            key_value = p.get('user')
 ##            return request.Context({'name':name, 'key_value':key_value, 'sip':e, 'domain':p.get('domain'), 'fsb':fsb }).render_response('directory/sip_reg.xml')
 ##        else:
-##            
+##
 
 def gw(request):
     p = request.POST
@@ -138,7 +138,7 @@ def new_endpoint(request):
     else:
         return {'error': {'type': 400, 'message': 'Bad request'}}
 
-#render_to('directory/edit.html')        
+#render_to('directory/edit.html')
 @login_required
 def directory_edit(request, object_id):
     """docstring for directory_edit"""

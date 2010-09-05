@@ -109,6 +109,14 @@ class Endpoint(models.Model):
         return str(self.uid)
 
     @property
+    def context(self):
+        return self.user_context.name
+
+    @property
+    def tariff(self):
+        return self.accountcode.balance.tariff.id
+
+    @property
     def username(self):
         return self.accountcode.username
 
@@ -123,7 +131,7 @@ class Endpoint(models.Model):
     @property
     def reg_server(self):
         return config_value('directory', 'reg_server')
-    
+
     @property
     def a1_hash(self):
         mcode = hashlib.md5()

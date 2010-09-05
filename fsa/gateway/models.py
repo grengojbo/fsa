@@ -12,7 +12,7 @@ __revision__ = '$Revision: $'
 SIP Provider Examples
 http://wiki.freeswitch.org/wiki/Tested_Phone_Providers_Listing
 
-смотреть как реализовать для 
+смотреть как реализовать для
 http://wiki.freeswitch.org/wiki/Provider_Configuration:_Brastel
 
 """
@@ -52,7 +52,7 @@ class SofiaGateway(models.Model):
     retry_seconds = models.PositiveIntegerField(_(u'Retry'), default=30, null=True, help_text=_(u'How many seconds before a retry when a failure or timeout occurs'))
     register_transport = models.PositiveSmallIntegerField(_(u'Register transport'), choices=TRANSPORT_CHOICES, default=0)
     # Use the callerid of an inbound call in the from field on outbound calls via this gateway
-    # replace the INVITE from user with the channel's caller-id    
+    # replace the INVITE from user with the channel's caller-id
     caller_id_in_from = models.BooleanField(_(u'CallerId in From'), default=False, help_text=_(u'Use the callerid of an inbound call in the from field on outbound calls via this gateway'))
     # TODO add help text
     extension_in_contact = models.BooleanField(_(u'Extension in contac'), default=False)
@@ -70,12 +70,12 @@ class SofiaGateway(models.Model):
     price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
     price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
     objects = GatewayManager()
-    
+
     class Meta:
         db_table = 'carrier_gateway'
         verbose_name = _(u'Gateway')
         verbose_name_plural = _(u'Gateways')
-    
+
     @property
     def status(self):
         """текущий статус"""
@@ -84,7 +84,7 @@ class SofiaGateway(models.Model):
             return _(u'REGISTERED')
         else:
             return _(u'UnMonitored')
-            
+
     @property
     def vrt(self):
         """
@@ -93,7 +93,7 @@ class SofiaGateway(models.Model):
         """
         # TODO сделать преобразованиие 0 -none 1 - udp 2 - tcp
         pass
-        
+
     @property
     def vd(self):
         """
@@ -102,14 +102,14 @@ class SofiaGateway(models.Model):
         """
         # TODO сделать преобразованиие 0 -incoming 1 - outgoing 2 - both
         pass
-            
+
     @property
     def vdescriptions(self):
         if self.prov_url:
-            return "<a href='%s' target='new'>%s</a>" % (self.prov_url, self.descriptions) 
+            return "<a href='%s' target='new'>%s</a>" % (self.prov_url, self.descriptions)
         else:
             return self.descriptions
-            
+
     def __unicode__(self):
         if self.enabled:
             return self.name

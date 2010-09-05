@@ -1,4 +1,4 @@
-# -*- mode: python; coding: utf-8; -*- 
+# -*- mode: python; coding: utf-8; -*-
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.handler import PaginatedCollectionBaseHandler
 from piston.utils import rc, require_mime, require_extended
@@ -197,37 +197,74 @@ class DirectorytHandler(BaseHandler):
     Authenticated entrypoint for blogposts.
     """
     allowed_methods = ('GET', 'POST',)
-    
+
     def read(self, request, phone=None, account=None):
         return {"count": 2}
-    
+
     #require_mime('xml')
     def create(self, request):
         attrs = self.flatten_dict(request.POST)
         key_value = name = 'result'
         xml_context = '<result status="not found" />'
-        
-        if attrs.get('section') == "directory":
-            if attrs.get('profile') and attrs.get('purpose') == 'gateways':
-                key_caches = "directory::gw::sites::{0}".format(attrs.get('profile'))
-                try:
-                    sites = keyedcache.cache_get(key_caches)
-                    return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}
-                except keyedcache.NotCachedError, nce:
+        user = request.user
+        if user.has_perm("billing.api_view"):
+            if attrs.get('section') == "directory":
+                if attrs.get('action') and attrs.get('action') == 'message-count':
+                    key_caches_endpoint = "endpoint::{0}".format(attrs.get('user'))
+                    key_extra_context = "endpoint::context::{0}".format(attrs.get('user'))
                     try:
-                        sofia = SipProfile.objects.get(enabled=True, name__exact=attrs.get('profile'))
-                        sites = sofia.sites.all().values()
-                        keyedcache.cache_set(key_caches, value=sites)
-                        return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}
+                        extra_context = keyedcache.cache_get(key_extra_context)
                     except:
-                        #keyedcache.cache_set(key_caches, value=None)
-                        keyedcache.cache_delete(key_caches)
-                        return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
-            elif request.POST.get('purpose') == 'network-list':
-                key_caches = "directory:::network-list:::{0}".format(attrs.get('hostname'))
-                return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+                        try:
+                            endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True)
+                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
+                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            keyedcache.cache_set(key_extra_context, value=extra_context)
+                        except:
+                            endpoint = None
+                            extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
+                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            keyedcache.cache_set(key_extra_context, value=extra_context)
+                    return extra_context
+                elif attrs.get('action') and attrs.get('action') == 'sip_auth':
+                    key_caches_endpoint = "endpoint::{0}".format(attrs.get('user'))
+                    key_extra_context = "endpoint::context::{0}".format(attrs.get('user'))
+                    try:
+                        extra_context = keyedcache.cache_get(key_extra_context)
+                    except:
+                        try:
+                            endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True, sip_profile__name__exact=attrs.get('sip_profile'))
+                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
+                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            keyedcache.cache_set(key_extra_context, value=extra_context)
+                        except:
+                            endpoint = None
+                            extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
+                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            keyedcache.cache_set(key_extra_context, value=extra_context)
+                    return extra_context
+                elif attrs.get('profile') and attrs.get('purpose') == 'gateways':
+                    key_caches = "directory::gw::sites::{0}".format(attrs.get('profile'))
+                    try:
+                        sites = keyedcache.cache_get(key_caches)
+                        return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}
+                    except keyedcache.NotCachedError, nce:
+                        try:
+                            sofia = SipProfile.objects.get(enabled=True, name__exact=attrs.get('profile'))
+                            sites = sofia.sites.all().values()
+                            keyedcache.cache_set(key_caches, value=sites)
+                            return {'template': 'directory/gw.xml', 'extra_context': {'sc': sites.count(), 'sites': sites}}
+                        except:
+                            #keyedcache.cache_set(key_caches, value=None)
+                            keyedcache.cache_delete(key_caches)
+                            return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+                elif attrs.get('purpose') == 'network-list':
+                    key_caches = "directory:::network-list:::{0}".format(attrs.get('hostname'))
+                    return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+                else:
+                    return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
             else:
                 return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
         else:
-            return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
-            
+            return rc.FORBIDDEN
+

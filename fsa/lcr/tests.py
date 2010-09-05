@@ -32,9 +32,9 @@ class LcrTestCase(test.TestCase):
     def setUp(self):
         # Every test needs a client.
         self.client = Client()
-    
-        
-    
+
+
+
     def testLoadCSV(self):
         """docstring for testLoadCSV"""
         try:
@@ -85,9 +85,9 @@ class LcrTestCase(test.TestCase):
                         #, n["name"], price )
                         # route
                         #writer.writerow((country_code, n["name"], country, 0, Decimal('0.0000'), Decimal('0.0000'), 1,   Decimal('0.0000'), price, n['brand']))
-                        
+
                 except Exception, e:
-                    l.error("line: %i => %s" % (cd.line_num, e)) 
+                    l.error("line: %i => %s" % (cd.line_num, e))
                     pass
             self.assertEquals(save_cnt, 3)
             res = Lcr.objects.get(digits="38039")
@@ -100,9 +100,9 @@ class LcrTestCase(test.TestCase):
             self.assertEquals(cur.currency.iso3_code, "USD")
             exc = Currency.objects.get_currency("EUR")
             self.assertEquals(exc.exchange_rate, Decimal("1.39"))
-            
+
         except Exception, e:
-            l.error(e)            
+            l.error(e)
         finally:
             f.close()
 
@@ -122,12 +122,12 @@ class LcrTestCase(test.TestCase):
     #                 mon = 50
     #             else:
     #                 mon = 80
-    #             m += 1 
+    #             m += 1
     #             writer.writerow( (row[0], '%s%s' % (row[1], row[2]), mon) )
     #     finally:
     #         fw.close()
     #         f.close()
-            
+
     def testLcrLoad(self):
         """docstring for testLcrLoad"""
         resp = '<result>\n  <row id="1">    <prefix>380</prefix>    <carrier_name>ukrtelecom</carrier_name>    <rate>0.22800</rate>    <codec></codec>    <cid></cid>    <dialstring>[lcr_carrier=ukrtelecom,lcr_rate=0.22800]sofia/external/380443615162</dialstring>  </row></result>'
@@ -141,23 +141,23 @@ class LcrTestCase(test.TestCase):
     #     try:
     #         #reader = csv.reader(open(filename, "rb"), delimiter=';')
     #         res = Lcr.objects.load_lcr(gw, f)
-    #         self.assertEquals(res, 286) 
+    #         self.assertEquals(res, 286)
     #     finally:
     #         f.close()
     #     f = open(os.path.join(os.path.dirname(__file__), 'fixtures', '14.csv'), "rt")
     #     gw.lcr_format = "delimiter=';'time_format='%d.%m.%Y 00:00'name|special_digits|rate"
     #     try:
     #         res = Lcr.objects.load_lcr(gw, f)
-    #         self.assertEquals(res, 577) 
+    #         self.assertEquals(res, 577)
     #     finally:
     #         f.close()
     #     f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test-lcr.csv'), "rt")
     #     gw.lcr_format = "delimiter=';'time_format='%d.%m.%Y 00:00'digits|name|rate|zeros|date_start|zeros"
     #     try:
     #         res = Lcr.objects.load_lcr(gw, f)
-    #         self.assertEquals(res, 14) 
+    #         self.assertEquals(res, 14)
     #     finally:
     #         f.close()
-        
+
 
 

@@ -21,10 +21,10 @@
   </params>
   <variables>
     <!--all variables here will be set on all inbound calls that originate from this user -->
-    <variable name="nibble_account" value="{{ sip.accountcode.id }}"/>
-    {% if tariff %}<variable name="nibble_tariff" value="{{ sip.accountcode.balance.tariff.id }}"/>{% endif %}
-    <variable name="accountcode" value="{{ sip.accountcode.username }}"/>
-    <variable name="user_context" value="{{ sip.user_context.name }}"/>
+    <variable name="nibble_account" value="{{ account }}"/>
+    {% if tariff %}<variable name="nibble_tariff" value="{{ tariff }}"/>{% endif %}
+    <variable name="accountcode" value="{{ sip.username }}"/>
+    <variable name="user_context" value="{{ context }}"/>
     <variable name="effective_caller_id_name" value="{{ sip.effective_caller_id_name }}"/>
     <variable name="effective_caller_id_number" value="{{ sip.uid }}"/>
     <!-- Don't write a CDR if this is false valid values are: true, false, a_leg and b_leg -->
@@ -35,7 +35,7 @@
       <!--<variable name="max_calls" value="{{ sip.max_calls }}"/>-->
 
   <!-- send presence information if FS is configured to do so -->
-  <!--<variable name="presence_id" value="{{ sip.uid }}@$${domain}"/>-->
+  <variable name="presence_id" value="{{ sip.uid }}@{{ domain }}"/>
 
   <!-- set these to take advantage of a dialplan localized to this user -->
   <!--<variable name="numbering_plan" value="US"/>-->

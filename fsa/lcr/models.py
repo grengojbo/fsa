@@ -95,12 +95,14 @@ class Lcr(models.Model):
         db_table = 'lcr'
         verbose_name = _(u'LCR')
         verbose_name_plural = _(u'LCRs')
-        
+
     @property
     def vprice(self):
         return "{0} {1}".format(self.price,self.price_currency)
-    
+
     def __unicode__(self):
         return self.name
 
 import config
+import listeners
+listeners.start_listening()
