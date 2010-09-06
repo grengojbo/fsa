@@ -23,9 +23,6 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
     #anonymous = 'AnonymousBlogpostHandler'
     fields = ('uid', 'password', 'username', 'effective_caller_id_name','enable', 'is_registered', 'last_registered', 'description', 'sip_server', 'reg_server')
 
-    #@staticmethod
-    #def resource_uri():
-    #    return ('api_numberplan_handler', ['phone_number'])
     #@require_mime('json', 'yaml')
     def read(self, request, phone=None, account=None):
         """
@@ -55,24 +52,6 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
         """
         Update number plan type.
         """
-        #attrs = self.flatten_dict(request.POST)
-        #endpoint = Endpoint.objects.get(uid__exact=phone, site__name__exact=request.user)
-        #if attrs.get('effective_caller_id_name'):
-            #endpoint.effective_caller_id_name = attrs.get('effective_caller_id_name')
-        #if attrs.get('password'):
-            #endpoint.password = attrs.get('password')
-        #if attrs.get('description'):
-            #endpoint.description = attrs.get('description')
-        #if attrs.get("enabled") == "false":
-            #endpoint.enable = False
-        #elif attrs.get("enabled") == "true":
-            #endpoint.enable = True
-        #if attrs.get("enable") == "false":
-            #endpoint.enable = False
-        #elif attrs.get("enable") == "true":
-            #endpoint.enable = True
-        #endpoint.save()
-        #return endpoint
         try:
             attrs = self.flatten_dict(request.POST)
             #if self.exists(**attrs):
@@ -118,40 +97,6 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
 
     @transaction.commit_on_success
     def create(self, request):
-        #attrs = self.flatten_dict(request.POST)
-        #u = User.objects.get(username__exact=attrs.get('username'))
-        #s = Site.objects.get(name__exact=request.user)
-        #log.debug(u)
-        #if attrs.get('phone'):
-        #    np = NumberPlan.objects.get(phone_number__exact=attrs.get('phone'), site__name__exact=request.user, status=0)
-        #    log.debug(np.phone_number)
-        #    if np.phone_number == attrs.get('phone'):
-        #        endpoint = Endpoint.objects.create_endpoint(user=u, phone_number=attrs.get('phone'), site=s)
-        #        log.debug("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-        #    else:
-        #        return rc.NOT_HERE
-        #else:
-        #    endpoint = Endpoint.objects.create_endpoint(user=u, site=s)
-        #if attrs.get('effective_caller_id_name'):
-        #    endpoint.effective_caller_id_name = attrs.get('effective_caller_id_name')
-        #else:
-        #    endpoint.effective_caller_id_name = "%s %s" % (u.first_name, u.last_name)
-        #if attrs.get("enabled") == "false":
-        #    endpoint.enable = False
-        #elif attrs.get("enabled") == "true":
-        #    endpoint.enable = True
-        #if attrs.get("enable") == "false":
-        #    endpoint.enable = False
-        #elif attrs.get("enable") == "true":
-        #    endpoint.enable = True
-        #if attrs.get('password'):
-        #    endpoint.password = attrs.get('password')
-        #if attrs.get('description'):
-        #    endpoint.description = attrs.get('description')
-        #log.debug(endpoint)
-        #endpoint.site = s
-        #endpoint.save()
-        #return endpoint
         try:
             attrs = self.flatten_dict(request.POST)
             u = User.objects.get(username__exact=attrs.get('username'))
@@ -203,9 +148,8 @@ class DirectorytHandler(BaseHandler):
 
     #require_mime('xml')
     def create(self, request):
-	log.debug("Directory API post:")
         attrs = self.flatten_dict(request.POST)
-	log.debug(request.POST)
+	    #log.debug(request.POST)
         key_value = name = 'result'
         xml_context = '<result status="not found" />'
         user = request.user
@@ -264,6 +208,8 @@ class DirectorytHandler(BaseHandler):
                             extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
                             keyedcache.cache_set(key_caches_endpoint, value=endpoint)
                             keyedcache.cache_set(key_extra_context, value=extra_context)
+	                        log.error("NO_PHOHE Directory API post domain: {0}, user: {1}".format(attrs.get('user'), attrs.get('domain')))
+	                log.debug("Directory API post domain: {0}, user: {1}".format(attrs.get('user'), attrs.get('domain')))
                     return extra_context
                 else:
                     return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
