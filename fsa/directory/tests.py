@@ -120,6 +120,19 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
 
+        register01 = {'domain': self.domainname, 'sip_contact_user': phone, 'ip': '195.5.34.250', 'sip_from_user': phone, 'sip_auth_nc': '00000001', 'section': 'directory', 'hostname': 'gw', 'sip_auth_method': 'REGISTER', 'sip_auth_username': phone, 'sip_auth_nonce': 'c627a081-2bba-4dbd-8b82-43d87c55b48d', u'sip_contact_host': '172.16.18.8', 'user': phone, 'key': u'id', 'sip_user_agent': 'sflphone/0.9.8~rc1', 'sip_profile': 'internal', 'sip_auth_qop': 'auth', 'tag_name': 'domain', 'action': 'sip_auth'}
+        register02 = {'key': 'id', 'section': 'directory', 'hostname': 'gw', 'domain': '089.com.ua', 'user': '380895403000', 'action': 'message-count'}
+        # Исходящий звонок
+        call_out = {'domain': '089.com.ua', 'ip': '195.5.34.250', 'sip_auth_nc': '00000001', 'section': 'directory', 'hostname': 'gw', 'sip_auth_method': 'INVITE', 'sip_request_user': '0443615162', 'user': '380895403000', 'key': 'id', 'sip_auth_realm': '95.67.67.187', 'sip_profile': 'internal','sip_to_user': '0443615162', 'action': 'sip_auth'}
+        #Входящий
+        call_in01 = {'section': 'directory', 'hostname': 'gw', 'domain': '089.com.ua', 'as_channel': 'true', 'Event-Calling-Function': 'user_outgoing_channel', 'action': 'user_call', 'user': '380895403000'}
+        call_in02 = {'section': 'directory', 'hostname': 'gw', 'domain': '089.com.ua', 'user': '380895403000', 'Event-Calling-Function': 'voicemail_leave_main', 'ip': '195.5.0.148'}
+        # отключаемся
+        user_disconect = {'domain': '089.com.ua', 'ip': '195.5.34.250', 'sip_auth_nc': '00000001', 'section': 'directory', 'hostname': 'gw', 'sip_auth_method': 'REGISTER', 'user': '380895403000', 'action': 'sip_auth'}
+        # перерегистрация
+        reregister01 = {'domain': '089.com.ua', 'sip_auth_nc': '00000001', 'section': 'directory', 'hostname': 'gw', 'sip_auth_method': 'REGISTER', 'sip_user_agent': 'sflphone/0.9.8~rc1', 'sip_profile': 'internal', 'action': 'sip_auth'}
+reregister02 = {'section': 'directory', 'hostname': 'gw', 'domain': '089.com.ua', 'user': '380895403000', 'action': 'message-count'}
+
         #directory network-list
         response = self.client.post('/api/directory/', {'key_value': self.domainname, 'key_name': 'name', 'section': 'directory', 'hostname': self.hostname, 'domain': self.domainname, 'tag_name': 'domain', 'purpose': 'network-list'}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
@@ -198,15 +211,4 @@ class DirectoryTestCase(test.TestCase):
         self.assertEquals(response.status_code, 200)
         res = simplejson.loads(response.content.encode('UTF-8'))
         self.assertEquals(res.get('endpoint'), None)
-
-##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
-##        self.assertEquals(sr, 1)
-##        # Удаление
-##        sip_auth_nc = '00000002'
-##        p  = {'domain': '192.168.51.100', 'sip_contact_user': new_endpoint.uid, 'ip': '192.168.51.240', 'sip_from_user': new_endpoint.uid, 'sip_auth_nc': sip_auth_nc, 'section': 'directory', 'hostname': 'test1.example.com', 'sip_auth_method': 'REGISTER', 'sip_auth_username': new_endpoint.uid, 'sip_auth_nonce': sip_auth_nonce, 'sip_to_host': '192.168.51.100', 'key_value': '192.168.51.100', 'sip_request_host': '192.168.51.100', 'key_name': 'name', 'sip_from_host': '192.168.51.100', 'sip_auth_uri': 'sip:192.168.51.100', 'user': new_endpoint.uid, 'key': 'id', 'sip_auth_cnonce': '8c2f4caf26d8082712b707a36c0131ee', 'sip_auth_response': '353416c6e18345b621b167acfbcf2182', 'sip_user_agent': 'X-Lite release 1100l stamp 47546', 'sip_auth_realm': '192.168.51.100', 'sip_to_user': new_endpoint.uid, 'sip_auth_qop': 'auth', 'tag_name': 'domain', 'sip_profile': 'test1.example.com', 'action': 'sip_auth', 'sip_contact_host': '192.168.51.251'}
-##        sr = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
-##        # TODO работает неправильно должно быть 2
-##        self.assertEquals(sr, 1)
-##        srf = SipRegistration.objects.sip_auth_nc(p,new_endpoint)
-##        self.assertEquals(srf, 0)
 
