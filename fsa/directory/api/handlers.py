@@ -211,41 +211,24 @@ class DirectorytHandler(BaseHandler):
         user = request.user
         if user.has_perm("billing.api_view"):
             if attrs.get('section') == "directory":
-                if attrs.get('action') and attrs.get('action') == 'message-count':
-                    key_caches_endpoint = "endpoint::{0}".format(attrs.get('user'))
-                    key_extra_context = "endpoint::context::{0}".format(attrs.get('user'))
-                    try:
-                        extra_context = keyedcache.cache_get(key_extra_context)
-                    except:
-                        try:
-                            endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True)
-                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
-                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
-                            keyedcache.cache_set(key_extra_context, value=extra_context)
-                        except:
-                            endpoint = None
-                            extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
-                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
-                            keyedcache.cache_set(key_extra_context, value=extra_context)
-                    return extra_context
-                elif attrs.get('action') and attrs.get('action') == 'sip_auth':
-                    key_caches_endpoint = "endpoint::{0}".format(attrs.get('user'))
-                    key_extra_context = "endpoint::context::{0}".format(attrs.get('user'))
-                    try:
-                        extra_context = keyedcache.cache_get(key_extra_context)
-                    except:
-                        try:
-                            endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True, sip_profile__name__exact=attrs.get('sip_profile'))
-                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
-                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
-                            keyedcache.cache_set(key_extra_context, value=extra_context)
-                        except:
-                            endpoint = None
-                            extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
-                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
-                            keyedcache.cache_set(key_extra_context, value=extra_context)
-                    return extra_context
-                elif attrs.get('profile') and attrs.get('purpose') == 'gateways':
+                #if attrs.get('action') and attrs.get('action') == 'message-count':
+                    #key_caches_endpoint = "endpoint::{0}".format(attrs.get('user'))
+                    #key_extra_context = "endpoint::context::{0}".format(attrs.get('user'))
+                    #try:
+                        #extra_context = keyedcache.cache_get(key_extra_context)
+                    #except:
+                        #try:
+                            #endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True)
+                            #extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
+                            #keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            #keyedcache.cache_set(key_extra_context, value=extra_context)
+                        #except:
+                            #endpoint = None
+                            #extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
+                            #keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            #keyedcache.cache_set(key_extra_context, value=extra_context)
+                    #return extra_context
+                if attrs.get('profile') and attrs.get('purpose') == 'gateways':
                     key_caches = "directory::gw::sites::{0}".format(attrs.get('profile'))
                     try:
                         sites = keyedcache.cache_get(key_caches)
@@ -263,6 +246,25 @@ class DirectorytHandler(BaseHandler):
                 elif attrs.get('purpose') == 'network-list':
                     key_caches = "directory:::network-list:::{0}".format(attrs.get('hostname'))
                     return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
+                elif attrs.get('user') and attrs.get('domain'):
+                    #elif attrs.get('action') and attrs.get('action') == 'sip_auth':
+                    key_caches_endpoint = "endpoint::{0}".format(attrs.get('user'))
+                    key_extra_context = "endpoint::context::{0}".format(attrs.get('user'))
+                    try:
+                        extra_context = keyedcache.cache_get(key_extra_context)
+                    except:
+                        try:
+                            endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True)
+                            #endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True, sip_profile__name__exact=attrs.get('sip_profile'))
+                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
+                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            keyedcache.cache_set(key_extra_context, value=extra_context)
+                        except:
+                            endpoint = None
+                            extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
+                            keyedcache.cache_set(key_caches_endpoint, value=endpoint)
+                            keyedcache.cache_set(key_extra_context, value=extra_context)
+                    return extra_context
                 else:
                     return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
             else:

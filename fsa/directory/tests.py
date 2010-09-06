@@ -131,7 +131,7 @@ class DirectoryTestCase(test.TestCase):
         user_disconect = {'domain': '089.com.ua', 'ip': '195.5.34.250', 'sip_auth_nc': '00000001', 'section': 'directory', 'hostname': 'gw', 'sip_auth_method': 'REGISTER', 'user': '380895403000', 'action': 'sip_auth'}
         # перерегистрация
         reregister01 = {'domain': '089.com.ua', 'sip_auth_nc': '00000001', 'section': 'directory', 'hostname': 'gw', 'sip_auth_method': 'REGISTER', 'sip_user_agent': 'sflphone/0.9.8~rc1', 'sip_profile': 'internal', 'action': 'sip_auth'}
-reregister02 = {'section': 'directory', 'hostname': 'gw', 'domain': '089.com.ua', 'user': '380895403000', 'action': 'message-count'}
+        reregister02 = {'section': 'directory', 'hostname': 'gw', 'domain': '089.com.ua', 'user': '380895403000', 'action': 'message-count'}
 
         #directory network-list
         response = self.client.post('/api/directory/', {'key_value': self.domainname, 'key_name': 'name', 'section': 'directory', 'hostname': self.hostname, 'domain': self.domainname, 'tag_name': 'domain', 'purpose': 'network-list'}, HTTP_AUTHORIZATION=self.auth_string)
