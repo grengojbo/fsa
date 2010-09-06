@@ -208,8 +208,8 @@ class DirectorytHandler(BaseHandler):
                             extra_context = {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'xml_context':xml_context}}
                             keyedcache.cache_set(key_caches_endpoint, value=endpoint)
                             keyedcache.cache_set(key_extra_context, value=extra_context)
-	                        log.error("NO_PHOHE Directory API post domain: {0}, user: {1}".format(attrs.get('user'), attrs.get('domain')))
-	                log.debug("Directory API post domain: {0}, user: {1}".format(attrs.get('user'), attrs.get('domain')))
+                            log.error("NO_PHOHE Directory API post domain: {0}, user: {1}".format(attrs.get('user'), attrs.get('domain')))
+                    log.debug("Directory API post domain: {0}, user: {1}".format(attrs.get('user'), attrs.get('domain')))
                     return extra_context
                 else:
                     return {'template': 'server/fs.xml', 'extra_context': {'name':name, 'key_value':key_value, 'xml_context':xml_context}}
