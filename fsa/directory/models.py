@@ -121,6 +121,10 @@ class Endpoint(models.Model):
         return self.accountcode.username
 
     @property
+    def sitename(self):
+        return self.site.name
+
+    @property
     def enabled(self):
         return self.enable
 

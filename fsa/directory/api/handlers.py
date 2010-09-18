@@ -200,7 +200,7 @@ class DirectorytHandler(BaseHandler):
                         try:
                             endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True)
                             #endpoint = Endpoint.objects.get(uid__exact=attrs.get('user'), enable=True, sip_profile__name__exact=attrs.get('sip_profile'))
-                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
+                            extra_context = {'template': 'directory/sip_reg.xml', 'extra_context': {'name':name, 'sitename':endpoint.sitename, 'context':endpoint.context, 'account':endpoint.accountcode.pk, 'tariff':endpoint.tariff, 'site_id':endpoint.site.pk, 'key_value':"view::endpoint::{0}".format(attrs.get('user')), 'sip':endpoint, 'domain':attrs.get('domain')}}
                             keyedcache.cache_set(key_caches_endpoint, value=endpoint)
                             keyedcache.cache_set(key_extra_context, value=extra_context)
                         except:

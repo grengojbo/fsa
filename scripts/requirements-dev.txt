@@ -1,5 +1,5 @@
 -e git+git://github.com/django/django.git#egg=django
-BeautifulSoup
+BeautifulSoup>=3.0.8
 pytils
 -e hg+http://dev.pocoo.org/hg/jinja2-main#egg=jinja2
 -e hg+http://bitbucket.org/andrewgodwin/south/#egg=south
@@ -21,8 +21,7 @@ pytils
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
 -e git+git://github.com/grengojbo/django-registration.git#egg=django-registration
 -e git+git://github.com/grengojbo/restfull.git#egg=restfull
+django-memcache-status==1.0.1
 django-debug-toolbar==0.8
 werkzeug
 ipython
-fabric
-pip

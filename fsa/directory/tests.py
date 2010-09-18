@@ -108,7 +108,7 @@ class DirectoryTestCase(test.TestCase):
 
         response = self.client.post('/api/directory/', {"hostname": self.hostname, "section": "directory", "tag_name": "domain", "key_name": "name", "key_value": self.domainname, "action": "sip_auth", "sip_profile": "internal", "ip": self.hostip, "key": "id", "user": phone, "domain": self.domainname}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
-        #l.debug(response)
+        l.debug(response)
 
         #sip_user_agent=sflphone/0.9.8~rc1, sip_auth_username: phone, sip_auth_realm=95.67.67.187, sip_auth_nc=00000001, sip_auth_response=9e832d104ac263c84a9fa3079161774b, sip_auth_method=REGISTER,
 
