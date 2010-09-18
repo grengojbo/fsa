@@ -26,28 +26,37 @@
 #fi
 
 build_global() {
-    sudo aptitude install curl wget python-setuptools
-    #sudo easy_install -U mercurial
-    sudo easy_install -U pip
-    sudo easy_install -U ipython
-    sudo easy_install -U virtualenv
-    sudo easy_install -U virtualenvwrapper
-
-    sudo easy_install -U hg-git
-    sudo easy_install -U setuptools_hg
-    sudo easy_install -U setuptools_git
-    sudo easy_install -U Fabric   
+    aptitude update 
+    aptitude install curl wget python-setuptools iftop mc wget traceroute git-core unattended-upgrades acpid munin-node 
+    aptitude install zsh ntp git-core mercurial subversion ntpdate screen
+    aptitude install python-cjson python-dev python-doc python-docutils python-git python-imaging python-lxml 
+    aptitude install python-mysqldb python-openssl python-svn python-tz python-yaml
+    aptitude install python-memcache python-pysqlite2 
+    aptitude install add-apt-key htop python-software-properties language-pack-ru language-pack-ru-base language-support-ru aspell-ru
+    aptitude install vim-nox vim-scripts vim-python python-rope ctags 
+    add-apt-repository ppa:linktel/ppa
+    aptitude update 
+    aptitude install uwsgi runit
+    easy_install -U pip
+    pip install django ipython
+    pip install virtualenv 
+    pip install virtualenvwrapper
+    pip install hg-git setuptools_hg setuptools_git Fabric
+    pip install ropemode
+    pip install ropevim
 }
 
 build_env() {
 if [ ! -d $HOME/.virtualenvs ]; then
+ pip completion --bash >> ~/.profile
+ pip completion --zsh >> ~/.zprofile
  mkdir $HOME/.virtualenvs
  echo "export WORKON_HOME=$HOME/.virtualenvs" >> $HOME/.bashrc
  echo "export PIP_VIRTUALENV_BASE=$WORKON_HOME" >> $HOME/.bashrс
  if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
   echo "source /usr/local/bin/virtualenvwrapper_bashrc" >> $HOME/.bashrc
- elif [ -f /usr/bin/virtualenvwrapper_bashrc ]; then
-  echo "source /usr/bin/virtualenvwrapper_bashrc" >> $HOME/.bashrc
+ elif [ -f /usr/local/bin/virtualenvwrapper.sh]; then
+  echo "source /usr/local/bin/virtualenvwrapper.sh" >> $HOME/.bashrc
  else
   echo "No file virtualenvwrapper_bashrc"
  fi

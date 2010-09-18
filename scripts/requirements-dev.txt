@@ -1,4 +1,4 @@
--e git+git://github.com/django/django.git#egg=django
+django
 BeautifulSoup>=3.0.8
 pytils
 -e hg+http://dev.pocoo.org/hg/jinja2-main#egg=jinja2
