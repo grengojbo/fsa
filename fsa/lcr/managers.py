@@ -47,6 +47,8 @@ class LcrManager(models.Manager):
             lc.weeks = n['week']
         lc.trail_strip = 0
         lc.quality = 0
+        if n.get('quality'):
+            lc.quality = n['quality']
         lc.reliability = 0
         lc.enabled = True
         lc.carrier_id = gw
@@ -82,6 +84,8 @@ class LcrManager(models.Manager):
                         if c != 'zeros' and len(row[index].strip()) > 0:
                             if c == 'name':
                                 n["name"] = row[index].strip()
+                            elif c == 'quality':
+                                n['quality'] = cd.set_num(row[index].strip())
                             elif c == 'rate':
                                 n['rate'] = cd.set_num(row[index].strip())
                             elif c == 'country_code':

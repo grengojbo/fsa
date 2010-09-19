@@ -1,4 +1,4 @@
-# -*- mode: python; coding: utf-8; -*- 
+# -*- mode: python; coding: utf-8; -*-
 
 """
 utils.py
@@ -6,7 +6,7 @@ utils.py
 Created by jbo on 2009-05-05.
 Copyright (c) 2009 __MyCompanyName__. All rights reserved.
 """
-import time, datetime, re, csv  
+import time, datetime, re, csv
 import logging
 from pytils.translit import translify
 from decimal import *
@@ -43,8 +43,8 @@ class CsvData(object):
         self.line_num = 0
         self.line_error_list = list()
         self.line_ok = 0
-        self.row = None 
-        
+        self.row = None
+
     def set_num(self, n):
         """docstring for set_num"""
         return Decimal(n.strip().replace(',','.').replace(" ", ''))
@@ -65,13 +65,13 @@ class CsvData(object):
     def set_time(self, t):
         """docstring for set_time"""
         return datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(t + " 00:00", self.time_format)))
-    
+
     def reader(self, f, delimiter=';', dialect='excel'):
         try:
             return csv.reader(f, delimiter=';', dialect='excel')
         finally:
             f.close()
-    
+
     def parse(self, row):
         """docstring for parse"""
         save_flag = False
@@ -85,7 +85,7 @@ class CsvData(object):
         n["rate"] = ''
         n['date_start'] = datetime.datetime.now()
         n['date_end'] = datetime.datetime.max
-        
+
         for index, c in enumerate(self.data_col):
             try:
                 #l.debug("%s=%s" % (c,row[index].strip()))
@@ -138,7 +138,7 @@ class CsvData(object):
                 return (country_list, n['country_code'], n)
             elif n["rate"] != '':
                 return n
-                
+
     def par_pref(self, special_digits, name):
         """docstring for par_spec"""
         country_list = list()
@@ -160,7 +160,7 @@ class CsvData(object):
                             country_list.append(digit)
                 else:
                     r = d.match(dig).groupdict()
-                    if r.get('country'): 
+                    if r.get('country'):
                         for prefs in delim_re.split(r.get('country')):
                             pref = dig_re.match(prefs)
                             if pref:
@@ -198,7 +198,7 @@ class CsvData(object):
         except Exception, e:
             self.line_error_list.append(self.row)
             l.error("line:%i except: %s => %s" % (self.line_num, pref_digits, e))
-        
+
     # def par_spec(self, special_digits, country_code, name):
     #     """docstring for par_spec"""
     #     l.debug(special_digits)
