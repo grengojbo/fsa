@@ -30,13 +30,14 @@ http://wiki.freeswitch.org/wiki/Mod_xml_curl#bindings.3D.22directory.22
 PHONE_TYPES = (('S', _(u'SIP Soft Phone')),
                ('P', _(u'SIP Phone')),
                ('F', _(u'Fax')),
-               ('H', _(u'H.323 Phone')),
                ('I', _(u'IVR')),
                ('G', _(u'Gateway')),
                ('A', _(u'Alias')),
+               ('M', _(u'Mobile')),
             )
 
-REDIRECT_CHOICES = ( (0, _(u'voice mail')), (1, _(u'other')),)
+REDIRECT_CHOICES = ( (0, _(u'Voice mail')), (1, _(u'Phone')),)
+REDIRECT_CHOICES_TYPE = ( (0, _(u'No Connection')), (1, _(u'All')), (2, _(u'Other')),)
 
 class Endpoint(models.Model):
     #uid = models.CharField(max_length=100)
@@ -66,6 +67,7 @@ class Endpoint(models.Model):
     srtp = models.BooleanField(_(u'ZRTP Support'), default=False)
     phone_alias = models.CharField(_(u'Alias or IVR'), max_length=12, blank=True, null=True)
     phone_redirect = models.PositiveSmallIntegerField(_(u'Redirect'), choices=REDIRECT_CHOICES, default=0)
+    phone_redirect_type = models.PositiveSmallIntegerField(_(u'Redirect Type'), choices=REDIRECT_CHOICES_TYPE, default=0)
 
     objects = EndpointManager()
 

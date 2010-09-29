@@ -21,7 +21,7 @@ class EndpointHandler(PaginatedCollectionBaseHandler):
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
     model = Endpoint
     #anonymous = 'AnonymousBlogpostHandler'
-    fields = ('uid', 'password', 'username', 'effective_caller_id_name','enable', 'is_registered', 'last_registered', 'description', 'sip_server', 'reg_server')
+    fields = ('uid', 'password', 'username', 'effective_caller_id_name','enable', 'is_registered', 'last_registered', 'description', 'sip_server', 'reg_server', 'phone_type', 'phone_alias', 'phone_redirect', 'phone_redirect_type', 'zrtp', 'srtp')
 
     #@require_mime('json', 'yaml')
     def read(self, request, phone=None, account=None):
