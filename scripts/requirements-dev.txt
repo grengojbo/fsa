@@ -13,7 +13,6 @@ pytils
 -e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
 -e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 -e hg+http://bitbucket.org/zacharyvoase/djanjinja/#egg=djanjinja
--e git+git://github.com/grengojbo/grappelli-admin-tools.git#egg=grappelli-admin-tools
 -e git+git://github.com/grengojbo/django-piston.git#egg=django-piston
 -e git+git://github.com/grengojbo/django-keyedcache.git#egg=django-keyedcache
 -e git+git://github.com/grengojbo/django-livesettings.git#egg=django-livesettings
@@ -21,8 +20,8 @@ pytils
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
 -e git+git://github.com/grengojbo/django-registration.git#egg=django-registration
 -e git+git://github.com/grengojbo/restfull.git#egg=restfull
+django-admin-tools
 django-memcache-status==1.0.1
 django-debug-toolbar==0.8
 werkzeug
-ipython
 pygments
