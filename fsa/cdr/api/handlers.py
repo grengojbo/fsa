@@ -83,9 +83,10 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         #root = "<root><tag>text</tag><aa><bb>bbb</bb><cc>ccc</cc></aa></root>"
         #tree = etree.fromstring(root, parser)
         xml_cdr = Soup(attrs.get('cdr'))
-        
+
         new_cdr = Cdr(caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string, caller_id_number = xml_cdr.cdr.callflow.caller_profile.caller_id_number.string)
         #new_cdr.procesed = 1
+        # TODO: New stats (n CDRs) rtcp_packet_count and rtcp_octet_count
         if xml_cdr.cdr.variables.lcr_rate is not None:
             log.debug("lcr_rate %s" % xml_cdr.cdr.variables.lcr_rate.string)
             new_cdr.lcr_rate = trunc_decimal(xml_cdr.cdr.variables.lcr_rate.string, 4)
@@ -97,7 +98,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
             new_cdr.lprice = trunc_decimal(xml_cdr.cdr.variables.lcr_price.string, 4)
         else:
             new_cdr.lprice = trunc_decimal("0.18", 4)
-        
+
         if xml_cdr.cdr.variables.lcr_name is not None:
             new_cdr.lcr_name = xml_cdr.cdr.variables.lcr_name.string
         if xml_cdr.cdr.variables.lcr_digits is not None:
@@ -105,7 +106,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         if xml_cdr.cdr.variables.lcr_carrier is not None:
             log.debug("lcr_carrier %s" % xml_cdr.cdr.variables.lcr_carrier.string)
             new_cdr.lcr_carrier = xml_cdr.cdr.variables.lcr_carrier.string
-            
+
         if xml_cdr.cdr.variables.lcr_direction is not None and xml_cdr.cdr.variables.lcr_direction.string == 'in':
             new_cdr.direction = 1
             new_cdr.nibble_rate = trunc_decimal("0.0", 2)
@@ -119,11 +120,11 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         else:
             new_cdr.direction = 0
             new_cdr.nibble_rate = trunc_decimal("0.0", 2)
-        
+
         if xml_cdr.cdr.variables.nibble_total_billed is not None:
             log.debug("nibble_total_billed %s" % xml_cdr.cdr.variables.nibble_total_billed.string)
             #new_cdr.nibble_total_billed = trunc_decimal(xml_cdr.cdr.variables.nibble_total_billed.string, 2)
-        
+
         #elif xml_cdr.cdr.channel_data.direction is not None:
             #log.debug("direction %s" % xml_cdr.cdr.channel_data.direction.string)
             #if xml_cdr.cdr.channel_data.direction.string == 'inbound':
@@ -131,7 +132,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
             #elif xml_cdr.cdr.channel_data.direction.string == 'outbound':
                 #new_cdr.direction = 2
         #l.debug("billsec: %i %i" % xml_cdr.cdr.variables.billsec, xml_cdr.cdr.variables.billmsec)
-        
+
         if xml_cdr.cdr.variables.accountcode is not None:
             log.debug("accountcode %s" % xml_cdr.cdr.variables.accountcode)
             new_cdr.accountcode = xml_cdr.cdr.variables.accountcode.string
@@ -143,7 +144,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
         if xml_cdr.cdr.variables.number_alias is not None:
             log.debug("number_alias %s" % xml_cdr.cdr.variables.number_alias.string)
             new_cdr.number_alias = xml_cdr.cdr.variables.number_alias.string
-        
+
         new_cdr.destination_number = xml_cdr.cdr.callflow.caller_profile.destination_number.string
         log.debug("destination_number %s" % xml_cdr.cdr.callflow.caller_profile.destination_number.string)
         new_cdr.context = xml_cdr.cdr.callflow.caller_profile.context.string
