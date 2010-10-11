@@ -11,7 +11,6 @@ pytils
 -e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
 -e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
--e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 -e hg+http://bitbucket.org/zacharyvoase/djanjinja/#egg=djanjinja
 -e git+git://github.com/grengojbo/django-piston.git#egg=django-piston
 -e git+git://github.com/grengojbo/django-keyedcache.git#egg=django-keyedcache
