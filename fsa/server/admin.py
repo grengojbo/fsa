@@ -50,13 +50,13 @@ class AliasAdmin(admin.ModelAdmin):
     save_as = True
     save_on_top = True
     order = 5
-    
+
 class CsvBaseAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'description',)
     save_as = True
     save_on_top = True
     order = 10
-    
+
 admin.site.register(Alias, AliasAdmin)
 admin.site.register(Server, ServerAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
