@@ -7,7 +7,7 @@ pytils
 -e hg+http://bitbucket.org/jbo/django-sugar/#egg=django-sugar
 -e git+git://github.com/django-extensions/django-extensions.git#egg=django_extensions
 -e git+git://github.com/daevaorn/django-composition.git#egg=django-composition
--e git+git://github.com/bryanveloso/django-grappelli.git#egg=django-grappelli
+-e git+git://github.com/grengojbo/django-grappelli.git#egg=django-grappelli
 -e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
 -e hg+http://bitbucket.org/bkroeze/django-signals-ahoy/#egg=django-signals-ahoy
