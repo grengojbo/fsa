@@ -26,6 +26,8 @@ P_STATUS = ((0, _(u'необработан')),
         )
 # Create your models here.
 class Cdr(models.Model):
+    # TODO: добавилось новое поле  UPDATE billusec=billsec*1000000 where billusec=0 and billsec>0;
+    # если direction = 0 то неопределено откуда звонок
     accountcode = models.CharField(_(u'Accaunt'), max_length=60)
     caller_id_name = models.CharField(_(u'Caller Name'), max_length=240)
     caller_id_number = models.CharField(_(u'Caller Number'), max_length=240)
@@ -37,15 +39,21 @@ class Cdr(models.Model):
     duration = models.IntegerField(_(u'Total duration'), help_text=_(u'Total call duration in seconds.'))
     billsec = models.IntegerField(_(u'Duration'), help_text=_(u'Billable call duration in seconds. Billable time does not include call time spent in "early media" prior to the far end answering the call.'))
     hangup_cause = models.CharField(_(u'Hangup'), max_length=135)
+    # TODO: добавить уникальность поля
     uuid = models.CharField(_(u'UUID'), max_length=108)
+    #uuid = models.CharField(_(u'UUID'), max_length=108, unique=True)
     nibble_account = models.PositiveIntegerField(_(u'Billing ID account'), default=0)
     sip_received_ip = models.IPAddressField(_(u'Received IP'), default='127.0.0.1')
     number_alias = models.CharField(_(u'Phone alias'), max_length=12, blank=True, null=True)
     #lcr_rate = CurrencyField(_("Lcr Rate"), max_digits=18, decimal_places=2, default=Decimal("0.0"), display_decimal=4)
     lcr_rate = models.DecimalField(_("Lcr Rate"), max_digits=18, decimal_places=4, default=Decimal("0.0"))
-    nibble_rate = models.DecimalField(_("Rate"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
-    cash = models.DecimalField(_("Cash"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
-    marja = models.DecimalField(_("Marja"), max_digits=18, decimal_places=2, default=Decimal("0.0"))
+    nibble_rate = models.DecimalField(_("Rate"), max_digits=18, decimal_places=4, default=Decimal("0.0"))
+    cash = models.DecimalField(_("Cash"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
+    nibble_current_balance = models.DecimalField(_("Current Balance"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
+    nibble_total_billed =  models.DecimalField(_("Money Billed"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
+    nibble_tariff = models.PositiveSmallIntegerField(_('Tariff'), default=0)
+    billusec = models.PositiveSmallIntegerField(_('Billing Microsec'), default=0)
+    marja = models.DecimalField(_("Marja"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
     lcr_carrier = models.CharField(_(u'Gateway'), max_length=50, default='local')
     direction = models.PositiveSmallIntegerField(_(u'Direction'), max_length=1, choices=D_STATUS, default=0, blank=False)
     #bleg_uuid = models.CharField(max_length=108)
@@ -61,6 +69,26 @@ class Cdr(models.Model):
     site_id = models.PositiveIntegerField(_(u'Site'), default=1)
     gw_id = models.PositiveIntegerField(_(u'Gateway ID'), default=0)
     gw = models.CharField(_(u'Gateway'), max_length=50, default="local")
+    rtp_audio_in_raw_bytes = models.PositiveIntegerField(verbose_name='rtp_audio_in_raw_bytes', default=0)
+    rtp_audio_in_media_bytes = models.PositiveIntegerField(verbose_name='rtp_audio_in_media_bytes', default=0)
+    rtp_audio_in_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_packet_count', default=0)
+    rtp_audio_in_media_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_media_packet_count', default=0)
+    rtp_audio_in_skip_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_skip_packet_count', default=0)
+    rtp_audio_in_jb_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_jb_packet_count', default=0)
+    rtp_audio_in_dtmf_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_dtmf_packet_count', default=0)
+    rtp_audio_in_cng_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_cng_packet_count', default=0)
+    rtp_audio_in_flush_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_in_flush_packet_count', default=0)
+    rtp_audio_out_raw_bytes = models.PositiveIntegerField(verbose_name='rtp_audio_out_raw_bytes', default=0)
+    rtp_audio_out_media_bytes = models.PositiveIntegerField(verbose_name='rtp_audio_out_media_bytes', default=0)
+    rtp_audio_out_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_out_packet_count', default=0)
+    rtp_audio_out_media_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_out_media_packet_count', default=0)
+    rtp_audio_out_skip_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_out_skip_packet_count', default=0)
+    rtp_audio_out_dtmf_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_out_dtmf_packet_count', default=0)
+    rtp_audio_out_cng_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_out_cng_packet_count', default=0)
+    rtp_audio_rtcp_packet_count = models.PositiveIntegerField(verbose_name='rtp_audio_rtcp_packet_count', default=0)
+    rtp_audio_rtcp_octet_count = models.PositiveIntegerField(verbose_name='rtp_audio_rtcp_octet_count', default=0)
+
+
     #sip_user_agent call_clientcode
     #sip_rtp_rxstat sip_rtp_txstat sofia_record_file
     class Meta:

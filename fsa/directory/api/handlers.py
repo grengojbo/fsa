@@ -149,7 +149,7 @@ class DirectorytHandler(BaseHandler):
     #require_mime('xml')
     def create(self, request):
         attrs = self.flatten_dict(request.POST)
-	    #log.debug(request.POST)
+        #log.debug(request.POST)
         key_value = name = 'result'
         xml_context = '<result status="not found" />'
         user = request.user
