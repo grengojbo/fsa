@@ -24,3 +24,4 @@ django-memcache-status==1.0.1
 django-debug-toolbar==0.8
 werkzeug
 pygments
+django-common

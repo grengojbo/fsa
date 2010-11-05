@@ -21,3 +21,4 @@ http://bitbucket.org/bkroeze/django-signals-ahoy/get/tip.tar.gz
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
 -e git+git://github.com/grengojbo/restfull.git#egg=restfull
 fabric
+django-common
