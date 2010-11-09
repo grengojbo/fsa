@@ -37,7 +37,7 @@ class Cdr(models.Model):
     answer_timestamp = models.DateTimeField(_(u'Answered'), help_text=_(u'Date/time that the far end of the call was actually answered.'))
     end_timestamp = models.DateTimeField(_(u'End call'), help_text=_(u'Date/time that the call was terminated.'))
     duration = models.IntegerField(_(u'Total duration'), help_text=_(u'Total call duration in seconds.'))
-    billsec = models.IntegerField(_(u'Duration'), help_text=_(u'Billable call duration in seconds. Billable time does not include call time spent in "early media" prior to the far end answering the call.'))
+    billsec = models.PositiveIntegerField(_(u'Duration'), help_text=_(u'Billable call duration in seconds. Billable time does not include call time spent in "early media" prior to the far end answering the call.'))
     hangup_cause = models.CharField(_(u'Hangup'), max_length=135)
     # TODO: добавить уникальность поля
     uuid = models.CharField(_(u'UUID'), max_length=108)
@@ -52,7 +52,7 @@ class Cdr(models.Model):
     nibble_current_balance = models.DecimalField(_("Current Balance"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
     nibble_total_billed =  models.DecimalField(_("Money Billed"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
     nibble_tariff = models.PositiveSmallIntegerField(_('Tariff'), default=0)
-    billusec = models.PositiveSmallIntegerField(_('Billing Microsec'), default=0)
+    billusec = models.PositiveIntegerField(_('Billing Microsec'), default=0)
     marja = models.DecimalField(_("Marja"), max_digits=18, decimal_places=6, default=Decimal("0.0"))
     lcr_carrier = models.CharField(_(u'Gateway'), max_length=50, default='local')
     direction = models.PositiveSmallIntegerField(_(u'Direction'), max_length=1, choices=D_STATUS, default=0, blank=False)
