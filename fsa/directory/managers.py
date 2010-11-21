@@ -36,12 +36,12 @@ class EndpointManager(models.Manager):
         else:
             return settings.START_PHONE_NUMBER
 
-    def gen_password(self, limlen=6):
+    def gen_password(self, limlen=10):
         """
         """
         pass
 
-    def new_endpoint():
+    def new_endpoint(self):
         pass
     
     def create_endpoint(self, user, phone_number=None, site=None):
@@ -60,7 +60,7 @@ class EndpointManager(models.Manager):
             n.uid = NumberPlan.objects.lphonenumber(site)
         else:
             n.uid = phone_number
-        n.password = User.objects.make_random_password(6, "0123456789")
+        n.password = User.objects.make_random_password(10, "0123456789")
         n.accountcode = user
         # TODO: добавить значение по умолчанию
         n.user_context = Context.objects.get(default_context=True)
