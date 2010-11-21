@@ -137,7 +137,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
                     new_cdr.site_id = int(xml_cdr.cdr.variables.site_id.string)
                 if xml_cdr.cdr.variables.billusec is not None:
                     new_cdr.billusec = int(xml_cdr.cdr.variables.billusec.string)
-                    log.debug("billusec: %i" % new_cdr.billusec)
+                    log.debug("billusec: %i" % int(xml_cdr.cdr.variables.billusec.string))
 
                 #elif xml_cdr.cdr.channel_data.direction is not None:
                     #log.debug("direction %s" % xml_cdr.cdr.channel_data.direction.string)

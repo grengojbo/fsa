@@ -106,7 +106,7 @@ class SofiaGateway(models.Model):
     @property
     def vdescriptions(self):
         if self.prov_url:
-            return "<a href='%s' target='new'>%s</a>" % (self.prov_url, self.descriptions)
+            return "<a href='{0}' target='new'>{1}</a>".format(self.prov_url, self.descriptions)
         else:
             return self.descriptions
 
@@ -114,7 +114,28 @@ class SofiaGateway(models.Model):
         if self.enabled:
             return self.name
         else:
-            return "%s (%s)" % (self.name, _(u'disable'))
+            return "{0} ({1})".format(self.name, _(u'disable'))
+
+#class GatewayLcr(models.Model):
+#    digits = models.CharField(_(u'Digits'), max_length=45, blank=True, help_text=_(u'matching digits'))
+#    name = models.CharField(_(u'Country'), max_length=200, blank=True)
+#    gw = models.ForeignKey(SofiaGateway, verbose_name=_(u'Gateway'))
+#    price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
+#    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
+#    date_start = models.DateField(_(u'Date Start'), default=datetime.datetime.now())
+#    quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
+#    enabled = models.BooleanField(_(u'Enable'), default=True)
+#
+#    class Meta:
+#        db_table = 'lcr_gateway'
+#        verbose_name = _(u'Gateway Lcr')
+#        verbose_name_plural = _(u'Gateway Lcrs')
+#
+#    def __unicode__(self):
+#        if self.enabled:
+#            return self.name
+#        else:
+#            return "{0} ({1})".format(self.name, _(u'disable'))
 
 import listeners
 listeners.start_listening()

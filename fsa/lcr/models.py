@@ -32,6 +32,7 @@ __author__ = '$Author:$'
 __revision__ = '$Revision:$'
 __all__ = ['main', __revision__]
 
+OPERATOR_TYPE_CHOICES = (('F', _(u'Fixed')), ('M', _(u'Mobile')), ('N', _(u'Uncown')), ('S', _(u'Satelite')),)
 
 #class CarrierGateway(models.Model):
 #    id = models.IntegerField(primary_key=True)
@@ -77,14 +78,7 @@ class Lcr(models.Model):
     enabled = models.BooleanField(_(u'Enable'), default=True)
     site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
     weeks = models.SmallIntegerField(_(u'Week'), default=0)
-    #weeks = models.CharField(_(u'Week'), max_length=13, default='1,2,3,4,5,6,7')
-    #week1 = models.BooleanField(_(u'Monday'), default=True)
-    #week2 = models.BooleanField(_(u'Tuesday'), default=True)
-    #week3 = models.BooleanField(_(u'Wednesday'), default=True)
-    #week4 = models.BooleanField(_(u'Thursday'), default=True)
-    #week5 = models.BooleanField(_(u'Friday'), default=True)
-    #week6 = models.BooleanField(_(u'Saturday'), default=True)
-    #week7 = models.BooleanField(_(u'Sunday'), default=True)
+    operator_type = models.CharField(_(u'Тип'), choices=OPERATOR_TYPE_CHOICES, max_length=1, default='N')
     time_start = models.TimeField(_(u'Time Start'), default=datetime.datetime.strptime("00:00", "%H:%M"))
     time_end = models.TimeField(_(u'Time End'), default=datetime.datetime.strptime("23:59", "%H:%M"))
     objects = LcrManager()

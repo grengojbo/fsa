@@ -109,7 +109,7 @@ class Command(BaseCommand):
             for row in reader:
                 try:
                     country_list, country_code, n = cd.parse(row)
-                    log.debug("country_code %s (%s)" % (country_code, country_list))
+                    log.debug("country_code {0} ({1})".format(country_code, country_list))
                     for country in country_list:
                         n['country_code'] = country_code
                         #digits = n['digits']
@@ -117,19 +117,19 @@ class Command(BaseCommand):
                         #price = Money(n['price'], n['currency'])
                         #price = Money(n['price'], 'USD')
                         price = n['price']
-                        log.debug("digits %s" % country)
+                        log.debug("digits {0}".format(country))
                         if n['weeks'] is not None:
                             if n['weeks'] == "all":
-                                n['week'] = 0;
+                                n['week'] = 0
                                 objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
                                 object_count += objects_in_fixture
                             else:
                                 for i in eval(n['weeks']):
-                                    n['week'] = int(i);
+                                    n['week'] = int(i)
                                     objects_in_fixture = Lcr.objects.add_lcr(gateway, n, digits, price, s)
                                     object_count += objects_in_fixture
                 except Exception, e:
-                    log.error("line: %i => %s" % (cd.line_num, e))
+                    log.error("line: {0} => {1}".format(cd.line_num, e))
                     pass
             label_found = True
         except Exception, e:
