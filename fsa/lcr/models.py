@@ -10,7 +10,6 @@
 # into your database.
 #
 from django.db import models
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 #from django.contrib.auth.models import User
 #from fsa.dialplan.models import Context
@@ -19,8 +18,6 @@ from bursar.fields import CurrencyField
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
 import datetime
-from decimal import Decimal
-from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 #from currency.fields import *
 #from currency.money import Money
@@ -32,29 +29,14 @@ __author__ = '$Author:$'
 __revision__ = '$Revision:$'
 __all__ = ['main', __revision__]
 
-OPERATOR_TYPE_CHOICES = (('F', _(u'Fixed')), ('M', _(u'Mobile')), ('N', _(u'Uncown')), ('S', _(u'Satelite')),)
-
-#class CarrierGateway(models.Model):
-#    id = models.IntegerField(primary_key=True)
-#    carrier_id = models.IntegerField(null=True, blank=True)
-#    prefix = models.CharField(max_length=48)
-#    suffix = models.CharField(max_length=48)
-#    enabled = models.IntegerField()
-#    class Meta:
-#        db_table = u'carrier_gateway'
-
-#class Carriers(models.Model):
-#    id = models.IntegerField(primary_key=True)
-#    carrier_name = models.CharField(max_length=765, blank=True)
-#    enabled = models.IntegerField()
-#    class Meta:
-#        db_table = u'carriers'
+OPERATOR_TYPE_CHOICES = (('F', _(u'Fixed')), ('M', _(u'Mobile')), ('N', _(u'Uncown')), ('S', _(u'Satelite')), ('V', _(u'VoIP')),)
 
 #  DAYOFWEEK(NOW()) IN (1,2,3,4,6);
 
 class Lcr(models.Model):
     #id = models.IntegerField(primary_key=True)
     digits = models.CharField(_(u'Digits'), max_length=45, blank=True, help_text=_(u'matching digits'))
+    ##code = models.PositiveIntegerField(_(u'Code'), default=0)
     # TODO: напрвление
     name = models.CharField(_(u'Country'), max_length=200, blank=True)
     country_code = models.IntegerField(_(u'Country Code'), default=0)
@@ -71,6 +53,7 @@ class Lcr(models.Model):
     suffix = models.CharField(_(u'Suffix'), max_length=100, blank=True, help_text=_(u'vaulue to add to end of passed in number'))
     lcr_profile = models.CharField(_(u'LCR Profile'), max_length=96, blank=True)
     date_start = models.DateTimeField(_(u'Date Start'), default=datetime.datetime.now())
+    ##date_start = models.DateField(_(u'Date Start'), default=datetime.datetime.now())
     date_end = models.DateTimeField(_(u'Date End'), default=datetime.datetime.max)
     quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
     reliability = models.FloatField(_(u'Reliability'), default=0, help_text=_(u'alternate field to order by'))
@@ -97,6 +80,5 @@ class Lcr(models.Model):
     def __unicode__(self):
         return self.name
 
-import config
 import listeners
 listeners.start_listening()
