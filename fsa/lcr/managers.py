@@ -16,7 +16,7 @@ from django.db.models import Max, Min, Avg, Sum, Count, StdDev, Variance
 #from currency.money import Money
 #from currency.models import Currency
 from fsa.core.utils import pars_phone
-l = logging.getLogger('fsa.lcr.managers')
+log = logging.getLogger('fsa.lcr.managers')
 
 class LcrManager(models.Manager):
     """
@@ -49,6 +49,10 @@ class LcrManager(models.Manager):
         lc.quality = 0
         if n.get('quality'):
             lc.quality = n['quality']
+        if n.get('operator_type'):
+            lc.operator_type = n['operator_type']
+        if n.get('code'):
+            lc.code = n['code']
         lc.reliability = 0
         lc.enabled = True
         lc.carrier_id = gw
@@ -80,7 +84,7 @@ class LcrManager(models.Manager):
                 n['date_end'] = datetime.datetime.max
                 for index, c in enumerate(cd.data_col):
                     try:
-                        #l.debug("%s=%s" % (c,row[index].strip()))
+                        #log.debug("%s=%s" % (c,row[index].strip()))
                         if c != 'zeros' and len(row[index].strip()) > 0:
                             if c == 'name':
                                 n["name"] = row[index].strip()
@@ -106,25 +110,25 @@ class LcrManager(models.Manager):
                         pass
                 if save_flag:
                     if n['special_digits']:
-                        l.debug(n['special_digits'])
+                        log.debug(n['special_digits'])
                         for dig in n['special_digits'].split(';'):
                             digit = dig.split('-')
                             if len(digit) == 2:
                                 for digits in range(int(digit[0]), int(digit[1])+1):
                                     d = '%s%s' % (n['country_code'].strip(), digits)
-                                    l.debug('digits: %s/%s/' % (d,n["name"]))
+                                    log.debug('digits: %s/%s/' % (d,n["name"]))
                                     save_cnt += self.add_lcr(gw, n, d)
                             elif len(dig) > 0 and dig != '':
                                 d = '%s%s' % (n['country_code'], dig.strip())
-                                l.debug('digits: %s/%s/%s/' % (d,n["name"],dig))
+                                log.debug('digits: %s/%s/%s/' % (d,n["name"],dig))
                                 save_cnt += self.add_lcr(gw, n, d)
                     elif n["digits"] != '':
                         d = '%s%s' % (n['country_code'], n["digits"])
                         save_cnt += self.add_lcr(gw, n, d)
-                        l.debug('digits: %s/%s/' % (d,n["name"]))
+                        log.debug('digits: %s/%s/' % (d,n["name"]))
                 n.clear()
         except csv.Error, e:
-            l.error('line %d: %s' % (reader.line_num, e))
+            log.error('line %d: %s' % (reader.line_num, e))
         #self.cnt += save_cnt
         #self.save()
         #if len(no_base) > 0:

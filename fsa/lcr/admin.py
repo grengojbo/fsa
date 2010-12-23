@@ -35,11 +35,12 @@ class LcrLoadForm(forms.ModelForm):
 
 class LcrAdmin(admin.ModelAdmin):
     #date_hierarchy = ''
-    list_display = ('digits', 'enabled', 'name', 'carrier_id', 'rate', 'vprice', 'quality', 'reliability', 'date_start', 'site')
+    list_display = ('digits', 'operator_type', 'enabled', 'name', 'carrier_id', 'rate', 'vprice', 'quality', 'reliability', 'date_start', 'site')
     list_filter = ('carrier_id', 'enabled', 'date_start', 'site',)
     #list_editable = ('rate', 'quality', 'reliability')
     list_editable = ('quality', 'reliability',)
     search_fields = ('digits','name',)
+    change_readonly_fields = ('digits', 'code', 'operator_type', 'enabled', 'name', 'carrier_id', 'rate', 'price', 'price_currency','cid', 'date_start', 'site', 'weeks', 'time_start', 'time_end')
     actions = ['delete_selected', 'make_enable', 'make_disable']
 
     # fieldsets = ((None, {

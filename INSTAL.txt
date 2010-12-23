@@ -2,21 +2,39 @@
 
 Сперва устанавливаем необходимые библиотеки для всей системы
 sudo su -
-aptitude install curl wget python-setuptools python-dev libevent-dev
+add-apt-repository ppa:linktel/ppa
+wget -O- http://ourdelta.org/deb/ourdelta.gpg | sudo apt-key add -
+wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
+      -O /etc/apt/sources.list.d/ourdelta.list
+aptitude update
+aptitude safe-upgrade
+
+aptitude install language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
+aptitude install gcc build-essential libc6-dev
+aptitude install curl wget python-setuptools python-dev libevent-dev screen
+aptitude install mariadb-client-5.1
+
+aptitude install python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
+aptitude install python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
+aptitude install python-pyrex python-rdflib python-rdflib
+
 easy_install -U mercurial
 easy_install -U pip
-easy_install -U ipython
-easy_install -U virtualenv
-easy_install -U virtualenvwrapper
+pip install ipython virtualenv virtualenvwrapper
 
-easy_install -U hg-git
-easy_install -U setuptools_hg
-easy_install -U setuptools_git
-easy_install -U Fabric 
-easy_install pyrex
+pip install hg-git setuptools_hg setuptools_git Fabric
+pip install greenlet
 easy_install concurrence
-easy_install greenlet
-easy_install pstats
+
+pip install django
+aptitude install uwsgi runit
+
+
+#easy_install pstats
+
+/usr/sbin/groupadd fsweb
+/usr/sbin/useradd -g fsweb -m --shell /bin/bash -d /home/fsweb fsweb
+passwd fsweb
 
 Затем устанавливам виртуальное окружения для нашей программы
 mkvirtualenv <name>

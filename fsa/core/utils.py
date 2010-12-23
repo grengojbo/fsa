@@ -64,7 +64,9 @@ class CsvData(object):
             return False
     def set_time(self, t):
         """docstring for set_time"""
-        return datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(t + " 00:00", self.time_format)))
+        d =  datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(t, self.time_format)))
+        #l.debug(self.time_format)
+        return d.date()
 
     def reader(self, f, delimiter=';', dialect='excel'):
         try:
@@ -83,8 +85,10 @@ class CsvData(object):
         n['pref_digits'] = False
         n["digits"] = ''
         n["rate"] = ''
-        n['date_start'] = datetime.datetime.now()
-        n['date_end'] = datetime.datetime.max
+        n['date_start'] = datetime.date.today()
+        n['date_end'] = datetime.date.max
+        #n['date_start'] = datetime.datetime.now()
+        #n['date_end'] = datetime.datetime.max
 
         for index, c in enumerate(self.data_col):
             try:
