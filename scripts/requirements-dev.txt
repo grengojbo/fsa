@@ -1,7 +1,6 @@
 django
 BeautifulSoup>=3.0.8
 pytils
--e hg+http://dev.pocoo.org/hg/jinja2-main#egg=jinja2
 -e hg+http://bitbucket.org/andrewgodwin/south/#egg=south
 -e hg+http://bitbucket.org/jbo/satchmo-l10n/#egg=satchmo-l10n
 -e hg+http://bitbucket.org/jbo/django-sugar/#egg=django-sugar
