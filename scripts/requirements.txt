@@ -20,5 +20,6 @@ http://bitbucket.org/bkroeze/django-signals-ahoy/get/tip.tar.gz
 -e git+git://github.com/grengojbo/django-bursar.git#egg=django-bursar
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
 -e git+git://github.com/grengojbo/restfull.git#egg=restfull
+-e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 fabric
 django-common

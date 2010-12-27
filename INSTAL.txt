@@ -9,14 +9,14 @@ wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
 aptitude update
 aptitude safe-upgrade
 
-aptitude install language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
-aptitude install gcc build-essential libc6-dev
-aptitude install curl wget python-setuptools python-dev libevent-dev screen
-aptitude install mariadb-client-5.1
+aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
+aptitude install -y gcc build-essential libc6-dev
+aptitude install -y curl wget python-setuptools python-dev libevent-dev screen
+aptitude install -y mariadb-client-5.1 libmemcached2 libmemcached-tools libmemcache-dev
 
-aptitude install python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
-aptitude install python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
-aptitude install python-pyrex python-rdflib python-rdflib
+aptitude install -y python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
+aptitude install -y python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
+aptitude install -y python-pyrex python-rdflib python-rdflib
 
 easy_install -U mercurial
 easy_install -U pip
@@ -27,7 +27,7 @@ pip install greenlet
 easy_install concurrence
 
 pip install django
-easy_install jinja2
+easy_install jinja2 python-memcached
 aptitude install uwsgi runit
 
 
@@ -44,7 +44,7 @@ workon <name>
 
 pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
 python manage.py syncdb
-python manage.py customdashboard
+#python manage.py customdashboard
 python manage.py loaddata l10n_data
 python manage.py loaddata  currency_default
 pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
@@ -56,5 +56,3 @@ pip install -e git+http://github.com/grengojbo/django-registration.git#egg=djang
 python manage.py syncdb
 python manage.py migrate
 python manage.py loaddata tariffplan --settings=settings
-
-
