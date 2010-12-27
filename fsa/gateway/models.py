@@ -19,6 +19,7 @@ http://wiki.freeswitch.org/wiki/Provider_Configuration:_Brastel
 # TODO  смотреть как реализовать транк на провайдера
 
 TRANSPORT_CHOICES = ( (0, _(u'None')), (1, _(u'UDP')), (2, _(u'TCP')),)
+NUMBERS_CHOICES = ( (0, _(u'None')), (1, _(u'International')), (2, _(u'National')),)
 DIRECTION_CHOICES = ( (0, _(u'incoming')), (1, _(u'outgoing')), (2, _(u'both')),)
 
 class SofiaGateway(models.Model):
@@ -58,7 +59,11 @@ class SofiaGateway(models.Model):
     extension_in_contact = models.BooleanField(_(u'Extension in contac'), default=False)
     ping = models.PositiveIntegerField(_(u'Ping'), default=25, null=True, help_text=_(u'send an options ping every x seconds, failure will unregister and/or mark it down'))
     prefix = models.CharField(_(u'Prefix'), max_length=100, blank=True, help_text=_(u'example: sofia/external/'))
+    pref_international = models.CharField(_(u'International pref'), max_length=5, default='')
+    pref_national = models.CharField(_(u'National pref'), max_length=5, default='')
+    prefix_number = models.PositiveSmallIntegerField(_(u'User Number Format'), choices=NUMBERS_CHOICES, default=0, help_text=_(u'Nationa call my number'))
     suffix = models.CharField(_(u'Suffix'), max_length=100, blank=True, help_text=_(u'example:@proxy.carrier2.net:5060'))
+    codec_string = models.CharField(_(u'Cedecs'), max_length=100, default='')
     enabled = models.BooleanField(_(u'Enable'), default=False)
     lcr_format = models.CharField(_(u'Lcr Format'), max_length=200, blank=True, default="digits,name,rate,other,date_start,date_end", help_text=_(u'Format file to load LCR'))
     #extension = models.ForeignKey(Extension, blank=True, null=True)
