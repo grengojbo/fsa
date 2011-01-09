@@ -46,13 +46,12 @@ pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-d
 python manage.py syncdb
 #python manage.py customdashboard
 python manage.py loaddata l10n_data
-python manage.py loaddata  currency_default
 pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
-python manage.py syncdb
 python manage.py migrate
+python manage.py syncdb
+python manage.py loaddata  currency_default
 pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
 pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc
-pip install -e git+http://github.com/grengojbo/django-registration.git#egg=django-registration
 python manage.py syncdb
 python manage.py migrate
 python manage.py loaddata tariffplan --settings=settings
