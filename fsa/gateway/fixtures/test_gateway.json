@@ -3,10 +3,12 @@
   "pk": 1, 
   "model": "gateway.sofiagateway", 
   "fields": {
+   "prefix_number": 1, 
    "caller_id_in_from": false, 
    "register_proxy": "", 
    "suffix": "", 
    "exten": "", 
+   "pref_international": "", 
    "register_transport": 0, 
    "prefix": "", 
    "descriptions": "", 
@@ -15,23 +17,22 @@
    "prov_url": "", 
    "ping": 25, 
    "retry_seconds": 30, 
-   "price": "0.21", 
    "username": "pass", 
    "direction": 2, 
-   "lcr_format": "digits,name,rate,other,date_start,date_end", 
-   "price_currency": "UAH", 
+   "in_progress_calls": 0, 
    "from_domain": "", 
    "extension_in_contact": false, 
    "proxy": "", 
    "from_user": "", 
-   "in_progress_calls": 0, 
    "password": "pass", 
    "max_concurrent": 0, 
    "name": "testgw", 
    "register": false, 
    "enabled": true, 
    "acl": [], 
-   "context": 2
+   "context": 2, 
+   "codec_string": "", 
+   "pref_national": "0"
   }
  }
 ]

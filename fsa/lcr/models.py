@@ -11,19 +11,14 @@
 #
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-#from django.contrib.auth.models import User
-#from fsa.dialplan.models import Context
 from fsa.lcr.managers import LcrManager
 from bursar.fields import CurrencyField
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
 import datetime
 from django.contrib.sites.models import Site
-#from currency.fields import *
-#from currency.money import Money
-#from currency.models import Currency
 from decimal import Decimal
-#from .managers import
+
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'

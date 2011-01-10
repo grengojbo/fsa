@@ -2,9 +2,9 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from fsa.gateway.managers import GatewayManager
-from fsa.dialplan.models import Context, Extension
+from fsa.dialplan.models import Context
+#from fsa.dialplan.models import Extension
 from fsa.acl.models import FSAcl
-from decimal import Decimal
 
 __author__ = '$Author: $'
 __revision__ = '$Revision: $'
@@ -59,21 +59,21 @@ class SofiaGateway(models.Model):
     extension_in_contact = models.BooleanField(_(u'Extension in contac'), default=False)
     ping = models.PositiveIntegerField(_(u'Ping'), default=25, null=True, help_text=_(u'send an options ping every x seconds, failure will unregister and/or mark it down'))
     prefix = models.CharField(_(u'Prefix'), max_length=100, blank=True, help_text=_(u'example: sofia/external/'))
-    pref_international = models.CharField(_(u'International pref'), max_length=5, default='')
-    pref_national = models.CharField(_(u'National pref'), max_length=5, default='')
-    prefix_number = models.PositiveSmallIntegerField(_(u'User Number Format'), choices=NUMBERS_CHOICES, default=0, help_text=_(u'Nationa call my number'))
+    pref_international = models.CharField(_(u'International pref'), max_length=5, blank=True, default='', help_text=_(u'00 add 0038089'))
+    pref_national = models.CharField(_(u'National pref'), max_length=5, blank=True, default='', help_text=_(u'0 add 038089'))
+    prefix_number = models.PositiveSmallIntegerField(_(u'User Number Format'), choices=NUMBERS_CHOICES, default=0, help_text=_(u'National call my number'))
     suffix = models.CharField(_(u'Suffix'), max_length=100, blank=True, help_text=_(u'example:@proxy.carrier2.net:5060'))
-    codec_string = models.CharField(_(u'Cedecs'), max_length=100, default='')
+    codec_string = models.CharField(_(u'Cedecs'), max_length=100, blank=True, default='')
     enabled = models.BooleanField(_(u'Enable'), default=False)
-    lcr_format = models.CharField(_(u'Lcr Format'), max_length=200, blank=True, default="digits,name,rate,other,date_start,date_end", help_text=_(u'Format file to load LCR'))
+    #lcr_format = models.CharField(_(u'Lcr Format'), max_length=200, blank=True, default="digits,name,rate,other,date_start,date_end", help_text=_(u'Format file to load LCR'))
     #extension = models.ForeignKey(Extension, blank=True, null=True)
     context = models.ForeignKey(Context, default=2)
     max_concurrent = models.PositiveIntegerField(_(u'Limit Calls'), default=0, help_text=_(u'The maximum number of concurrent calls supported by this gw (0 - is not limit)'))
     in_progress_calls = models.PositiveIntegerField(_(u'calls in progress'), default=0, help_text=_(u'The number of calls in progress (0 - is not limit)'))
     direction = models.PositiveSmallIntegerField(_(u'Direction'), choices=DIRECTION_CHOICES, default=2)
     acl = models.ManyToManyField(FSAcl, related_name='gateway_acl', blank=True, null=True)
-    price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
-    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
+    #price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
+    #price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
     objects = GatewayManager()
 
     class Meta:
@@ -120,27 +120,6 @@ class SofiaGateway(models.Model):
             return self.name
         else:
             return "{0} ({1})".format(self.name, _(u'disable'))
-
-#class GatewayLcr(models.Model):
-#    digits = models.CharField(_(u'Digits'), max_length=45, blank=True, help_text=_(u'matching digits'))
-#    name = models.CharField(_(u'Country'), max_length=200, blank=True)
-#    gw = models.ForeignKey(SofiaGateway, verbose_name=_(u'Gateway'))
-#    price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
-#    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
-#    date_start = models.DateField(_(u'Date Start'), default=datetime.datetime.now())
-#    quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
-#    enabled = models.BooleanField(_(u'Enable'), default=True)
-#
-#    class Meta:
-#        db_table = 'lcr_gateway'
-#        verbose_name = _(u'Gateway Lcr')
-#        verbose_name_plural = _(u'Gateway Lcrs')
-#
-#    def __unicode__(self):
-#        if self.enabled:
-#            return self.name
-#        else:
-#            return "{0} ({1})".format(self.name, _(u'disable'))
 
 import listeners
 listeners.start_listening()
