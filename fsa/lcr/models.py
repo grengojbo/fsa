@@ -40,7 +40,7 @@ class Lcr(models.Model):
     intralata_rate = CurrencyField(_("rate for intralata calls"), max_digits=18, decimal_places=6, default=Decimal("0.0"), display_decimal=6)
     #price = MoneyField(max_digits=18, decimal_places=4, default=Money(0, Currency.objects.get_default()))
     price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=6)
-    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
+    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD", help_text=_(u'USD - dollar, UAH -grivna'))
     carrier_id = models.ForeignKey(SofiaGateway, help_text=_(u'which carrier for this entry'))
     lead_strip = models.IntegerField(_(u'Strip front'), default=0, help_text=_(u'how many digits to strip off front of passed in number'))
     trail_strip = models.IntegerField(_(u'Strip end'), default=0, help_text=_(u'how many digits to strip of end of passed in number'))

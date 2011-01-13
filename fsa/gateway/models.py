@@ -77,7 +77,7 @@ class SofiaGateway(models.Model):
     money_nds = models.PositiveSmallIntegerField(_(u'NDS Billing'), default=20, help_text=_(u'value procent'))
     money_period = models.PositiveSmallIntegerField(_(u'Billing Period'), choices=BILLING_CHOICES, default=0)
     #price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
-    #price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
+    price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD", help_text=_(u'Operator currency: USD - dollar, UAH -grivna'))
     objects = GatewayManager()
 
     class Meta:
