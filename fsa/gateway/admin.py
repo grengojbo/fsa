@@ -21,7 +21,7 @@ class SofiaGatewayAdmin(admin.ModelAdmin):
                 }),
                 (_(u'Phone number format'), {
                     'classes': ['collapse-close'],
-                    'fields': ('money_time', 'money_nds', 'money_period',)
+                    'fields': ('money_time', 'money_nds', 'money_period', 'price_currency',)
                 }),
                 (_(u'Other Registration'), {
                     'classes': ['collapse-open'],
