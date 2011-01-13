@@ -29,7 +29,38 @@
    "rate": "0.3", 
    "operator_type": "F"
   }
- }, 
+ },
+ {
+  "pk": 2,
+  "model": "lcr.lcr",
+  "fields": {
+   "code": 100001,
+   "suffix": "",
+   "lead_strip": 0,
+   "trail_strip": 0,
+   "site": 1,
+   "carrier_id": 1,
+   "prefix": "",
+   "reliability": 0.0,
+   "country_code": 380,
+   "lcr_profile": "",
+   "quality": 1.0,
+   "price_currency": "UAH",
+   "time_start": "00:00:00",
+   "date_start": "2010-11-30",
+   "weeks": 0,
+   "intralata_rate": "0.1",
+   "price": "0.1",
+   "time_end": "23:59:00",
+   "digits": "1003",
+   "intrastate_rate": "0.1",
+   "name": "Ukraine",
+   "cid": "",
+   "enabled": true,
+   "rate": "0.1",
+   "operator_type": "F"
+  }
+ },
  {
   "pk": 6, 
   "model": "lcr.lcr", 
