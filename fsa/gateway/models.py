@@ -21,6 +21,7 @@ http://wiki.freeswitch.org/wiki/Provider_Configuration:_Brastel
 TRANSPORT_CHOICES = ( (0, _(u'None')), (1, _(u'UDP')), (2, _(u'TCP')),)
 NUMBERS_CHOICES = ( (0, _(u'None')), (1, _(u'International')), (2, _(u'National')),)
 DIRECTION_CHOICES = ( (0, _(u'incoming')), (1, _(u'outgoing')), (2, _(u'both')),)
+BILLING_CHOICES = ( (0, _(u'1 Month')), (1, _(u'1 call')),)
 
 class SofiaGateway(models.Model):
     # TODO добавить
@@ -72,6 +73,9 @@ class SofiaGateway(models.Model):
     in_progress_calls = models.PositiveIntegerField(_(u'calls in progress'), default=0, help_text=_(u'The number of calls in progress (0 - is not limit)'))
     direction = models.PositiveSmallIntegerField(_(u'Direction'), choices=DIRECTION_CHOICES, default=2)
     acl = models.ManyToManyField(FSAcl, related_name='gateway_acl', blank=True, null=True)
+    money_time = models.PositiveSmallIntegerField(_(u'Time Billing'), default=60, help_text=_(u'Time billing seconds'))
+    money_nds = models.PositiveSmallIntegerField(_(u'NDS Billing'), default=20, help_text=_(u'value procent'))
+    money_period = models.PositiveSmallIntegerField(_(u'Billing Period'), choices=BILLING_CHOICES, default=0)
     #price =  models.DecimalField('Price', default=Decimal("0"), max_digits=18, decimal_places=4)
     #price_currency = models.CharField(_(u'Currency name'), max_length=3, default="USD")
     objects = GatewayManager()
