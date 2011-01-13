@@ -32,6 +32,7 @@ datamigration
 ./manage.py dumpdata --format=json --indent=1 dialplan.context > context.json
 ./manage.py dumpdata --format=xml --indent=1 numberplan > ../../fsa/fsa/numberplan/fixtures/testnp.xml
 ./manage.py dumpdata --format=json --indent=1 grappelli > ../../fsa/fsa/core/fixtures/fsa_grappelli.json
+./manage.py dumpdata --format=json --indent=1 lcr > ../../fsa/fsa/lcr/fixtures/test_lcr.json
 
 
 Добавте Синонимы для SIP профайлов если вы загрузили данные то уже есть некоторые синонимы по умолчанию
