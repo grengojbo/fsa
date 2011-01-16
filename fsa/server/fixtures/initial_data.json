@@ -40,32 +40,5 @@
    "val": "delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|other|pref_digits|rate|currency|brand", 
    "description": "country_code|name|other|pref_digits|rate|currency|brand"
   }
- }, 
- {
-  "pk": 3, 
-  "model": "server.csvbase", 
-  "fields": {
-   "name": "Lcr Ukraina", 
-   "val": "delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|digits|price|rate|currency|weeks|time_start|time_end", 
-   "description": "country_code|name|digits|price|rate|currency|weeks|time_start|time_end"
-  }
- }, 
- {
-  "pk": 4, 
-  "model": "server.csvbase", 
-  "fields": {
-   "name": "Lcr Russian", 
-   "val": "delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|pref_digits|rate|currency|brand", 
-   "description": "name|country_code|pref_digits|rate|currency|brand"
-  }
- }, 
- {
-  "pk": 5, 
-  "model": "server.csvbase", 
-  "fields": {
-   "name": "Lcr Other", 
-   "val": "delimiter=';'time_format='%d.%m.%Y 00:00'name|country_code|special_digits|rate", 
-   "description": "name|country_code|special_digits|rate"
-  }
  }
 ]
