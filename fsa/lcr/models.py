@@ -25,8 +25,9 @@ __revision__ = '$Revision:$'
 __all__ = ['main', __revision__]
 
 OPERATOR_TYPE_CHOICES = (('F', _(u'Fixed')), ('M', _(u'Mobile')), ('N', _(u'Uncown')), ('S', _(u'Satelite')), ('V', _(u'VoIP')),)
-
-#  DAYOFWEEK(NOW()) IN (1,2,3,4,6);
+D_STATUS = ((0,_(u'outbound')),
+           (1,_(u'inbound')),
+        )
 
 class Lcr(models.Model):
     #id = models.IntegerField(primary_key=True)
@@ -54,6 +55,7 @@ class Lcr(models.Model):
     reliability = models.FloatField(_(u'Reliability'), default=0, help_text=_(u'alternate field to order by'))
     cid = models.CharField(_(u'Callers caller id'), max_length=200, default='', blank=True, help_text=_(u'regular expression to modify the callers caller id number - channel variables are also valid when called from the dial plan'))
     enabled = models.BooleanField(_(u'Enable'), default=True)
+    direction = models.PositiveSmallIntegerField(_(u'Direction'), max_length=1, choices=D_STATUS, default=0, blank=False)
     site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
     weeks = models.SmallIntegerField(_(u'Week'), default=0)
     operator_type = models.CharField(_(u'Тип'), choices=OPERATOR_TYPE_CHOICES, max_length=1, default='N')
