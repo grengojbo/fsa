@@ -2,7 +2,7 @@
 import logging
 
 l = logging.getLogger('fsa')
-VERSION = (0, 5, 2)
+VERSION = (0, 5, 3)
             
 # Dynamically calculate the version based on VERSION tuple
 if len(VERSION)>2 and VERSION[2] is not None:
