@@ -52,7 +52,7 @@ class Lcr(models.Model):
     lcr_profile = models.CharField(_(u'LCR Profile'), max_length=96, blank=True)
     #date_start = models.DateTimeField(_(u'Date Start'), default=datetime.datetime.now())
     date_start = models.DateField(_(u'Date Start'), default=datetime.date.today())
-    #date_end = models.DateTimeField(_(u'Date End'), default=datetime.datetime.max)
+    #date_end = models.DateTimeField(_(u'Date End'), default=datetime.date.max)
     quality = models.FloatField(_(u'Quality'), default=0, help_text=_(u'alternate field to order by'))
     reliability = models.FloatField(_(u'Reliability'), default=0, help_text=_(u'alternate field to order by'))
     cid = models.CharField(_(u'Callers caller id'), max_length=200, default='', blank=True, help_text=_(u'regular expression to modify the callers caller id number - channel variables are also valid when called from the dial plan'))
