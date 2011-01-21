@@ -19,7 +19,7 @@ http://wiki.freeswitch.org/wiki/Provider_Configuration:_Brastel
 # TODO  смотреть как реализовать транк на провайдера
 
 TRANSPORT_CHOICES = ( (0, _(u'None')), (1, _(u'UDP')), (2, _(u'TCP')),)
-NUMBERS_CHOICES = ( (0, _(u'None')), (1, _(u'International')), (2, _(u'National')),)
+NUMBERS_CHOICES = ( (0, _(u'None')), (1, _(u'International')), (2, _(u'National')), (3, _(u'National or International')),)
 DIRECTION_CHOICES = ( (0, _(u'incoming')), (1, _(u'outgoing')), (2, _(u'both')),)
 BILLING_CHOICES = ( (0, _(u'1 Month')), (1, _(u'1 call')),)
 
