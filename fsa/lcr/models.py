@@ -15,6 +15,7 @@ from fsa.lcr.managers import LcrManager
 from bursar.fields import CurrencyField
 from fsa.core.managers import GenericManager
 from fsa.gateway.models import SofiaGateway
+from fsa.server.models import NumberGroup
 import datetime
 from django.contrib.sites.models import Site
 from decimal import Decimal
@@ -63,6 +64,7 @@ class Lcr(models.Model):
     #tariff_id = models.IntegerField(_(u'ID Tariff'), default=1, help_text=_(u'Tariff Plan ID'))
     time_start = models.TimeField(_(u'Time Start'), default=datetime.datetime.strptime("00:00", "%H:%M"))
     time_end = models.TimeField(_(u'Time End'), default=datetime.datetime.strptime("23:59", "%H:%M"))
+    ng = models.ForeignKey(NumberGroup, default=1, verbose_name=_('Number Group'))
     objects = LcrManager()
     active_objects = GenericManager( enabled = True ) # only active entries
     inactive_objects = GenericManager( enabled = False ) # only inactive entries
