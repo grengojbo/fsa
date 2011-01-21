@@ -86,8 +86,8 @@ class Alias(models.Model):
 class NumberGroup(models.Model):
     name = models.CharField(_(u'Name'), max_length=50, default='default')
     enabled = models.BooleanField(_(u'Enable'), default=True)
-    number_start = models.IntegerField(_(u'Start Number'), default=1000)
-    number_end = models.IntegerField(_(u'Start Number'), default=1010)
+    number_start = models.BigIntegerField(_(u'Start Number'), default=1000)
+    number_end = models.BigIntegerField(_(u'Start Number'), default=1010)
 
     class Meta:
         db_table = 'number_group'
