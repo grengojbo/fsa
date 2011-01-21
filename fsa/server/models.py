@@ -83,6 +83,20 @@ class Alias(models.Model):
     def __unicode__(self):
         return self.name
 
+class NumberGroup(models.Model):
+    name = models.CharField(_(u'Name'), max_length=50, default='default')
+    enabled = models.BooleanField(_(u'Enable'), default=True)
+    number_start = models.IntegerField(_(u'Start Number'), default=1000)
+    number_end = models.IntegerField(_(u'Start Number'), default=1010)
+
+    class Meta:
+        db_table = 'number_group'
+        verbose_name = _(u'Number Group')
+        verbose_name_plural = _(u'Number Groups')
+
+    def __unicode__(self):
+        return self.name
+
 class Conf(models.Model):
     name = models.CharField(_(u'Name'), max_length=50)
     server = models.ForeignKey(Server, verbose_name=_('FreeSWITCH Server'), default=2, related_name='serverfs')

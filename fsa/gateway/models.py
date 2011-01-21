@@ -63,6 +63,10 @@ class SofiaGateway(models.Model):
     pref_international = models.CharField(_(u'International pref'), max_length=5, blank=True, default='', help_text=_(u'00 add 0038089'))
     pref_national = models.CharField(_(u'National pref'), max_length=5, blank=True, default='', help_text=_(u'0 add 038089'))
     prefix_number = models.PositiveSmallIntegerField(_(u'User Number Format'), choices=NUMBERS_CHOICES, default=0, help_text=_(u'National call my number'))
+    destination_number = models.PositiveSmallIntegerField(_(u'Destination Number Format'), choices=NUMBERS_CHOICES, default=0, help_text=_(u'Destination call number format'))
+    destination_international = models.CharField(_(u'Destination International pref'), max_length=5, blank=True, default='', help_text=_(u'00 add 0038089'))
+    destination_national = models.CharField(_(u'Destination National pref'), max_length=5, blank=True, default='', help_text=_(u'0 add 038089'))
+
     suffix = models.CharField(_(u'Suffix'), max_length=100, blank=True, help_text=_(u'example:@proxy.carrier2.net:5060'))
     codec_string = models.CharField(_(u'Cedecs'), max_length=100, blank=True, default='')
     enabled = models.BooleanField(_(u'Enable'), default=False)

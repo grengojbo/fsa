@@ -2,9 +2,7 @@
 
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
-from fsa.server.models import Server, SipProfile, Alias, Conf, CsvBase
-from django.contrib.auth.models import User
-from django.conf import settings
+from fsa.server.models import Server, SipProfile, Alias, Conf, CsvBase, NumberGroup
 
 class ServerAdmin(admin.ModelAdmin):
     #prepopulated_fields = {'slug': ('name', )}
@@ -57,8 +55,15 @@ class CsvBaseAdmin(admin.ModelAdmin):
     save_on_top = True
     order = 10
 
+class NumberGroupAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'name', 'number_start', 'number_end', 'enabled',)
+    save_as = True
+    save_on_top = True
+    order = 10
+
 admin.site.register(Alias, AliasAdmin)
 admin.site.register(Server, ServerAdmin)
 admin.site.register(SipProfile, SipProfileAdmin)
 admin.site.register(Conf, ConfAdmin)
 admin.site.register(CsvBase, CsvBaseAdmin)
+admin.site.register(NumberGroup, NumberGroupAdmin)

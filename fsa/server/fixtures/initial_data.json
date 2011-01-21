@@ -40,5 +40,15 @@
    "val": "delimiter=';'time_format='%d.%m.%Y 00:00'country_code|name|other|pref_digits|rate|currency|brand", 
    "description": "country_code|name|other|pref_digits|rate|currency|brand"
   }
+ },
+ {
+  "pk": 1,
+  "model": "server.numbergroup",
+  "fields": {
+   "number_start": 1000,
+   "enabled": false,
+   "name": "default",
+   "number_end": 1010
+  }
  }
 ]
