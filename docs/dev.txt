@@ -96,3 +96,19 @@ post_load_modules.conf.xml
 
 wget http://launchpadlibrarian.net/41426942/python-profiler_2.6.5-0ubuntu1_all.deb
 dpkg -i ./python-profiler_2.6.5-0ubuntu1_all.deb
+
+Проверка отправляемой почты
+===========================
+
+В debug_settings.py раскоментируйте строки
+#EMAIL_HOST = 'localhost'
+#EMAIL_PORT = 1025
+
+далее запскаем в терминале
+python -m smtpd -n -c DebuggingServer localhost:1025
+
+Локализация
+===========
+
+django-admin.py makemessages -l ru
+django-admin.py compilemessages -v 2 -l ru

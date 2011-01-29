@@ -15,7 +15,6 @@ http://bitbucket.org/bkroeze/django-signals-ahoy/get/tip.tar.gz
 -e hg+http://bitbucket.org/fetzig/grappelli-admin-tools/#egg=grappelli-admin-tools
 -e hg+http://bitbucket.org/bkroeze/django-threaded-multihost/#egg=django-threaded-multihost
 -e hg+http://bitbucket.org/bkroeze/django-caching-app-plugins/#egg=django-caching-app-plugins
--e hg+http://bitbucket.org/baratrion/django-renderform/#egg=django-renderform
 -e hg+http://bitbucket.org/zacharyvoase/djanjinja/#egg=djanjinja
 -e git+git://github.com/grengojbo/django-bursar.git#egg=django-bursar
 -e git+git://github.com/grengojbo/django-currency.git#egg=django-currency
