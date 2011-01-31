@@ -100,7 +100,7 @@
  </object>
  <object pk="15" model="numberplan.numberplan">
   <field type="CharField" name="phone_number">1014</field>
-  <field type="PositiveSmallIntegerField" name="nt">1</field>
+  <field type="PositiveSmallIntegerField" name="nt">2</field>
   <field type="BooleanField" name="enables">False</field>
   <field type="PositiveSmallIntegerField" name="status">0</field>
   <field type="DateField" name="date_active"><None></None></field>
