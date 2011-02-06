@@ -1,14 +1,7 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.db import models
-from django.db.models import signals
-from lib.composition import CompositionField, AttributesAggregation, ChildsAggregation, ForeignAttribute
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
-from fsa.dialplan.models import Context
-from fsa.server.models import SipProfile
 from fsa.numberplan.managers import NumberPlanManager
-from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 #from .managers import
 
@@ -36,7 +29,7 @@ class NumberPlan(models.Model):
     enables = models.BooleanField(_(u'Enables'), default=False)
     status = models.PositiveSmallIntegerField(_(u'Status'), max_length=1, choices=N_STATUS, default=0, blank=False)
     date_active = models.DateField(_(u'Activation Date'), blank=True, null=True)
-    site = models.ForeignKey(Site, default=1, verbose_name=_('Site'))
+    site = models.ForeignKey(Site, default=1, verbose_name=_(u'Site'))
     objects = NumberPlanManager()
 
     class Meta:

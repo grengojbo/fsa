@@ -53,7 +53,7 @@ class NumberPLanTestCase(test.TestCase):
         self.assertEquals(res.count(), 31)
         res = NumberPlan.objects.filter(enables=False, nt=1)
         #res = Endpoint.objects.get_next_number()
-        self.assertEquals(res.count(), 27)
+        self.assertEquals(res.count(), 26)
         # res1 = NumberPlan.objects.set_number()
         # self.assertEquals(res1, 2001)
         #c = Context.objects.filter(name='private')

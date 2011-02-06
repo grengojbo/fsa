@@ -1,14 +1,9 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.db import models
 #from django.template import Context, loader
-from django.contrib.auth.models import User
-from fsa.dialplan.models import Context
-from fsa.server.models import SipProfile
 #from fsa.directory.models import Endpoint as e
-from django.conf import settings
 #from fsa.directory.models import Endpoint, NumberPlan
-from django.db.models import Avg, Max, Min, Count
-from django.contrib.sites.models import RequestSite
+from django.db.models import    Count
 from django.contrib.sites.models import Site
 import logging
 import datetime
@@ -36,7 +31,7 @@ class NumberPlanManager(models.Manager):
         """Возвращает случайный свободный номер"""
         if site is None:
             site = Site.objects.get(pk=1)
-        l.debug("site: %s" %site.name)
+        l.debug("site: {0}".format(site.name))
         try:
             p = self.filter(enables=False, nt=1, status=0, site=site)[0]
             p.status = 3
@@ -96,5 +91,5 @@ class NumberPlanManager(models.Manager):
             np.phone_number = str(n)
             np.site = site
             np.nt = nt
-            l.debug("number: %i" % n)
+            l.debug("number: {0}".format(n))
             np.save()
