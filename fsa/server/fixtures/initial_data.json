@@ -28,7 +28,7 @@
   "model": "server.csvbase", 
   "fields": {
    "name": "Prepaid Cards", 
-   "val": "delimiter=';'time_format='%d.%m.%Y 00:00'num_prepaid|code|rate|nt|zeros|date_end", 
+   "val": "delimiter=';'time_format='%d.%m.%Y'num_prepaid|code|rate|nt|zeros|date_end",
    "description": "num_prepaid code rate nt zeros date_end"
   }
  }, 
