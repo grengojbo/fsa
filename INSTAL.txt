@@ -1,54 +1,17 @@
-Установка необходимых библиотек
-
-Сперва устанавливаем необходимые библиотеки для всей системы
-sudo su -
-add-apt-repository ppa:linktel/ppa
-wget -O- http://ourdelta.org/deb/ourdelta.gpg | sudo apt-key add -
-wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
-      -O /etc/apt/sources.list.d/ourdelta.list
-aptitude update
-aptitude safe-upgrade
-
-aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
-aptitude install -y gcc build-essential libc6-dev
-aptitude install -y curl wget python-setuptools python-dev libevent-dev screen
-aptitude install -y mariadb-client-5.1 libmemcached2 libmemcached-tools libmemcache-dev
-
-aptitude install -y python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
-aptitude install -y python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
-aptitude install -y python-pyrex python-rdflib python-rdflib python-openssl
-
-easy_install -U mercurial
-easy_install -U pip
-pip install ipython virtualenv virtualenvwrapper
-
-pip install hg-git setuptools_hg setuptools_git Fabric
-pip install greenlet
-easy_install concurrence
-
-pip install django
-easy_install jinja2 python-memcached
-aptitude install uwsgi runit
-
-
 #easy_install pstats
 
-/usr/sbin/groupadd fsweb
-/usr/sbin/useradd -g fsweb -m --shell /bin/bash -d /home/fsweb fsweb
-passwd fsweb
 
-Затем устанавливам виртуальное окружения для нашей программы
-mkvirtualenv <name>
-cd <name>
-workon <name>
+
 
 pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
-python manage.py syncdb
-#python manage.py customdashboard
-python manage.py loaddata l10n_data
+./manage.py syncdb
+./manage.py migrate
+./manage.py loaddata l10n_data
 pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
-python manage.py migrate
 python manage.py syncdb
+python manage.py migrate
+Ошибка при миграции dialplan
+
 python manage.py loaddata  currency_default
 pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
 pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc

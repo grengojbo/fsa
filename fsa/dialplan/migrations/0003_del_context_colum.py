@@ -9,7 +9,7 @@ class Migration:
     def forwards(self, orm):
         
         # Deleting field 'Extension.context'
-        db.delete_column('dialplan_extension', 'context_id')
+        db.delete_column('dialplan_extension', 'context')
         
     
     

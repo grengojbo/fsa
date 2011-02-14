@@ -24,3 +24,6 @@ django-debug-toolbar==0.8
 werkzeug
 pygments
 django-common
+-e git+git://github.com/grengojbo/django-registration.git#egg=django-registration
+-e git+git://github.com/codekoala/django-uni-form.git#egg=django-uni-form
+django-social-auth
