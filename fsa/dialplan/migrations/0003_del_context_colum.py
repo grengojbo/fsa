@@ -8,15 +8,13 @@ class Migration:
     
     def forwards(self, orm):
         
-        # Deleting field 'Extension.context'
-        db.delete_column('dialplan_extension', 'context')
+        pass
         
     
     
     def backwards(self, orm):
         
-        # Adding field 'Extension.context'
-        db.add_column('dialplan_extension', 'context', orm['dialplan.extension:context'])
+        pass
         
     
     

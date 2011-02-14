@@ -13,7 +13,6 @@ class Migration:
             ('id', orm['dialplan.Extension:id']),
             ('name', orm['dialplan.Extension:name']),
             ('continue_on', orm['dialplan.Extension:continue_on']),
-            ('context', orm['dialplan.Extension:context']),
         ))
         db.send_create_signal('dialplan', ['Extension'])
         
@@ -44,7 +43,6 @@ class Migration:
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
         },
         'dialplan.extension': {
-            'context': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['dialplan.Context']"}),
             'continue_on': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50', 'unique': 'True'})
