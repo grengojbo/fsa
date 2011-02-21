@@ -15,6 +15,7 @@ from django.test.client import Client
 from django.contrib.auth.models import User
 from fsa.directory.models import Endpoint
 from fsa.dialplan.models import Context
+from django.core.urlresolvers import reverse
 import logging as l
 from django.contrib.sites.models import Site
 from fsa.server.models import Server, SipProfile, Conf
@@ -95,6 +96,7 @@ class DirectoryTestCase(test.TestCase):
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
         self.assertEquals(new_endpoint.uid, '1003')
         response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
+        l.debug(response)
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
         #es = Server.objects.get(name=self.hostname, enabled=True)

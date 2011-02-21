@@ -46,6 +46,24 @@ mkvirtualenv <name>
 cd <name>
 workon <name>
 
+pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
+./manage.py syncdb
+./manage.py migrate
+./manage.py loaddata l10n_data
+pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
+./manage.py syncdb
+./manage.py migrate
+./manage.py loaddata  currency_default
+pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
+pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc
+./manage.py syncdb
+./manage.py migrate
+./manage.py loaddata tariffplan --settings=settings
+
+
+Для удаленного обновления и перезагрузки uwsgi в файл /etc/sudoers добавьте сторки
+fsweb ALL= NOPASSWD:/usr/bin/rsync
+fsweb ALL= NOPASSWD:/usr/bin/sv
 
 ### Настройка FreeSWITCH Admin
 

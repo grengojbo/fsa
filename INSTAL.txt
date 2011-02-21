@@ -3,18 +3,4 @@
 
 
 
-pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
-./manage.py syncdb
-./manage.py migrate
-./manage.py loaddata l10n_data
-pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
-python manage.py syncdb
-python manage.py migrate
-Ошибка при миграции dialplan
 
-python manage.py loaddata  currency_default
-pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
-pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc
-python manage.py syncdb
-python manage.py migrate
-python manage.py loaddata tariffplan --settings=settings
