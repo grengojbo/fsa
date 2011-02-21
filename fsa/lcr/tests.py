@@ -40,8 +40,8 @@ class LcrTestCase(test.TestCase):
         try:
             from fsa.lcr.models import Lcr
             from fsa.gateway.models import SofiaGateway
-            from currency.money import Money
-            from currency.models import Currency
+            #from currency.money import Money
+            #from currency.models import Currency
             from django.contrib.sites.models import RequestSite
             from django.contrib.sites.models import Site
             #f = open(os.path.join(os.path.dirname(__file__), 'fixtures', 'test_all.csv'), "rt")
