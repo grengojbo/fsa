@@ -90,12 +90,13 @@ class CdrHandler(PaginatedCollectionBaseHandler):
                     caller_id_number=xml_cdr.cdr.callflow.caller_profile.caller_id_number.string
                 else:
                     caller_id_number='000000'
-                if xml_cdr.cdr.callflow.caller_profile.caller_id_name is not None:
+                if xml_cdr.cdr.callflow.caller_profile.caller_id_name.string is not None:
                     caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string
                 else:
                     caller_id_name = caller_id_number
                 new_cdr = Cdr(caller_id_name=caller_id_name,
                               caller_id_number=caller_id_number)
+                #log.debug("caller_id_number: {0} caller_id_name: {1}".format(caller_id_number, caller_id_name))
                 #new_cdr.procesed = 1
                 # TODO: New stats (n CDRs) rtcp_packet_count and rtcp_octet_count
                 if xml_cdr.cdr.variables.lcr_rate is not None:
