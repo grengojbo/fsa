@@ -58,7 +58,9 @@ class Cdr(models.Model):
     direction = models.PositiveSmallIntegerField(_(u'Direction'), max_length=1, choices=D_STATUS, default=0, blank=False)
     #bleg_uuid = models.CharField(max_length=108)
     #bridge_channel = models.CharField(max_length=108, blank=True)
+    # TODO: add default value
     read_codec =  models.CharField(_(u'Read codec'), max_length=10)
+    # TODO: add default value
     write_codec = models.CharField(_(u'Write codec'), max_length=10)
 
     lprice =  models.DecimalField('LCR Price', default=Decimal("0"), max_digits=18, decimal_places=4)

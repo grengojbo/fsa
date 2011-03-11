@@ -167,24 +167,39 @@ class CdrHandler(PaginatedCollectionBaseHandler):
                         time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.start_stamp.string), time_format)))
                 log.debug("start_stamp: %s" % new_cdr.start_timestamp)
 
-                new_cdr.answer_timestamp = datetime.datetime.utcfromtimestamp(
-                        time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.answer_stamp.string), time_format)))
-                #log.debug("answer_stamp: %s" % xml_cdr.cdr.variables.answer_stamp.string)
-                new_cdr.end_timestamp = datetime.datetime.utcfromtimestamp(
-                        time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.end_stamp.string), time_format)))
+                if xml_cdr.cdr.variables.answer_stamp is not None:
+                    new_cdr.answer_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.answer_stamp.string), time_format)))
+                else:
+                    new_cdr.answer_timestamp = new_cdr.start_timestamp
+                log.debug("answer_stamp:{0}".format(new_cdr.answer_timestamp))
+                #new_cdr.end_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.end_stamp.string), time_format)))
                 #log.debug("end_stamp: %s" % xml_cdr.cdr.variables.end_stamp.string)
-                new_cdr.duration = xml_cdr.cdr.variables.duration.string
-                log.debug("duration: %s" % xml_cdr.cdr.variables.duration.string)
+
+                try:
+                    new_cdr.duration = xml_cdr.cdr.variables.duration.string
+                except Exception as e:
+                    log.error(e)
+                    new_cdr.duration = '0'
+                log.debug("duration: {0}".format(new_cdr.duration))
                 new_cdr.billsec = int(xml_cdr.cdr.variables.billsec.string)
-                log.debug("billsec %s" % xml_cdr.cdr.variables.billsec.string)
+                log.debug("billsec {0}".format(xml_cdr.cdr.variables.billsec.string))
                 new_cdr.hangup_cause = xml_cdr.cdr.variables.hangup_cause.string
-                log.debug("hangup_cause %s" % xml_cdr.cdr.variables.hangup_cause.string)
+                log.debug("hangup_cause {0}".format(xml_cdr.cdr.variables.hangup_cause.string))
                 new_cdr.uuid = xml_cdr.cdr.callflow.caller_profile.uuid.string
-                log.debug("uuid %s" % xml_cdr.cdr.callflow.caller_profile.uuid.string)
-                new_cdr.read_codec = xml_cdr.cdr.variables.read_codec.string
-                #log.debug("read_codec %s" % new_cdr.read_codec)
-                new_cdr.write_codec = xml_cdr.cdr.variables.write_codec.string
-                #log.debug("write_codec %s" % new_cdr.write_codec)
+                log.debug("uuid {0}".format(xml_cdr.cdr.callflow.caller_profile.uuid.string))
+                try:
+                    new_cdr.read_codec = xml_cdr.cdr.variables.read_codec.string
+                except Exception as e:
+                    #log.error(e)
+                    # TODO: add to None
+                    new_cdr.read_codec = 'PCMA'
+                log.debug("read_codec{0}".format(new_cdr.read_codec))
+                try:
+                    new_cdr.write_codec = xml_cdr.cdr.variables.write_codec.string
+                except Exception as e:
+                    #log.error(e)
+                    new_cdr.write_codec = new_cdr.read_codec
+                log.debug("write_codec {0}".format(new_cdr.write_codec))
 
                 if xml_cdr.cdr.variables.rtp_audio_in_raw_bytes is not None:
                     new_cdr.rtp_audio_in_raw_bytes = int(xml_cdr.cdr.variables.rtp_audio_in_raw_bytes.string)
@@ -233,7 +248,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
 
                 if xml_cdr.cdr.variables.nibble_total_billed is not None:
                     #<nibble_total_billed>0.087786</nibble_total_billed>
-                    log.debug("nibble_total_billed %s" % xml_cdr.cdr.variables.nibble_total_billed.string)
+                    log.debug("nibble_total_billed {0}".format(xml_cdr.cdr.variables.nibble_total_billed.string))
                     new_cdr.nibble_total_billed = trunc_decimal(xml_cdr.cdr.variables.nibble_total_billed.string, 6)
                 #sip_user_agent
                 #if new_cdr.lcr_rate > Decimal("0") and new_cdr.nibble_rate > Decimal("0") and new_cdr.billsec > 0:
@@ -261,8 +276,8 @@ class CdrHandler(PaginatedCollectionBaseHandler):
                 ##        <write_rate>8000</write_rate>
                 new_cdr.save()
 
-                log.debug("caller_id_name %s" % new_cdr.caller_id_name)
-                log.debug("caller_id_number %s" % new_cdr.caller_id_number)
+                log.debug("caller_id_name {0}".format(new_cdr.caller_id_name))
+                log.debug("caller_id_number {0}".format(new_cdr.caller_id_number))
                 #log.debug("bridge_channel %s" % new_cdr.bridge_channel)
                 #resp = rc.CREATED
                 resp = rc.ALL_OK
