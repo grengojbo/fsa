@@ -86,7 +86,15 @@ class CdrHandler(PaginatedCollectionBaseHandler):
             try:
                 xml_cdr = Soup(attrs.get('cdr'))
 
-                new_cdr = Cdr(caller_id_name=xml_cdr.cdr.callflow.caller_profile.caller_id_name.string,
+                if xml_cdr.cdr.callflow.caller_profile.caller_id_number is not None:
+                    caller_id_number=xml_cdr.cdr.callflow.caller_profile.caller_id_number.string
+                else:
+                    caller_id_number='000000'
+                if xml_cdr.cdr.callflow.caller_profile.caller_id_name is not None:
+                    caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string
+                else:
+                    caller_id_name = caller_id_number
+                new_cdr = Cdr(caller_id_name=caller_id_name,
                               caller_id_number=xml_cdr.cdr.callflow.caller_profile.caller_id_number.string)
                 #new_cdr.procesed = 1
                 # TODO: New stats (n CDRs) rtcp_packet_count and rtcp_octet_count
@@ -172,9 +180,11 @@ class CdrHandler(PaginatedCollectionBaseHandler):
                 else:
                     new_cdr.answer_timestamp = new_cdr.start_timestamp
                 log.debug("answer_stamp:{0}".format(new_cdr.answer_timestamp))
-                #new_cdr.end_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.end_stamp.string), time_format)))
-                #log.debug("end_stamp: %s" % xml_cdr.cdr.variables.end_stamp.string)
-
+                if xml_cdr.cdr.variables.end_stamp is not None:
+                    new_cdr.end_timestamp = datetime.datetime.utcfromtimestamp(time.mktime(time.strptime(urllib.unquote(xml_cdr.cdr.variables.end_stamp.string), time_format)))
+                else:
+                    new_cdr.end_timestamp = new_cdr.answer_timestamp
+                log.debug("answer_stamp:{0}".format(new_cdr.end_timestamp))
                 try:
                     new_cdr.duration = xml_cdr.cdr.variables.duration.string
                 except Exception as e:
