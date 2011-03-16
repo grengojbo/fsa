@@ -94,8 +94,7 @@ class CdrHandler(PaginatedCollectionBaseHandler):
                     caller_id_name = xml_cdr.cdr.callflow.caller_profile.caller_id_name.string
                 else:
                     caller_id_name = caller_id_number
-                new_cdr = Cdr(caller_id_name=caller_id_name,
-                              caller_id_number=caller_id_number)
+                new_cdr = Cdr(caller_id_name=caller_id_name, caller_id_number=caller_id_number)
                 #log.debug("caller_id_number: {0} caller_id_name: {1}".format(caller_id_number, caller_id_name))
                 #new_cdr.procesed = 1
                 # TODO: New stats (n CDRs) rtcp_packet_count and rtcp_octet_count
