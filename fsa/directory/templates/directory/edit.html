@@ -1,74 +1,15 @@
-{% extends "userprofile/base_2col.html" %}
-{% load i18n %}
-{% load media %}
-{% block title %}Настройка SIP ID: {{ e.uid }}{% endblock %}
-{% block robots %}noindex,nofollow{% endblock %}
-
-{% block extracss %}
-	<link rel="stylesheet" href="{% media "userprofile/css/ui.datepicker.css" %}" type="text/css" />
-{% endblock %}
-
-{% block extrajs %}
-<script type="text/javascript">
-	$(function() {
-		$("input[type='text']").addClass("text");
-		$("form input")[0].focus();
-	});
-</script>
-{% endblock %}
-
-{% block userprofile_navigation %}
-{% include "userprofile/menu.html" %}
-{% endblock %}
-
-{% block userprofile_content %}
-	<form class="personal" action="{{ request.path_info }}" method="post" enctype="multipart/form-data">
-	{{ form.errors }}
-	<fieldset>
-		<legend>Настройка SIP ID: {{ e.uid }}</legend>
-		{{ form.as_p }}
-	</fieldset>
-  <input type="submit" value="{% trans 'Save' %}" />
-	</form>
-{% endblock %}
-
-{% block userprofile_content_related %}
-  <div class="box">
-    <h3>Настройки для программ</h3>
-    <p>Пример настройки для программы X-Lite</p>
-	<ul>
-		<li>SIP ID / User Name : <b>{{ e.uid }}</b></li>
-		<li>Пароль / Password : <b>{{ e.password }}</b></li>
-		<li>Caller id Name / Display Name : <b>{{ e.effective_caller_id_name }}</b></li>
-		<li> / Domain : <b></b></li>
-		<li> / Authorization user name : <b>{{ e.uid }}</b></li>
-	</ul>
-  </div>
-
-Ваши настройки к SIP
-14410 (Oleg)
-Сервер	sip.089.com.ua
-Логин	14410
-Пароль*	123456789
-Отображаемое имя*	Oleg
-Переадресация на номер	переадресация будет активна после первого пополнения счета
-Использовать данный SIP номер для приема факсов
-
-Добавить новый SIP (функция будет доступна после первого пополнения счета)
-Поля, отмеченные * можно редактировать, кликнув на текст.
-
-<!--
-Информация
-Вам могут позвонить из телефонной сети на Ваш SIP логин набрав следующие номера:
-Украина +380 89 500-00-00
-После ответа системы, необходимо осуществить дополнительный набор вашего SIP номера в тональном наборе.
-Вы можете звонить на другие SIP номера внутри нашей системы, номер содержит 5 цифр.
-Все входящие и внутренние телефонные разговоры - бесплатные.
-
-Номер для эхо-теста: 4444.
-
-Качество связи
-!!! Если Вас не устраивает качество разговора с международным номером, просто наберите 888 перед этим номером и наша система автоматически переключит это направление на другого международного оператора. Стоимость направления при этом не изменится.
--->
-
+{% extends "accounts/base_accounts.html" %}
+{% load i18n uni_form_tags %}
+{% block title %}{% trans "Настройка SIP ID" %}: {{ e.uid }}{% endblock %}
+{% block body_class %}{{ block.super }} activate_form{% endblock %}
+{% block bodyid %}prepaid{% endblock %}
+{% block content %}{{ block.super }}
+<h2>{% trans "Настройка SIP ID" %}: {{ e.uid }}</h2>
+  {% if form.helper %}
+    {% with form.helper as helper %}
+        {% uni_form form helper %}
+    {% endwith %}
+{% else %}
+    {% uni_form form helper %}
+ {% endif %}
 {% endblock %}

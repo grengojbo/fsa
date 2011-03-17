@@ -1,18 +1,21 @@
 # -*- mode: python; coding: utf-8; -*-
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
-from fsa.directory.models import Endpoint, FSGroup, SipRegistration
+from fsa.directory.models import Endpoint, FSGroup
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.directory.forms import EndpointForm
 import keyedcache
 from django.views.generic.list_detail import object_list
 from sugar.views.decorators import render_to, ajax_request
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
 from django.shortcuts import get_object_or_404
+from django.template import RequestContext
+from django.shortcuts import redirect
 from fsa.core import is_app
 import logging
 
-l = logging.getLogger('fsa.directory.views')
+log = logging.getLogger('fsa.directory.views')
 
 __author__ = '$Author:$'
 __revision__ = '$Revision:$'
@@ -138,17 +141,27 @@ def new_endpoint(request):
     else:
         return {'error': {'type': 400, 'message': 'Bad request'}}
 
-#render_to('directory/edit.html')
 @login_required
-def directory_edit(request, object_id):
-    """docstring for directory_edit"""
-    endpoint = Endpoint.objects.get(pk = object_id, enable=True, accountcode = request.user)
+def edit(request, object_id, template_name='directory/edit.html', success_url='profile_overview', extra_context=None, **kwargs):
+    """Chenge parameters Endpoint"""
+    # TODO: add test
+    if extra_context is None:
+        extra_context = {}
+    context = RequestContext(request)
+    for key, value in extra_context.items():
+        context[key] = callable(value) and value() or value
+
+    endpoint = get_object_or_404(Endpoint, uid__exact=object_id, enable=True, accountcode=request.user)
     if request.method == "POST":
-        form = EndpointForm(request.POST, instance=endpoint)
+        form = EndpointForm(request, instance=endpoint, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             #request.user.message_set.create(message=_("Your profile information has been updated successfully."))
+            data = form.cleaned_data
+            log.debug('form valid {0}'.format(data))
+            return redirect(success_url)
     else:
-        form = EndpointForm(instance=endpoint)
-    data = { 'section': 'directory', 'form': form, 'e': endpoint, }
-    return data
+        form = EndpointForm(request, instance=endpoint)
+    data = {'form': form, 'e': endpoint, 'subsection': 'directory', 'section': 'profile', 'ip':request.META['REMOTE_ADDR']}
+    #data = { 'e': endpoint, 'subsection': 'directory', 'section': 'profile', 'ip':request.META['REMOTE_ADDR']}
+    return render_to_response(template_name, data, context_instance=context)
