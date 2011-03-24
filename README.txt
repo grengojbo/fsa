@@ -16,7 +16,7 @@ wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
 aptitude update
 aptitude safe-upgrade
 aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
-aptitude install -y gcc build-essential libc6-dev
+aptitude install -y gcc build-essential libc6-dev libyaml-dev libfreetype6-dev
 aptitude install -y curl wget python-setuptools python-dev libevent-dev screen
 aptitude install -y mariadb-client-5.1 libmemcached2 libmemcached-tools libmemcache-dev
 
@@ -26,6 +26,8 @@ aptitude install -y python-pyrex python-rdflib python-rdflib python-openssl
 
 easy_install -U mercurial
 easy_install -U pip
+pip install Sphinx
+pip install docutils
 pip install ipython virtualenv virtualenvwrapper
 
 pip install hg-git setuptools_hg setuptools_git Fabric
@@ -35,6 +37,10 @@ easy_install concurrence
 pip install django
 easy_install jinja2 python-memcached
 aptitude install uwsgi runit
+
+pip install pycrypto
+pip install PyYAML
+pip install reportlab
 
 Добавляем группу и пользователя от которого будет запускатся веб интерфейс
 /usr/sbin/groupadd fsweb

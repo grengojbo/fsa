@@ -27,3 +27,5 @@ django-common
 -e git+git://github.com/grengojbo/django-registration.git#egg=django-registration
 -e git+git://github.com/codekoala/django-uni-form.git#egg=django-uni-form
 django-social-auth
+git+git://github.com/miglu/django-countries.git
+http://www.satchmoproject.com/snapshots/trml2pdf-1.2.tar.gz
