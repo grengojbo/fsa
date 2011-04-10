@@ -4,7 +4,7 @@ from settings import *
 # TODO delete lib.decorators
 INSTALLED_APPS += (
     'currency',
-    'fsa.core',
+    #'fsa.core',
     'fsa.api',
     'lib',
     'bursar',

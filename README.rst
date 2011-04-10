@@ -20,8 +20,7 @@ FreeSWITCH Admin -это веб интерфейс для администрир
     sudo su -
     add-apt-repository ppa:linktel/ppa
     wget -O- http://ourdelta.org/deb/ourdelta.gpg | sudo apt-key add -
-    wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
-          -O /etc/apt/sources.list.d/ourdelta.list
+    wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list -O /etc/apt/sources.list.d/ourdelta.list
     aptitude update
     aptitude safe-upgrade
     aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
@@ -73,28 +72,33 @@ FreeSWITCH Admin -это веб интерфейс для администрир
     cd <name>
     workon <name>
 
-pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
-./manage.py syncdb
-./manage.py migrate
-./manage.py loaddata l10n_data
-pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
-./manage.py syncdb
-./manage.py migrate
-./manage.py loaddata  currency_default
-pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
-pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc
-./manage.py syncdb
-./manage.py migrate
-./manage.py loaddata tariffplan --settings=settings
+    pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
+    ./manage.py syncdb
+    ./manage.py migrate
+    ./manage.py loaddata l10n_data
+    pip install -e git+http://github.com/grengojbo/fsa.git#egg=fsa
+    ./manage.py syncdb
+    ./manage.py migrate
+    ./manage.py loaddata  currency_default
+    pip install -e git+http://github.com/grengojbo/fsb.git#egg=fsb
+    pip install -e git+http://github.com/grengojbo/fsc.git#egg=fsc
+    ./manage.py syncdb
+    ./manage.py migrate
+    ./manage.py loaddata tariffplan --settings=settings
+
+- Для удаленного обновления и перезагрузки uwsgi в файл /etc/sudoers добавьте сторки::
+
+    fsweb ALL= NOPASSWD:/usr/bin/rsync
+    fsweb ALL= NOPASSWD:/usr/bin/sv
 
 
-Для удаленного обновления и перезагрузки uwsgi в файл /etc/sudoers добавьте сторки
-fsweb ALL= NOPASSWD:/usr/bin/rsync
-fsweb ALL= NOPASSWD:/usr/bin/sv
+--------------------------
+Настройка FreeSWITCH Admin
+--------------------------
 
-### Настройка FreeSWITCH Admin
+1. В закладке FreeSWITCH Servers меняем
+---------------------------------------
 
-#### 1. В закладке FreeSWITCH Servers меняем  
 1.1 Название сайта в *Начало › Sites › Сайты*  
 1.2 Настраиваем Списки доступа *Начало › Acl › Acls* и *Начало › Acl › Acl Network Lists*  
 1.3 Меняем и добавляем при необходимости синонимы для SIP *Начало › Server › SIP Alias*  
@@ -114,11 +118,17 @@ user - это группа в которую добавляются обычны
 Если Вы хотите что бы при активации новой учетной записи создавался SIP ID
 то перейдите в раздел Site Setting и активируйте  *Endpoint Module Settings > Auto create endpoint*
 
-#### 2. Настраиваем сервер  
+
+2. Настраиваем сервер
+---------------------
+
 *Начало › Server › SIP Profiles* установите профиль по умолчанию  
 *Начало › Dialplan › Dialplan Contexts* установите контекст по умолчанию
 
-#### 3. Управлени Номерным планом  
+
+3. Управлени Номерным планом
+----------------------------
+
 Переходим в *Начало › Numberplan › Number Plans*
 Номера в номерном плане делятся на такие типы    
 1. Default - все номера после их создания (из этого пула номеров берутся автоматически для новых клиентов)   
@@ -126,7 +136,10 @@ user - это группа в которую добавляются обычны
 Для груповой обработки номерного плана воспользуйтесь *Mark selected type as Silver* и т.д.   
 Выбрать можно только номера с статусом Free и Disable.
 
-#### 3. Маршруты LCR
+
+4. Маршруты LCR
+---------------
+
 Подготовка CSV файла
 Для добавления маршрута необходимо в начале добавить формат загружаемого файла в таблицу
 *Начало › Server › Format loads csv files* напрмер в таком формате

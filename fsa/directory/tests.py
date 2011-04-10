@@ -16,14 +16,17 @@ from django.contrib.auth.models import User
 from fsa.directory.models import Endpoint
 from fsa.dialplan.models import Context
 from django.core.urlresolvers import reverse
-import logging as l
+import logging
 from django.contrib.sites.models import Site
 from fsa.server.models import Server, SipProfile, Conf
 from fsa.core import is_app
-import urllib, base64
+import urllib
+import base64
 import simplejson
 import keyedcache
 from decimal import Decimal
+
+log = logging.getLogger('fsa.directory.tests')
 
 class DirectoryTestCase(test.TestCase):
     #fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'gateway', 'sipprofile']
@@ -34,12 +37,6 @@ class DirectoryTestCase(test.TestCase):
         fixtures = ['testsite', 'testnp', 'acl', 'alias', 'extension', 'context', 'server', 'server_conf', 'test_gateway', 'test_lcr', 'sipprofile']
 
     def setUp(self):
-        #cont1 = Context(name="default", default_context=True)
-        #cont1.save()
-        #cont2 = Context(name="public", default_context=False)
-        #cont2.save()
-        #cont3 = Context(name="private", default_context=False)
-        #cont3.save()
         self.user = User.objects.create_user('test', 'test@test.com', 'test')
         #self.user = User.objects.create_user('admin', 'admin@world.com', 'admin')
         self.user.is_staff = True
@@ -96,7 +93,7 @@ class DirectoryTestCase(test.TestCase):
         new_endpoint = Endpoint.objects.create_endpoint(self.user)
         self.assertEquals(new_endpoint.uid, '1003')
         response = self.client.post('/api/directory/', {'profile': 'internal', 'key_value': '', 'key_name': '', 'section': 'directory', 'hostname': self.hostname, 'tag_name': '', 'purpose': 'gateways'}, HTTP_AUTHORIZATION=self.auth_string)
-        l.debug(response)
+        log.debug(response)
         self.assertEquals(response.status_code, 200)
         #l.debug(response)
         #es = Server.objects.get(name=self.hostname, enabled=True)
@@ -110,7 +107,7 @@ class DirectoryTestCase(test.TestCase):
 
         response = self.client.post('/api/directory/', {"hostname": self.hostname, "section": "directory", "tag_name": "domain", "key_name": "name", "key_value": self.domainname, "action": "sip_auth", "sip_profile": "internal", "ip": self.hostip, "key": "id", "user": phone, "domain": self.domainname}, HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
-        l.debug(response)
+        log.debug(response)
 
         #sip_user_agent=sflphone/0.9.8~rc1, sip_auth_username: phone, sip_auth_realm=95.67.67.187, sip_auth_nc=00000001, sip_auth_response=9e832d104ac263c84a9fa3079161774b, sip_auth_method=REGISTER,
 
@@ -200,7 +197,7 @@ class DirectoryTestCase(test.TestCase):
         response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone), HTTP_AUTHORIZATION=self.auth_string)
         self.assertEquals(response.status_code, 200)
         res = simplejson.loads(response.content.encode('UTF-8'))
-        #l.debug(response)
+        #log.debug(response)
         self.assertEquals(Decimal(res.get('lcr_price')), Decimal("0.1"))
         self.assertEquals(res.get('endpoint').get('phone_type'), 'I')
         self.assertEquals(res.get('endpoint').get('phone_alias'), 'demo-ivr')
@@ -208,7 +205,7 @@ class DirectoryTestCase(test.TestCase):
         #self.assertEquals(res.get('endpoint').get('accountcode').get('username'), 'test')
         #self.assertEquals(res.get('endpoint').get('site').get('name'), 'test1.example.com')
         self.assertEquals(res.get('endpoint').get('zrtp'), False)
-        #l.debug(res)
+        #log.debug(res)
 
         phone = '5431'
         response = self.client.get('/api/billing/in/{0}/{1}/'.format(gw, phone), HTTP_AUTHORIZATION=self.auth_string)

@@ -16,7 +16,7 @@ fsa_api = Resource(handler=FreeSwitchAdminHandler, authentication=auth)
 directory = Resource(handler=DirectorytHandler, authentication=auth)
 
 urlpatterns = patterns('',
-    url(r'^get/$', views.get),
+    #url(r'^get/$', views.get),
     #url(r'^directory/$', views.directory),
     url(r'^directory/$', directory, {'emitter_format': 'jinja'}),
     #url(r'^cdr/$', set_cdr),
