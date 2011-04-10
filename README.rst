@@ -1,56 +1,77 @@
-# FreeSWITCH Admin v0.4.1  
+=======================
+FreeSWITCH Admin v0.4.1
+=======================
 
 FreeSWITCH Admin -это веб интерфейс для администрирования VoIp програмного коммутатора FreeSWITCH.  
 В ближайшее время будет доступен видео ролик.  
 
-## Установка FreeSWITCH Admin
 
-###Установка необходимых библиотек
+--------------------------
+Установка FreeSWITCH Admin
+--------------------------
 
-Сперва устанавливаем необходимые библиотеки для всей системы
-sudo su -
-add-apt-repository ppa:linktel/ppa
-wget -O- http://ourdelta.org/deb/ourdelta.gpg | sudo apt-key add -
-wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
-      -O /etc/apt/sources.list.d/ourdelta.list
-aptitude update
-aptitude safe-upgrade
-aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
-aptitude install -y gcc build-essential libc6-dev libyaml-dev libfreetype6-dev
-aptitude install -y curl wget python-setuptools python-dev libevent-dev screen
-aptitude install -y mariadb-client-5.1 libmemcached2 libmemcached-tools libmemcache-dev
 
-aptitude install -y python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
-aptitude install -y python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
-aptitude install -y python-pyrex python-rdflib python-rdflib python-openssl
+-------------------------------
+Установка необходимых библиотек
+-------------------------------
 
-easy_install -U mercurial
-easy_install -U pip
-pip install Sphinx
-pip install docutils
-pip install ipython virtualenv virtualenvwrapper
+- Сперва устанавливаем необходимые библиотеки для всей системы::
 
-pip install hg-git setuptools_hg setuptools_git Fabric
-pip install greenlet
-easy_install concurrence
+    sudo su -
+    add-apt-repository ppa:linktel/ppa
+    wget -O- http://ourdelta.org/deb/ourdelta.gpg | sudo apt-key add -
+    wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list \
+          -O /etc/apt/sources.list.d/ourdelta.list
+    aptitude update
+    aptitude safe-upgrade
+    aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
+    aptitude install -y gcc build-essential libc6-dev libyaml-dev libfreetype6-dev
+    aptitude install -y curl wget python-setuptools python-dev libevent-dev screen
+    aptitude install -y mariadb-client-5.1 libmemcached2 libmemcached-tools libmemcache-dev
 
-pip install django
-easy_install jinja2 python-memcached
-aptitude install uwsgi runit
+    aptitude install -y python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
+    aptitude install -y python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
+    aptitude install -y python-pyrex python-rdflib python-rdflib python-openssl
 
-pip install pycrypto
-pip install PyYAML
-pip install reportlab
+    easy_install -U mercurial
+    easy_install -U pip
+    pip install Sphinx
+    pip install docutils
+    pip install ipython virtualenv virtualenvwrapper
 
-Добавляем группу и пользователя от которого будет запускатся веб интерфейс
-/usr/sbin/groupadd fsweb
-/usr/sbin/useradd -g fsweb -m --shell /bin/bash -d /home/fsweb fsweb
-Добавляем пароль
-passwd fsweb
-Затем устанавливам виртуальное окружения для нашей программы
-mkvirtualenv <name>
-cd <name>
-workon <name>
+    pip install hg-git setuptools_hg setuptools_git Fabric
+    pip install greenlet
+    easy_install concurrence
+
+    pip install django
+    easy_install jinja2 python-memcached
+    aptitude install uwsgi runit
+
+    pip install pycrypto
+    pip install PyYAML
+    pip install reportlab
+
+Если Вы будкте использовать систему неприрывного тнстирования jenkins то устанавливаем модуль для django
+подробнее смотрите `Как начать тестировать и получать от этого удовольствие`_ ::
+
+    pip install -e "git+git://github.com/kmmbvnr/django-jenkins.git#egg=django-jenkins"
+
+- Добавляем группу и пользователя от которого будет запускатся веб интерфейс::
+
+    /usr/sbin/groupadd fsweb
+    /usr/sbin/useradd -g fsweb -m --shell /bin/bash -d /home/fsweb fsweb
+    Добавляем пароль
+    passwd fsweb
+
+- Заходим под толькочто созданым пользователем::
+
+    su -l fsweb
+
+- Затем устанавливам виртуальное окружения для нашей программы::
+
+    mkvirtualenv <name>
+    cd <name>
+    workon <name>
 
 pip install -r http://github.com/grengojbo/fsa/raw/master/scripts/requirements-dev.txt
 ./manage.py syncdb
@@ -137,3 +158,4 @@ gw - ID шлюза смотреть в таблице Начало › Gateway �
 site - ID сайта смотреть в Начало › Sites › Сайты 
 format_csv - смотреть в Начало › Server › Format loads csv files 
 
+.. _Как начать тестировать и получать от этого удовольствие: http://kmmbvnr.livejournal.com/75183.html
