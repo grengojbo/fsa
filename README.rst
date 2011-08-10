@@ -21,34 +21,37 @@ FreeSWITCH Admin -это веб интерфейс для администрир
     add-apt-repository ppa:linktel/ppa
     wget -O- http://ourdelta.org/deb/ourdelta.gpg | sudo apt-key add -
     wget http://ourdelta.org/deb/sources/lucid-mariadb-ourdelta.list -O /etc/apt/sources.list.d/ourdelta.list
+    
     aptitude update
     aptitude safe-upgrade
-    aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru language-support-ru language-support-translations-ru manpages-ru
+    aptitude install -y language-pack-ru language-pack-ru-base language-support-extra-ru language-support-input-ru 
+    aptitude install -y language-support-ru language-support-translations-ru manpages-ru
     aptitude install -y gcc build-essential libc6-dev libyaml-dev libfreetype6-dev
+    aptitude install -y language-support-ru language-support-translations-ru manpages-ru
     aptitude install -y curl wget python-setuptools python-dev libevent-dev screen
     aptitude install -y mariadb-client-5.1 libmemcached2 libmemcached-tools libmemcache-dev
+    aptitude install -y git-core byobu mercurial-git python-git git-svn git-doc git-completion git-email libnet-github-perl
 
     aptitude install -y python-cjson python-crypto python-docutils python-geoip python-git python-httplib2 python-html5lib
-    aptitude install -y python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz python-yaml
-    aptitude install -y python-pyrex python-rdflib python-rdflib python-openssl
+    aptitude install -y python-imaging python-lxml python-mysqldb python-pam python-pycurl python-sphinx python-tz 
+    aptitude install -y python-pyrex python-rdflib python-rdflib python-openssl python-yaml
 
     easy_install -U mercurial
     easy_install -U pip
-    pip install Sphinx
-    pip install docutils
+    pip install --upgrade git+https://github.com/pypa/pip/
+    pip install --upgrade Sphinx
+    pip install --upgrade docutils
     pip install ipython virtualenv virtualenvwrapper
 
     pip install hg-git setuptools_hg setuptools_git Fabric
     pip install greenlet
     easy_install concurrence
 
-    pip install django
-    easy_install jinja2 python-memcached
-    aptitude install uwsgi runit
+    pip install --upgrade jinja2 python-memcached
+    aptitude install runit uwsgi-python uwsgi-extra uwsgi-common
 
-    pip install pycrypto
-    pip install PyYAML
-    pip install reportlab
+    pip install --upgrade pycrypto PyYAML reportlab
+    pip install --upgrade django
 
 Если Вы будкте использовать систему неприрывного тнстирования jenkins то устанавливаем модуль для django
 подробнее смотрите `Как начать тестировать и получать от этого удовольствие`_ ::
